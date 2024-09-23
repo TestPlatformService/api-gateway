@@ -1,0 +1,10 @@
+info:
+  contact: {}
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    description: API Gateway
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

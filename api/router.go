@@ -18,5 +18,8 @@ import (
 func Router(hand *handler.Handler) *gin.Engine {
 	router := gin.Default()
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+
+	
 	return router
 }

@@ -62,4 +62,6 @@ networks:
     external: true
 
 volumes:
+  minio_data:
+    driver: local
   db:

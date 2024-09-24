@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  postgres-db:
+  postgres-db-casbin:
     container_name: postgres
     image: postgres:latest
     environment:
@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=casbin
     ports:
-      - "5435:5432"
+      - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
     networks:
@@ -20,16 +20,21 @@ services:
       timeout: 5s
       retries: 5
 
-  api-services:
-    container_name: api_gateway
+  api-service:
+    container_name: api-gateway
     build: .
     depends_on:
-      postgres-db:
+      postgres-db-casbin:
         condition: service_healthy
-    networks:
-      - testuzb
     ports:
-      - "9876:9876"
+      - "8080:8080"
+    networks:
+     - sales
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   testuzb:

@@ -203,11 +203,6 @@ const docTemplate = `{
         },
         "/api/user/login": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "This endpoint logs in a user by checking the credentials and generating JWT tokens.",
                 "consumes": [
                     "application/json"

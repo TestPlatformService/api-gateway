@@ -47,7 +47,6 @@ func (h Handler) Register(c *gin.Context) {
 // @Tags         user
 // @Accept       json
 // @Produce      json
-// @Security     ApiKeyAuth
 // @Param        credentials  body user.LoginRequest  true  "User Login Data"
 // @Success      200   {object}  user.LoginResponse "Tokens"
 // @Failure      400   {object}  string "Invalid request body"

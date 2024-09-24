@@ -71,3 +71,19 @@ func GetUserIdFromAccesToken(req *pb.LoginResponse) error {
 
 	return nil
 }
+
+func GetUserInfoFromAccessToken(accessTokenString string) (string, string, error) {
+	conf := config.Load()
+	refreshToken, err := jwt.Parse(accessTokenString, func(token *jwt.Token) (interface{}, error) { return []byte(conf.ACCES_KEY), nil })
+	if err != nil || !refreshToken.Valid {
+		return "", "", err
+	}
+	claims, ok := refreshToken.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", "", err
+	}
+	userID := claims["user_id"].(string)
+	Role := claims["role"].(string)
+
+	return userID, Role, nil
+}

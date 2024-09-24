@@ -1,16 +1,18 @@
 package handler
 
 import (
+	"api/genproto/user"
 	"log"
 	"log/slog"
-	"api/genproto/user"
 
+	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
-	User user.UsersClient
-	Log  *slog.Logger
+	User     user.UsersClient
+	Log      *slog.Logger
+	Enforcer *casbin.Enforcer
 }
 
 func CORSMiddleware() gin.HandlerFunc {

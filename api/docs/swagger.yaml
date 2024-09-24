@@ -307,7 +307,7 @@ paths:
       - ApiKeyAuth: []
       summary: Update User by Admin
       tags:
-      - users
+      - user
   /api/user/updateprofile:
     put:
       description: Update User profile

@@ -307,7 +307,7 @@ const docTemplate = `{
                 ],
                 "description": "Update User Profile by Admin",
                 "tags": [
-                    "users"
+                    "user"
                 ],
                 "summary": "Update User by Admin",
                 "parameters": [

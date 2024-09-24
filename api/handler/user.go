@@ -52,7 +52,7 @@ func (h Handler) Register(c *gin.Context) {
 // @Failure      400   {object}  string "Invalid request body"
 // @Failure      401   {object}  string "Unauthorized"
 // @Failure      500   {object}  string "Server error"
-// @Router       /api/user/login [post]
+// @Router       /all/user/login [post]
 func (h Handler) Login(c *gin.Context) {
 	h.Log.Info("Login starting")
 	req := pb.LoginRequest{}

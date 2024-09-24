@@ -97,6 +97,41 @@ definitions:
 info:
   contact: {}
 paths:
+  /all/user/login:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint logs in a user by checking the credentials and generating
+        JWT tokens.
+      parameters:
+      - description: User Login Data
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tokens
+          schema:
+            $ref: '#/definitions/user.LoginResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Login a user
+      tags:
+      - user
   /api/user/all:
     get:
       consumes:
@@ -215,41 +250,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get user profile
-      tags:
-      - user
-  /api/user/login:
-    post:
-      consumes:
-      - application/json
-      description: This endpoint logs in a user by checking the credentials and generating
-        JWT tokens.
-      parameters:
-      - description: User Login Data
-        in: body
-        name: credentials
-        required: true
-        schema:
-          $ref: '#/definitions/user.LoginRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Tokens
-          schema:
-            $ref: '#/definitions/user.LoginResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "401":
-          description: Unauthorized
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      summary: Login a user
       tags:
       - user
   /api/user/register:

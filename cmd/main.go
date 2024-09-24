@@ -5,37 +5,45 @@ import (
 	"api/api/handler"
 	"api/casbin"
 	"api/config"
+	"api/genproto/group"
+	"api/genproto/notification"
+	"api/genproto/user"
 	"api/logs"
-	"api/service"
 	"log"
 
-	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	log.Println("API Gateway started successfully!")
-	logger := logs.NewLogger()
-	logger.Info("API Gateway started successfully!")
+	conf := config.Load()
+	hand := NewHandler()
+	router := api.Router(hand)
+	log.Printf("server is running...")
+	log.Fatal(router.Run(conf.API_ROUTER))
+}
 
-	enforcer, err := casbin.CasbinEnforcer(logger)
+func NewHandler() *handler.Handler {
+	conf := config.Load()
+	connUser, err := grpc.NewClient(conf.USER_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-        log.Println("Error initializing casbin enforcer", "error", err.Error())
-		logger.Error("Error initializing enforcer", "error", err.Error())
-		return
-    }
-
-	config := config.Load()
-	serviceManager, err := service.NewServiceManager()
-	if err != nil {
-		log.Println("Error initializing service manager", "error", err.Error())
-		logger.Error("Error initializing service manager", "error", err.Error())
-		return
+		panic(err)
 	}
 
+	User := user.NewUsersClient(connUser)
+	Notification := notification.NewNotificationsClient(connUser)
+	Group := group.NewGroupServiceClient(connUser)
 
-	handler := handler.NewHandler(serviceManager.UserService(), logger, enforcer)
-	controller := api.NewController(gin.Default())
-	controller.SetupRoutes(*handler, logger)
-	controller.StartServer(config)
-
+	logs := logs.NewLogger()
+	en, err := casbin.CasbinEnforcer(logs)
+	if err != nil {
+		log.Fatal("error in creating casbin enforcer", err)
+	}
+	return &handler.Handler{
+		User:         User,
+		Notification: Notification,
+		Group:        Group,
+		Log:          logs,
+		Enforcer:     en,
+	}
 }

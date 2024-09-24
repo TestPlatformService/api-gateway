@@ -1,10 +1,10 @@
 package token
 
 import (
-	"log"
-	"time"
 	"api/config"
 	pb "api/genproto/user"
+	"log"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -54,22 +54,6 @@ func ExtractAccesClaim(tokenStr string) (*jwt.MapClaims, error) {
 	}
 
 	return &claims, nil
-}
-
-func GetUserIdFromAccesToken(req *pb.LoginResponse) error {
-	conf := config.Load()
-	AccesToken, err := jwt.Parse(req.Access, func(token *jwt.Token) (interface{}, error) { return []byte(conf.ACCES_KEY), nil })
-	if err != nil || !AccesToken.Valid {
-		return err
-	}
-	claims, ok := AccesToken.Claims.(jwt.MapClaims)
-	if !ok {
-		return err
-	}
-	req.Id = claims["user_id"].(string)
-	req.Role = claims["role"].(string)
-
-	return nil
 }
 
 func GetUserInfoFromAccessToken(accessTokenString string) (string, string, error) {

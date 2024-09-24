@@ -50,7 +50,7 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		return nil, err
 	}
 	
-	policies := [][]string{
+	policies := [][]string {
 		//user
 		{"admin", "/api/user/register", "POST"},
 		{"admin", "/api/user/login", "POST"},
@@ -71,7 +71,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"support", "/api/user/getprofile", "GET"},
 		{"support", "/api/user/updateprofile", "PUT"},
 
-		
 	}
 
 	_, err = enforcer.AddPolicies(policies)
@@ -85,5 +84,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error saving Casbin policy", "error", err.Error())
 		return nil, err
 	}
+	
 	return enforcer, nil
 }

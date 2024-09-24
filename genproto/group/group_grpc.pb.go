@@ -30,6 +30,7 @@ const (
 	GroupService_DeleteTeacherFromGroup_FullMethodName = "/group.GroupService/DeleteTeacherFromGroup"
 	GroupService_GetStudentGroups_FullMethodName       = "/group.GroupService/GetStudentGroups"
 	GroupService_GetTeacherGroups_FullMethodName       = "/group.GroupService/GetTeacherGroups"
+	GroupService_GetGroupStudents_FullMethodName       = "/group.GroupService/GetGroupStudents"
 )
 
 // GroupServiceClient is the client API for GroupService service.
@@ -47,6 +48,7 @@ type GroupServiceClient interface {
 	DeleteTeacherFromGroup(ctx context.Context, in *DeleteTeacherReq, opts ...grpc.CallOption) (*DeleteResp, error)
 	GetStudentGroups(ctx context.Context, in *StudentId, opts ...grpc.CallOption) (*StudentGroups, error)
 	GetTeacherGroups(ctx context.Context, in *TeacherId, opts ...grpc.CallOption) (*TeacherGroups, error)
+	GetGroupStudents(ctx context.Context, in *GroupId, opts ...grpc.CallOption) (*GroupStudents, error)
 }
 
 type groupServiceClient struct {
@@ -167,6 +169,16 @@ func (c *groupServiceClient) GetTeacherGroups(ctx context.Context, in *TeacherId
 	return out, nil
 }
 
+func (c *groupServiceClient) GetGroupStudents(ctx context.Context, in *GroupId, opts ...grpc.CallOption) (*GroupStudents, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GroupStudents)
+	err := c.cc.Invoke(ctx, GroupService_GetGroupStudents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GroupServiceServer is the server API for GroupService service.
 // All implementations must embed UnimplementedGroupServiceServer
 // for forward compatibility
@@ -182,6 +194,7 @@ type GroupServiceServer interface {
 	DeleteTeacherFromGroup(context.Context, *DeleteTeacherReq) (*DeleteResp, error)
 	GetStudentGroups(context.Context, *StudentId) (*StudentGroups, error)
 	GetTeacherGroups(context.Context, *TeacherId) (*TeacherGroups, error)
+	GetGroupStudents(context.Context, *GroupId) (*GroupStudents, error)
 	mustEmbedUnimplementedGroupServiceServer()
 }
 
@@ -221,6 +234,9 @@ func (UnimplementedGroupServiceServer) GetStudentGroups(context.Context, *Studen
 }
 func (UnimplementedGroupServiceServer) GetTeacherGroups(context.Context, *TeacherId) (*TeacherGroups, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTeacherGroups not implemented")
+}
+func (UnimplementedGroupServiceServer) GetGroupStudents(context.Context, *GroupId) (*GroupStudents, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGroupStudents not implemented")
 }
 func (UnimplementedGroupServiceServer) mustEmbedUnimplementedGroupServiceServer() {}
 
@@ -433,6 +449,24 @@ func _GroupService_GetTeacherGroups_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GroupService_GetGroupStudents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupId)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).GetGroupStudents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GroupService_GetGroupStudents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).GetGroupStudents(ctx, req.(*GroupId))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GroupService_ServiceDesc is the grpc.ServiceDesc for GroupService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -483,6 +517,10 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTeacherGroups",
 			Handler:    _GroupService_GetTeacherGroups_Handler,
+		},
+		{
+			MethodName: "GetGroupStudents",
+			Handler:    _GroupService_GetGroupStudents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

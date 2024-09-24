@@ -35,5 +35,6 @@ func Router(hand *handler.Handler) *gin.Engine {
 		user.DELETE("/delete/:id", hand.DeleteProfile)
 	}
 
+	
 	return router
 }

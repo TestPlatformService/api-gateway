@@ -81,7 +81,7 @@ func (h Handler) Login(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Success      200    {object}  user.GetUserResponse
+// @Success      200    {object}  user.GetProfileResponse
 // @Failure      400    {object}  string "Invalid token"
 // @Failure      500    {object}  string "Server error"
 // @Router       /api/user/getprofile [get]
@@ -191,7 +191,7 @@ func (h *Handler) UpdateProfile(c *gin.Context) {
 // @Description  Update User Profile by Admin
 // @Tags         users
 // @Security     ApiKeyAuth
-// @Param        info body user.UpdateUserRequest true "info"
+// @Param        info body user.UpdateProfileAdminRequest true "info"
 // @Success      200 {object} string "User profile updated"
 // @Failure      400 {object} string "Invalid request body"
 // @Failure      500 {object} string "Server error"
@@ -232,7 +232,7 @@ func (h *Handler) UpdateProfileAdmin(c *gin.Context) {
 // @Tags         user
 // @Security     ApiKeyAuth
 // @Param        id   path      string  true  "User ID to delete"
-// @Success      200  {object}  pb.Void "Successfully deleted the user profile"
+// @Success      200  {object}  string "success"
 // @Failure      400  {object}  string "Invalid request"
 // @Failure      404  {object}  string "User not found"
 // @Failure      500  {object}  string "Internal server error"
@@ -257,5 +257,5 @@ func (h Handler) DeleteProfile(c *gin.Context) {
 	}
 
 	h.Log.Info("DeleteProfile ended successfully")
-	c.JSON(http.StatusOK, pb.Void{})
+	c.JSON(http.StatusOK, gin.H{"message": "User profile deleted"})
 }

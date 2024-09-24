@@ -1,6 +1,343 @@
+definitions:
+  user.GetAllUsersResponse:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_count:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/user.GetProfileResponse'
+        type: array
+    type: object
+  user.GetProfileResponse:
+    properties:
+      date_of_birth:
+        type: string
+      firstname:
+        type: string
+      gender:
+        type: string
+      hh_id:
+        type: string
+      id:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      role:
+        type: string
+    type: object
+  user.LoginRequest:
+    properties:
+      hh_id:
+        type: string
+      password:
+        type: string
+    type: object
+  user.LoginResponse:
+    properties:
+      access:
+        type: string
+      id:
+        type: string
+      refresh:
+        type: string
+      role:
+        type: string
+    type: object
+  user.RegisterRequest:
+    properties:
+      date_of_birth:
+        type: string
+      firstname:
+        type: string
+      gender:
+        type: string
+      hh_id:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  user.UpdateProfileAdminRequest:
+    properties:
+      date_of_birth:
+        type: string
+      firstname:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  user.UpdateProfileRequest:
+    properties:
+      id:
+        type: string
+      password:
+        type: string
+      profile_picture:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /api/user/all:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all users with optional filters such as role, group, subject,
+        teacher, and pagination.
+      parameters:
+      - description: Role to filter by
+        in: query
+        name: role
+        type: string
+      - description: Group to filter by
+        in: query
+        name: group
+        type: string
+      - description: Subject to filter by
+        in: query
+        name: subject
+        type: string
+      - description: Teacher ID to filter by
+        in: query
+        name: teacher
+        type: string
+      - description: Unique household ID to filter by
+        in: query
+        name: hh_id
+        type: string
+      - description: Phone number to filter by
+        in: query
+        name: phone_number
+        type: string
+      - description: Gender to filter by
+        in: query
+        name: gender
+        type: string
+      - default: 10
+        description: Number of users to return per page
+        in: query
+        name: limit
+        type: integer
+      - description: Pagination offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved users
+          schema:
+            $ref: '#/definitions/user.GetAllUsersResponse'
+        "400":
+          description: Invalid request parameters
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get all users
+      tags:
+      - user
+  /api/user/delete/{id}:
+    delete:
+      description: Marks a user profile as deleted by setting the deleted_at timestamp.
+      parameters:
+      - description: User ID to delete
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: User not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Delete User Profile
+      tags:
+      - user
+  /api/user/getprofile:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retrieves user profile.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.GetProfileResponse'
+        "400":
+          description: Invalid token
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get user profile
+      tags:
+      - user
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint logs in a user by checking the credentials and generating
+        JWT tokens.
+      parameters:
+      - description: User Login Data
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tokens
+          schema:
+            $ref: '#/definitions/user.LoginResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Login a user
+      tags:
+      - user
+  /api/user/register:
+    post:
+      description: Create a new user
+      parameters:
+      - description: User info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/user.RegisterRequest'
+      responses:
+        "200":
+          description: Registered successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Register user
+      tags:
+      - user
+  /api/user/update:
+    put:
+      description: Update User Profile by Admin
+      parameters:
+      - description: info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateProfileAdminRequest'
+      responses:
+        "200":
+          description: User profile updated
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update User by Admin
+      tags:
+      - users
+  /api/user/updateprofile:
+    put:
+      description: Update User profile
+      parameters:
+      - description: info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateProfileRequest'
+      responses:
+        "200":
+          description: message
+          schema:
+            type: string
+        "400":
+          description: Invalid data
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update User
+      tags:
+      - user
 securityDefinitions:
   ApiKeyAuth:
     description: API Gateway

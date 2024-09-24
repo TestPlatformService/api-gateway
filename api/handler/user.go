@@ -70,6 +70,12 @@ func (h Handler) Login(c *gin.Context) {
 		return
 	}
 
+	err = token.GeneratedAccessJWTToken(res)
+
+	if err != nil {
+		h.Log.Error(err.Error())
+		c.JSON(500, gin.H{"error": err.Error()})
+	}
 	err = token.GeneratedRefreshJWTToken(res)
 	if err != nil {
 		h.Log.Error(err.Error())

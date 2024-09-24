@@ -42,6 +42,7 @@ func (h Handler) Register(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Registered successfully"})
 }
 
+
 // @Summary      Login a user
 // @Description  This endpoint logs in a user by checking the credentials and generating JWT tokens.
 // @Tags         user
@@ -74,6 +75,7 @@ func (h Handler) Login(c *gin.Context) {
 	h.Log.Info("Login ended successfully")
 	c.JSON(http.StatusOK, res)
 }
+
 
 // @Summary      Get user profile
 // @Description  This endpoint retrieves user profile.
@@ -110,6 +112,7 @@ func (h Handler) GetProfile(c *gin.Context) {
 	h.Log.Info("GetProfile ended")
 	c.JSON(http.StatusOK, res)
 }
+
 
 // @Summary      Get all users
 // @Description  Retrieve all users with optional filters such as role, group, subject, teacher, and pagination.
@@ -152,6 +155,7 @@ func (h Handler) GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+
 // @Security ApiKeyAuth
 // @Summary Update User
 // @Description Update User profile
@@ -186,6 +190,7 @@ func (h *Handler) UpdateProfile(c *gin.Context) {
 	h.Log.Info("UpdateUser ended")
 	c.JSON(http.StatusOK, gin.H{"message": "User profile updated"})
 }
+
 
 // @Summary      Update User by Admin
 // @Description  Update User Profile by Admin
@@ -226,6 +231,7 @@ func (h *Handler) UpdateProfileAdmin(c *gin.Context) {
 	h.Log.Info("UpdateProfileAdmin ended successfully")
 	c.JSON(http.StatusOK, gin.H{"message": "User profile updated"})
 }
+
 
 // @Summary      Delete User Profile
 // @Description  Marks a user profile as deleted by setting the deleted_at timestamp.

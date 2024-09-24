@@ -188,7 +188,7 @@ func (h *Handler) UpdateProfile(c *gin.Context) {
 
 // @Summary      Update User by Admin
 // @Description  Update User Profile by Admin
-// @Tags         users
+// @Tags         user
 // @Security     ApiKeyAuth
 // @Param        info body user.UpdateProfileAdminRequest true "info"
 // @Success      200 {object} string "User profile updated"

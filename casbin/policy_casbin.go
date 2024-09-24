@@ -53,21 +53,21 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 	policies := [][]string{
 		//user
 		{"admin", "/api/user/register", "POST"},
-		{"admin", "/api/user/login", "POST"},
+		{"admin", "/all/user/login", "POST"},
 		{"admin", "/api/user/getprofile", "GET"},
 		{"admin", "/api/user/all", "GET"},
 		{"admin", "/api/user/updateprofile", "PUT"},
 		{"admin", "/api/user/update", "PUT"},
 
-		{"user", "/api/user/login", "POST"},
+		{"user", "/all/user/login", "POST"},
 		{"user", "/api/user/getprofile", "GET"},
 		{"user", "/api/user/updateprofile", "PUT"},
 
-		{"teacher", "/api/user/login", "POST"},
+		{"teacher", "/all/user/login", "POST"},
 		{"teacher", "/api/user/getprofile", "GET"},
 		{"teacher", "/api/user/updateprofile", "PUT"},
 
-		{"support", "/api/user/login", "POST"},
+		{"support", "/all/user/login", "POST"},
 		{"support", "/api/user/getprofile", "GET"},
 		{"support", "/api/user/updateprofile", "PUT"},
 	}

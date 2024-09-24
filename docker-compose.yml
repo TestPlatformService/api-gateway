@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  postgres-db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=casbin
+    ports:
+      - "5435:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - google
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-services:
+    container_name: api_gateway
+    build: .
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    networks:
+      - google
+    ports:
+      - "9876:9876"
+
+networks:
+  google:
+    name: google
+    driver: bridge
+    external: true
+
+volumes:
+  db:

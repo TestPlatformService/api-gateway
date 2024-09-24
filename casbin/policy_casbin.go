@@ -50,7 +50,7 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		return nil, err
 	}
 	
-	policies := [][]string{
+	policies := [][]string {
 		//user
 		{"admin", "/api/user/register", "POST"},
 		{"admin", "/api/user/login", "POST"},

@@ -4,16 +4,19 @@ import (
 	"api/genproto/group"
 	"api/genproto/notification"
 	"api/genproto/user"
+	"log"
 	"log/slog"
 
 	"github.com/casbin/casbin/v2"
+	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
-	User     user.UsersClient
-	Group    group.GroupServiceClient
-	Log      *slog.Logger
-	Enforcer *casbin.Enforcer
+	User         user.UsersClient
+	Group        group.GroupServiceClient
+	Notification notification.NotificationsClient
+	Log          *slog.Logger
+	Enforcer     *casbin.Enforcer
 }
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -32,9 +35,4 @@ func CORSMiddleware() gin.HandlerFunc {
 			c.Next()
 		}
 	}
-	User         user.UsersClient
-	Notification notification.NotificationsClient
-	Group        group.GroupServiceClient
-	Log          *slog.Logger
-	Enforcer     *casbin.Enforcer
 }

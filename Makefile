@@ -24,3 +24,6 @@ swag:
 	~/go/bin/swag init -g ./api/router.go -o api/docs
 run:
 	go run cmd/main.go
+
+permission:
+	@chmod +x scripts/gen-proto.sh

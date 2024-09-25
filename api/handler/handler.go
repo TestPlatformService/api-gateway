@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"api/genproto/group"
 	"api/genproto/user"
 	"log"
 	"log/slog"
@@ -11,6 +12,7 @@ import (
 
 type Handler struct {
 	User     user.UsersClient
+	Group    group.GroupServiceClient
 	Log      *slog.Logger
 	Enforcer *casbin.Enforcer
 }

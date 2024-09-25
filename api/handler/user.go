@@ -3,6 +3,7 @@ package handler
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"api/api/token"
@@ -151,6 +152,7 @@ func (h Handler) GetAllUsers(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid query parameters"})
 		return
 	}
+	fmt.Println(&req)
 
 	res, err := h.User.GetAllUsers(c, &req)
 	if err != nil {

@@ -493,6 +493,9 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
+                },
+                "role": {
+                    "type": "string"
                 }
             }
         },

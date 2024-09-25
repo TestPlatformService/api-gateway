@@ -47,13 +47,12 @@ func (h Handler) Register(c *gin.Context) {
 // @Tags         user
 // @Accept       json
 // @Produce      json
-// @Security     ApiKeyAuth
 // @Param        credentials  body user.LoginRequest  true  "User Login Data"
 // @Success      200   {object}  user.LoginResponse "Tokens"
 // @Failure      400   {object}  string "Invalid request body"
 // @Failure      401   {object}  string "Unauthorized"
 // @Failure      500   {object}  string "Server error"
-// @Router       /api/user/login [post]
+// @Router       /all/user/login [post]
 func (h Handler) Login(c *gin.Context) {
 	h.Log.Info("Login starting")
 	req := pb.LoginRequest{}
@@ -69,6 +68,18 @@ func (h Handler) Login(c *gin.Context) {
 		h.Log.Error("Login failed", "error", err.Error())
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
+	}
+
+	err = token.GeneratedAccessJWTToken(res)
+
+	if err != nil {
+		h.Log.Error(err.Error())
+		c.JSON(500, gin.H{"error": err.Error()})
+	}
+	err = token.GeneratedRefreshJWTToken(res)
+	if err != nil {
+		h.Log.Error(err.Error())
+		c.JSON(500, gin.H{"error": err.Error()})
 	}
 
 	h.Log.Info("Login ended successfully")
@@ -189,7 +200,7 @@ func (h *Handler) UpdateProfile(c *gin.Context) {
 
 // @Summary      Update User by Admin
 // @Description  Update User Profile by Admin
-// @Tags         users
+// @Tags         user
 // @Security     ApiKeyAuth
 // @Param        info body user.UpdateProfileAdminRequest true "info"
 // @Success      200 {object} string "User profile updated"

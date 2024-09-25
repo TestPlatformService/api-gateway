@@ -16,8 +16,7 @@ WORKDIR /app
 
 COPY --from=builder /app/myapp .
 COPY --from=builder /app/.env .
-COPY --from=builder /app/app.log ./
-COPY --from=builder /app/.env .
+COPY --from=builder /app/casbin/model.conf ./casbin/
 
 EXPOSE 8080
 

@@ -27,12 +27,16 @@ func Router(hand *handler.Handler) *gin.Engine {
 	user.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
 	{
 		user.POST("/register", hand.Register)
-		user.POST("/login", hand.Login)
 		user.GET("/getprofile", hand.GetProfile)
 		user.GET("/all", hand.GetAllUsers)
 		user.PUT("/updateprofile", hand.UpdateProfile)
 		user.PUT("/update", hand.UpdateProfileAdmin)
 		user.DELETE("/delete/:id", hand.DeleteProfile)
+	}
+
+	all := router.Group("/all/user")
+	{
+		all.POST("/login", hand.Login)
 	}
 
 	return router

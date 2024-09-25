@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	host     = "postgres3"
+	host     = "postgres-db-casbin"
 	port     = "5432"
 	dbname   = "casbin"
 	username = "postgres"
@@ -49,13 +49,21 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error loading Casbin policy", "error", err.Error())
 		return nil, err
 	}
-	
-	policies := [][]string {
+
+	policies := [][]string{
 		//user
+
 		{"admin", "/api/user/getprofile", "GET"},
 		{"admin", "/api/user/all", "GET"},
 		{"admin", "/api/user/updateprofile", "PUT"},
 		{"admin", "/api/user/update", "PUT"},
+
+
+		{"user", "/api/user/getprofile", "GET"},
+		{"user", "/api/user/updateprofile", "PUT"},
+
+		{"teacher", "/api/user/getprofile", "GET"},
+		{"teacher", "/api/user/updateprofile", "PUT"},
 
 		{"user", "/api/user/getprofile", "GET"},
 		{"user", "/api/user/updateprofile", "PUT"},
@@ -65,7 +73,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 
 		{"support", "/api/user/getprofile", "GET"},
 		{"support", "/api/user/updateprofile", "PUT"},
-
 	}
 
 	_, err = enforcer.AddPolicies(policies)
@@ -79,6 +86,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error saving Casbin policy", "error", err.Error())
 		return nil, err
 	}
-	
+
 	return enforcer, nil
 }

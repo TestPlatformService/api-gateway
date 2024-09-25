@@ -1632,7 +1632,7 @@ func file_group_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_group_proto_msgTypes[0].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateGroupReq); i {
 			case 0:
 				return &v.state
@@ -1644,7 +1644,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[1].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateGroupResp); i {
 			case 0:
 				return &v.state
@@ -1656,7 +1656,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[2].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateGroupReq); i {
 			case 0:
 				return &v.state
@@ -1668,7 +1668,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[3].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateGroupResp); i {
 			case 0:
 				return &v.state
@@ -1680,7 +1680,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[4].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GroupId); i {
 			case 0:
 				return &v.state
@@ -1692,7 +1692,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[5].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteResp); i {
 			case 0:
 				return &v.state
@@ -1704,7 +1704,7 @@ func file_group_proto_init() {
 				return nil
 			}
 		}
-		file_group_proto_msgTypes[6].Exporter = func(v any, i int) any {
+		file_group_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Group); i {
 			case 0:
 				return &v.state

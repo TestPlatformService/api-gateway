@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	host     = "postgres3"
+	host     = "postgres-db-casbin"
 	port     = "5432"
 	dbname   = "casbin"
 	username = "postgres"
@@ -49,41 +49,30 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error loading Casbin policy", "error", err.Error())
 		return nil, err
 	}
-	
+
 	policies := [][]string{
 		//user
-		{"admin", "/api/user/getbyuser/:email", "GET"},
-		{"admin", "/api/user/update_user", "PUT"},
-		{"admin", "/api/user/delete_user/:id", "DELETE"},
 
-		{"user", "/api/user/getbyuser/:email", "GET"},
-		{"user", "/api/user/update_user", "PUT"},
-		{"user", "/api/user/delete_user/:id", "DELETE"},
+		{"admin", "/api/user/getprofile", "GET"},
+		{"admin", "/api/user/all", "GET"},
+		{"admin", "/api/user/updateprofile", "PUT"},
+		{"admin", "/api/user/update", "PUT"},
 
 
-		// docs
-		{"admin", "/api/docs/createDocument/:title", "POST"},
-		{"admin", "/api/docs/SearchDocument", "GET"},
-		{"admin", "/api/docs/GetAllDocuments", "GET"},
-		{"admin", "/api/docs/UpdateDocument", "PUT"},
-		{"admin", "/api/docs/DeleteDocument", "DELETE"},
-		{"admin", "/api/docs/ShareDocument", "POST"},
+		{"user", "/api/user/getprofile", "GET"},
+		{"user", "/api/user/updateprofile", "PUT"},
 
-		{"user", "/api/docs/createDocument/:title", "POST"},
-		{"user", "/api/docs/SearchDocument", "GET"},
-		{"user", "/api/docs/GetAllDocuments", "GET"},
-		{"user", "/api/docs/UpdateDocument", "PUT"},
-		{"user", "/api/docs/DeleteDocument", "DELETE"},
-		{"user", "/api/docs/ShareDocument", "POST"},
+		{"teacher", "/api/user/getprofile", "GET"},
+		{"teacher", "/api/user/updateprofile", "PUT"},
 
+		{"user", "/api/user/getprofile", "GET"},
+		{"user", "/api/user/updateprofile", "PUT"},
 
-		// version
-		{"admin", "/api/version/GetAllVersions", "GET"},
-		{"admin", "/api/version/RestoreVersion", "PUT"},
+		{"teacher", "/api/user/getprofile", "GET"},
+		{"teacher", "/api/user/updateprofile", "PUT"},
 
-		{"user", "/api/version/GetAllVersions", "GET"},
-		{"user", "/api/version/RestoreVersion", "PUT"},
-		
+		{"support", "/api/user/getprofile", "GET"},
+		{"support", "/api/user/updateprofile", "PUT"},
 	}
 
 	_, err = enforcer.AddPolicies(policies)
@@ -97,5 +86,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error saving Casbin policy", "error", err.Error())
 		return nil, err
 	}
+
 	return enforcer, nil
 }

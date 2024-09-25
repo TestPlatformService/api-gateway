@@ -1012,7 +1012,7 @@ func file_user_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_user_proto_msgTypes[0].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Void); i {
 			case 0:
 				return &v.state
@@ -1024,7 +1024,7 @@ func file_user_proto_init() {
 				return nil
 			}
 		}
-		file_user_proto_msgTypes[1].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RegisterRequest); i {
 			case 0:
 				return &v.state
@@ -1036,7 +1036,7 @@ func file_user_proto_init() {
 				return nil
 			}
 		}
-		file_user_proto_msgTypes[2].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LoginRequest); i {
 			case 0:
 				return &v.state
@@ -1048,7 +1048,7 @@ func file_user_proto_init() {
 				return nil
 			}
 		}
-		file_user_proto_msgTypes[3].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LoginResponse); i {
 			case 0:
 				return &v.state
@@ -1060,7 +1060,7 @@ func file_user_proto_init() {
 				return nil
 			}
 		}
-		file_user_proto_msgTypes[4].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetProfileRequest); i {
 			case 0:
 				return &v.state
@@ -1072,7 +1072,7 @@ func file_user_proto_init() {
 				return nil
 			}
 		}
-		file_user_proto_msgTypes[5].Exporter = func(v any, i int) any {
+		file_user_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetProfileResponse); i {
 			case 0:
 				return &v.state

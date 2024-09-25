@@ -2,12 +2,11 @@ package handler
 
 import (
 	"api/genproto/group"
+	"api/genproto/notification"
 	"api/genproto/user"
-	"log"
 	"log/slog"
 
 	"github.com/casbin/casbin/v2"
-	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
@@ -33,4 +32,9 @@ func CORSMiddleware() gin.HandlerFunc {
 			c.Next()
 		}
 	}
+	User         user.UsersClient
+	Notification notification.NotificationsClient
+	Group        group.GroupServiceClient
+	Log          *slog.Logger
+	Enforcer     *casbin.Enforcer
 }

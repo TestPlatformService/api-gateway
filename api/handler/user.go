@@ -129,15 +129,15 @@ func (h Handler) GetProfile(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        role         query    string  false  "Role to filter by"
-// @Param        group        query    string  false  "Group to filter by"
-// @Param        subject      query    string  false  "Subject to filter by"
-// @Param        teacher      query    string  false  "Teacher ID to filter by"
-// @Param        hh_id        query    string  false  "Unique household ID to filter by"
-// @Param        phone_number query    string  false  "Phone number to filter by"
-// @Param        gender       query    string  false  "Gender to filter by"
-// @Param        limit        query    int     false  "Number of users to return per page" default(10)
-// @Param        offset       query    int     false  "Pagination offset"
+// @Param        Role         query    string  false  "Role to filter by"
+// @Param        Group        query    string  false  "Group to filter by"
+// @Param        Subject      query    string  false  "Subject to filter by"
+// @Param        Teacher      query    string  false  "Teacher ID to filter by"
+// @Param        HhId        query    string  false  "Unique household ID to filter by"
+// @Param        PhoneNumber query    string  false  "Phone number to filter by"
+// @Param        Gender       query    string  false  "Gender to filter by"
+// @Param        Limit        query    int     false  "Number of users to return per page" default(10)
+// @Param        Offset       query    int     false  "Pagination offset"
 // @Success      200   {object}  user.GetAllUsersResponse  "Successfully retrieved users"
 // @Failure      400   {object}  string "Invalid request parameters"
 // @Failure      500   {object}  string "Internal server error"

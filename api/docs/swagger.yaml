@@ -703,40 +703,40 @@ paths:
       parameters:
       - description: Role to filter by
         in: query
-        name: role
+        name: Role
         type: string
       - description: Group to filter by
         in: query
-        name: group
+        name: Group
         type: string
       - description: Subject to filter by
         in: query
-        name: subject
+        name: Subject
         type: string
       - description: Teacher ID to filter by
         in: query
-        name: teacher
+        name: Teacher
         type: string
       - description: Unique household ID to filter by
         in: query
-        name: hh_id
+        name: HhId
         type: string
       - description: Phone number to filter by
         in: query
-        name: phone_number
+        name: PhoneNumber
         type: string
       - description: Gender to filter by
         in: query
-        name: gender
+        name: Gender
         type: string
       - default: 10
         description: Number of users to return per page
         in: query
-        name: limit
+        name: Limit
         type: integer
       - description: Pagination offset
         in: query
-        name: offset
+        name: Offset
         type: integer
       produces:
       - application/json

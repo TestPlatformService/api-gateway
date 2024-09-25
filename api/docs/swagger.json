@@ -645,56 +645,56 @@
                     {
                         "type": "string",
                         "description": "Role to filter by",
-                        "name": "role",
+                        "name": "Role",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Group to filter by",
-                        "name": "group",
+                        "name": "Group",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Subject to filter by",
-                        "name": "subject",
+                        "name": "Subject",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Teacher ID to filter by",
-                        "name": "teacher",
+                        "name": "Teacher",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Unique household ID to filter by",
-                        "name": "hh_id",
+                        "name": "HhId",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Phone number to filter by",
-                        "name": "phone_number",
+                        "name": "PhoneNumber",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "Gender to filter by",
-                        "name": "gender",
+                        "name": "Gender",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "default": 10,
                         "description": "Number of users to return per page",
-                        "name": "limit",
+                        "name": "Limit",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "Pagination offset",
-                        "name": "offset",
+                        "name": "Offset",
                         "in": "query"
                     }
                 ],

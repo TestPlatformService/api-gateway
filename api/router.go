@@ -5,6 +5,7 @@ import (
 	"api/api/middleware"
 
 	_ "api/api/docs"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -37,6 +38,24 @@ func Router(hand *handler.Handler) *gin.Engine {
 	all := router.Group("/all/user")
 	{
 		all.POST("/login", hand.Login)
+	}
+
+	group := router.Group("/api/groups")
+	group.Use(middleware.Check)
+	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		group.POST("/create", hand.CreateGroup)
+		group.PUT("/update", hand.UpdateGroup)
+		group.DELETE("/delete", hand.DeleteGroup)
+		group.GET("/getById", hand.GetGroupById)
+		group.GET("/getAll", hand.GetAllGroups)
+		group.POST("/add-student", hand.AddStudentToGroup)
+		group.DELETE("delete-student", hand.DeleteStudentFromGroup)
+		group.POST("add-teacher", hand.AddTeacherToGroup)
+		group.DELETE("delete-teacher", hand.DeleteTeacherFromGroup)
+		group.GET("student-groups", hand.GetStudentGroups)
+		group.GET("tacher-groups", hand.GetTeacherGroups)
+		group.GET("students", hand.GetGroupStudents)
 	}
 
 	return router

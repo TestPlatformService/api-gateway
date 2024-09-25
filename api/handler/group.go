@@ -19,7 +19,7 @@ import (
 // @Success 200 {object} group.CreateGroupResp "Successful group creation"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/create [post]
+// @Router /api/groups/create [post]
 func(h *Handler) CreateGroup(c *gin.Context){
 	req := pb.CreateGroupReq{}
 	err := c.ShouldBindJSON(&req)
@@ -50,7 +50,7 @@ func(h *Handler) CreateGroup(c *gin.Context){
 // @Success 200 {object} group.UpdateGroupResp "Successful group update"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/update [put]
+// @Router /api/groups/update [put]
 func(h *Handler) UpdateGroup(c *gin.Context){
 	req := pb.UpdateGroupReq{}
 	err := c.ShouldBindJSON(&req)
@@ -81,7 +81,7 @@ func(h *Handler) UpdateGroup(c *gin.Context){
 // @Success 200 {object} group.DeleteResp "Successful group deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/delete [delete]
+// @Router /api/groups/delete [delete]
 func(h *Handler) DeleteGroup(c *gin.Context){
 	req := pb.GroupId{}
 	err := c.ShouldBindJSON(&req)
@@ -112,7 +112,7 @@ func(h *Handler) DeleteGroup(c *gin.Context){
 // @Success 200 {object} group.Group "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/getById [get]
+// @Router /api/groups/getById [get]
 func(h *Handler) GetGroupById(c *gin.Context){
 	req := pb.GroupId{}
 	err := c.ShouldBindJSON(&req)
@@ -146,7 +146,7 @@ func(h *Handler) GetGroupById(c *gin.Context){
 // @Success 200 {object} group.GetAllGroupsResp "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/getAll [get]
+// @Router /api/groups/getAll [get]
 func(h *Handler) GetAllGroups(c *gin.Context){
 	req := &pb.AllGroupsFilter{}
 	err := c.ShouldBindJSON(&req)
@@ -194,7 +194,7 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 // @Success 200 {object} group.AddStudentResp "Successful student addition"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/add-student [post]
+// @Router /api/groups/add-student [post]
 func(h *Handler) AddStudentToGroup(c *gin.Context){
 	req := pb.AddStudentReq{}
 	err := c.ShouldBindJSON(&req)
@@ -226,7 +226,7 @@ func(h *Handler) AddStudentToGroup(c *gin.Context){
 // @Success 200 {object} group.DeleteResp "Successful student deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/delete-student [delete]
+// @Router /api/groups/delete-student [delete]
 func(h *Handler) DeleteStudentFromGroup(c *gin.Context){
 	req := pb.DeleteStudentReq{}
 	err := c.ShouldBindJSON(&req)
@@ -257,7 +257,7 @@ func(h *Handler) DeleteStudentFromGroup(c *gin.Context){
 // @Success 200 {object} group.AddTeacherResp "Successful teacher addition"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/add-teacher [post]
+// @Router /api/groups/add-teacher [post]
 func(h *Handler) AddTeacherToGroup(c *gin.Context){
 	req := pb.AddTeacherReq{}
 	err := c.ShouldBindJSON(&req)
@@ -288,7 +288,7 @@ func(h *Handler) AddTeacherToGroup(c *gin.Context){
 // @Success 200 {object} group.DeleteResp "Successful teacher deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/delete-teacher [delete]
+// @Router /api/groups/delete-teacher [delete]
 func(h *Handler) DeleteTeacherFromGroup(c *gin.Context){
 	req := pb.DeleteTeacherReq{}
 	err := c.ShouldBindJSON(&req)
@@ -319,7 +319,7 @@ func(h *Handler) DeleteTeacherFromGroup(c *gin.Context){
 // @Success 200 {object} group.StudentGroups "Successful retrieval of student groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/student-groups [get]
+// @Router /api/groups/student-groups [get]
 func(h *Handler) GetStudentGroups(c *gin.Context){
 	req := pb.StudentId{}
 	err := c.ShouldBindJSON(&req)
@@ -350,7 +350,7 @@ func(h *Handler) GetStudentGroups(c *gin.Context){
 // @Success 200 {object} group.TeacherGroups "Successful retrieval of teacher groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/teacher-groups [get]
+// @Router /api/groups/teacher-groups [get]
 func(h *Handler) GetTeacherGroups(c *gin.Context){
 	req := pb.TeacherId{}
 	err := c.ShouldBindJSON(&req)
@@ -381,7 +381,7 @@ func(h *Handler) GetTeacherGroups(c *gin.Context){
 // @Success 200 {object} group.GroupStudents "Successful retrieval of group students"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /groups/students [get]
+// @Router /api/groups/students [get]
 func(h *Handler) GetGroupStudents(c *gin.Context){
 	req := pb.GroupId{}
 	err := c.ShouldBindJSON(&req)

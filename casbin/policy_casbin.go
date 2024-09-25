@@ -65,7 +65,22 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 
 		{"support", "/api/user/getprofile", "GET"},
 		{"support", "/api/user/updateprofile", "PUT"},
+
+		//group 
+		{"admin", "/api/groups/create", "POST"},
+		{"admin", "/api/groups/update", "PUT"},
+		{"admin", "/api/groups/delete", "DELETE"},
+		{"admin", "/api/groups/getById", "GET"},
+		{"admin", "/api/groups/getAll", "GET"},
+		{"admin", "/api/groups/add-student", "POST"},
+		{"admin", "/api/groups/delete-student", "DELETE"},
+		{"admin", "/api/groups/add-teacher", "POST"},
+		{"admin", "/api/groups/delete-teacher", "DELETE"},
+		{"admin", "/api/groups/student-groups", "GET"},
+		{"admin", "/api/groups/teacher-groups", "GET"},
+		{"admin", "/api/group-students", "GET"},
 	}
+
 
 	_, err = enforcer.AddPolicies(policies)
 	if err != nil {

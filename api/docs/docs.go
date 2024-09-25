@@ -387,9 +387,864 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/groups/add-student": {
+            "post": {
+                "description": "This endpoint allows adding a student to a specific group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Add student to group",
+                "parameters": [
+                    {
+                        "description": "Student addition request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.AddStudentReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful student addition",
+                        "schema": {
+                            "$ref": "#/definitions/group.AddStudentResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/add-teacher": {
+            "post": {
+                "description": "This endpoint allows adding a teacher to a specific group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Add teacher to group",
+                "parameters": [
+                    {
+                        "description": "Teacher addition request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.AddTeacherReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful teacher addition",
+                        "schema": {
+                            "$ref": "#/definitions/group.AddTeacherResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/create": {
+            "post": {
+                "description": "This endpoint is used to create a new group in the system.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Create a new group",
+                "parameters": [
+                    {
+                        "description": "Group creation request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.CreateGroupReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful group creation",
+                        "schema": {
+                            "$ref": "#/definitions/group.CreateGroupResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/delete": {
+            "delete": {
+                "description": "This endpoint is used to delete a group from the system.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Delete a group",
+                "parameters": [
+                    {
+                        "description": "Group deletion request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.GroupId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful group deletion",
+                        "schema": {
+                            "$ref": "#/definitions/group.DeleteResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/delete-student": {
+            "delete": {
+                "description": "This endpoint allows deleting a student from a specific group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Delete student from group",
+                "parameters": [
+                    {
+                        "description": "Student deletion request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.DeleteStudentReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful student deletion",
+                        "schema": {
+                            "$ref": "#/definitions/group.DeleteResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/delete-teacher": {
+            "delete": {
+                "description": "This endpoint allows deleting a teacher from a specific group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Delete teacher from group",
+                "parameters": [
+                    {
+                        "description": "Teacher deletion request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.DeleteTeacherReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful teacher deletion",
+                        "schema": {
+                            "$ref": "#/definitions/group.DeleteResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/getAll": {
+            "get": {
+                "description": "This endpoint retrieves all groups with optional filters like room and subject.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get all groups",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Room filter",
+                        "name": "room",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Subject ID filter",
+                        "name": "subject_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Limit for pagination",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Offset for pagination",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful group retrieval",
+                        "schema": {
+                            "$ref": "#/definitions/group.GetAllGroupsResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/getById": {
+            "get": {
+                "description": "This endpoint retrieves the details of a group by its ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get group by ID",
+                "parameters": [
+                    {
+                        "description": "Group ID request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.GroupId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful group retrieval",
+                        "schema": {
+                            "$ref": "#/definitions/group.Group"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/student-groups": {
+            "get": {
+                "description": "This endpoint retrieves the list of groups a specific student belongs to.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get student groups",
+                "parameters": [
+                    {
+                        "description": "Student ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.StudentId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of student groups",
+                        "schema": {
+                            "$ref": "#/definitions/group.StudentGroups"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/students": {
+            "get": {
+                "description": "This endpoint retrieves the list of students in a specific group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get students of a group",
+                "parameters": [
+                    {
+                        "description": "Group ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.GroupId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of group students",
+                        "schema": {
+                            "$ref": "#/definitions/group.GroupStudents"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/teacher-groups": {
+            "get": {
+                "description": "This endpoint retrieves the list of groups a specific teacher belongs to.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get teacher groups",
+                "parameters": [
+                    {
+                        "description": "Teacher ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.TeacherId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of teacher groups",
+                        "schema": {
+                            "$ref": "#/definitions/group.TeacherGroups"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/update": {
+            "put": {
+                "description": "This endpoint is used to update the details of an existing group.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Update an existing group",
+                "parameters": [
+                    {
+                        "description": "Group update request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/group.UpdateGroupReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful group update",
+                        "schema": {
+                            "$ref": "#/definitions/group.UpdateGroupResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request: invalid input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "group.AddStudentReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string"
+                },
+                "student_hh_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.AddStudentResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.AddTeacherReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string"
+                },
+                "teacher_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.AddTeacherResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.CreateGroupReq": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "room": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "subject_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.CreateGroupResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.DeleteResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.DeleteStudentReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string"
+                },
+                "student_hh_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.DeleteTeacherReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "teacher_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.GetAllGroupsResp": {
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/group.Group"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                }
+            }
+        },
+        "group.Group": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "room": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "subject_id": {
+                    "type": "string"
+                },
+                "teacher_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.GroupId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.GroupStudents": {
+            "type": "object",
+            "properties": {
+                "students": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/group.Student"
+                    }
+                }
+            }
+        },
+        "group.Student": {
+            "type": "object",
+            "properties": {
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "hh_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.StudentGroups": {
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/group.Group"
+                    }
+                }
+            }
+        },
+        "group.StudentId": {
+            "type": "object",
+            "properties": {
+                "hh_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.TeacherGroups": {
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/group.Group"
+                    }
+                }
+            }
+        },
+        "group.TeacherId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.UpdateGroupReq": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "room": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "group.UpdateGroupResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "user.GetAllUsersResponse": {
             "type": "object",
             "properties": {
@@ -492,6 +1347,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 }
             }

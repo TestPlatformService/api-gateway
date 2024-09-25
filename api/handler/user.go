@@ -152,7 +152,7 @@ func (h Handler) GetAllUsers(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid query parameters"})
 		return
 	}
-	fmt.Print(req.HhId)
+	fmt.Print("1\n", req.HhId, "\n2")
 
 	res, err := h.User.GetAllUsers(c, &req)
 	if err != nil {

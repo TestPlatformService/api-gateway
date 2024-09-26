@@ -30,6 +30,7 @@ type UsersClient interface {
 	UpdateProfileAdmin(ctx context.Context, in *UpdateProfileAdminRequest, opts ...grpc.CallOption) (*Void, error)
 	DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*Void, error)
 	UploadPhoto(ctx context.Context, in *UploadPhotoRequest, opts ...grpc.CallOption) (*Void, error)
+	DeletePhoto(ctx context.Context, in *DeletePhotoRequest, opts ...grpc.CallOption) (*Void, error)
 }
 
 type usersClient struct {
@@ -112,6 +113,15 @@ func (c *usersClient) UploadPhoto(ctx context.Context, in *UploadPhotoRequest, o
 	return out, nil
 }
 
+func (c *usersClient) DeletePhoto(ctx context.Context, in *DeletePhotoRequest, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/user.Users/DeletePhoto", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServer is the server API for Users service.
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility
@@ -124,6 +134,7 @@ type UsersServer interface {
 	UpdateProfileAdmin(context.Context, *UpdateProfileAdminRequest) (*Void, error)
 	DeleteProfile(context.Context, *DeleteProfileRequest) (*Void, error)
 	UploadPhoto(context.Context, *UploadPhotoRequest) (*Void, error)
+	DeletePhoto(context.Context, *DeletePhotoRequest) (*Void, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -154,6 +165,9 @@ func (UnimplementedUsersServer) DeleteProfile(context.Context, *DeleteProfileReq
 }
 func (UnimplementedUsersServer) UploadPhoto(context.Context, *UploadPhotoRequest) (*Void, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadPhoto not implemented")
+}
+func (UnimplementedUsersServer) DeletePhoto(context.Context, *DeletePhotoRequest) (*Void, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePhoto not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 
@@ -312,6 +326,24 @@ func _Users_UploadPhoto_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Users_DeletePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePhotoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).DeletePhoto(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.Users/DeletePhoto",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).DeletePhoto(ctx, req.(*DeletePhotoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Users_ServiceDesc is the grpc.ServiceDesc for Users service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +382,10 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadPhoto",
 			Handler:    _Users_UploadPhoto_Handler,
+		},
+		{
+			MethodName: "DeletePhoto",
+			Handler:    _Users_DeletePhoto_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

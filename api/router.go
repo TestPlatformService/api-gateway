@@ -61,5 +61,15 @@ func Router(hand *handler.Handler) *gin.Engine {
 		group.GET("students", hand.GetGroupStudents)
 	}
 
+	topic := router.Group("/api/topics")
+	group.Use(middleware.Check)
+	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		topic.POST("/create", hand.CreateTopic)
+		topic.PUT("/update", hand.UpdateTopic)
+		topic.DELETE("/delete", hand.DeleteTopic)
+		topic.GET("/getAll", hand.GetAllTopics)
+	}
+
 	return router
 }

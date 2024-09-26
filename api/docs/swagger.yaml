@@ -843,6 +843,55 @@ paths:
       summary: Get user profile
       tags:
       - user
+  /api/user/photo:
+    delete:
+      description: Delete Product Photo
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteUserPhoto
+      tags:
+      - user
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload User Photo
+      parameters:
+      - description: UploadMediaForm
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: UploadPhotoToUser
+      tags:
+      - user
   /api/user/register:
     post:
       description: Create a new user
@@ -925,56 +974,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update User
-      tags:
-      - user
-  /products/photo/{product_id}:
-    delete:
-      description: Delete Product Photo
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteUserPhoto
-      tags:
-      - user
-  /user/photo:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Upload User Photo
-      parameters:
-      - description: UploadMediaForm
-        in: formData
-        name: file
-        required: true
-        type: file
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: UploadPhotoToUser
       tags:
       - user
 securityDefinitions:

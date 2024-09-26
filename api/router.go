@@ -33,6 +33,8 @@ func Router(hand *handler.Handler) *gin.Engine {
 		user.PUT("/updateprofile", hand.UpdateProfile)
 		user.PUT("/update", hand.UpdateProfileAdmin)
 		user.DELETE("/delete/:id", hand.DeleteProfile)
+		user.DELETE("/photo", hand.DeleteUserPhoto)
+		user.POST("/photo", hand.UploadPhotoToUser)
 	}
 
 	all := router.Group("/all/user")

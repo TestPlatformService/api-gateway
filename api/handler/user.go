@@ -331,7 +331,7 @@ func (h Handler) Refresh(c *gin.Context) {
 // @Success 200 {object} string
 // @Failure 400 {object} string
 // @Failure 500 {object} string
-// @Router /user/photo [post]
+// @Router /api/user/photo [post]
 func (h *Handler) UploadPhotoToUser(c *gin.Context) {
 	h.Log.Info("UploadPhotoToUser called")
 
@@ -439,7 +439,7 @@ func (h *Handler) UploadPhotoToUser(c *gin.Context) {
 // @Success 200 {object} string
 // @Failure 400 {object} string
 // @Failure 500 {object} string
-// @Router /products/photo/{product_id} [delete]
+// @Router /api/user/photo [delete]
 func (h *Handler) DeleteUserPhoto(c *gin.Context) {
 	accestoken := c.GetHeader("Authorization")
 	UserId, _, err := token.GetUserInfoFromAccessToken(accestoken)

@@ -404,17 +404,14 @@ func (h *Handler) UploadPhotoToUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting user"})
 		return
 	}
-	if res.Photo == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "User has no photo"})
-		return
+	if res.Photo != "" {
+		err = DeleteMinioPhoto(UserId, res.Photo)
+		if err != nil {
+			h.Log.Error(err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting photo"})
+			return
+		}
 	}
-	err = DeleteMinioPhoto(UserId, res.Photo)
-	if err != nil {
-		h.Log.Error(err.Error())
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting photo"})
-		return
-	}
-
 	req := pb.UploadPhotoRequest{
 		Id:    UserId,
 		Photo: madeUrl,

@@ -67,6 +67,46 @@ const docTemplate = `{
                 }
             }
         },
+        "/all/user/refresh": {
+            "post": {
+                "description": "it generates new access token",
+                "tags": [
+                    "all"
+                ],
+                "summary": "Refresh token",
+                "parameters": [
+                    {
+                        "description": "enough",
+                        "name": "token",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.Tokens"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "tokens",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid date",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "error while reading from server",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/groups/add-student": {
             "post": {
                 "description": "This endpoint allows adding a student to a specific group.",
@@ -954,6 +994,86 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/products/photo/{product_id}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete Product Photo",
+                "tags": [
+                    "user"
+                ],
+                "summary": "DeleteUserPhoto",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/photo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Upload User Photo",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "UploadPhotoToUser",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "UploadMediaForm",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1357,6 +1477,14 @@ const docTemplate = `{
                 }
             }
         },
+        "user.Tokens": {
+            "type": "object",
+            "properties": {
+                "refreshtoken": {
+                    "type": "string"
+                }
+            }
+        },
         "user.UpdateProfileAdminRequest": {
             "type": "object",
             "properties": {
@@ -1390,9 +1518,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
-                },
-                "profile_picture": {
                     "type": "string"
                 }
             }

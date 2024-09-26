@@ -38,6 +38,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	all := router.Group("/all/user")
 	{
 		all.POST("/login", hand.Login)
+		all.POST("/refresh", hand.Refresh)
 	}
 
 	group := router.Group("/api/groups")

@@ -18,7 +18,7 @@ func GeneratedAccessJWTToken(req *pb.LoginResponse) error {
 	claims["user_id"] = req.Id
 	claims["role"] = req.Role
 	claims["iat"] = time.Now().Unix()
-	claims["exp"] = time.Now().Add(30 * time.Minute).Unix()
+	claims["exp"] = time.Now().Add(1 * time.Hour).Unix()
 
 	newToken, err := token.SignedString([]byte(conf.ACCES_KEY))
 	if err != nil {

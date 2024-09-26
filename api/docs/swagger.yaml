@@ -257,6 +257,11 @@ definitions:
       role:
         type: string
     type: object
+  user.Tokens:
+    properties:
+      refreshtoken:
+        type: string
+    type: object
   user.UpdateProfileAdminRequest:
     properties:
       date_of_birth:
@@ -279,8 +284,6 @@ definitions:
       id:
         type: string
       password:
-        type: string
-      profile_picture:
         type: string
     type: object
 info:
@@ -321,6 +324,32 @@ paths:
       summary: Login a user
       tags:
       - user
+  /all/user/refresh:
+    post:
+      description: it generates new access token
+      parameters:
+      - description: enough
+        in: body
+        name: token
+        required: true
+        schema:
+          $ref: '#/definitions/user.Tokens'
+      responses:
+        "200":
+          description: tokens
+          schema:
+            type: string
+        "400":
+          description: Invalid date
+          schema:
+            type: string
+        "500":
+          description: error while reading from server
+          schema:
+            type: string
+      summary: Refresh token
+      tags:
+      - all
   /api/groups/add-student:
     post:
       consumes:
@@ -896,6 +925,56 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update User
+      tags:
+      - user
+  /products/photo/{product_id}:
+    delete:
+      description: Delete Product Photo
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteUserPhoto
+      tags:
+      - user
+  /user/photo:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload User Photo
+      parameters:
+      - description: UploadMediaForm
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: UploadPhotoToUser
       tags:
       - user
 securityDefinitions:

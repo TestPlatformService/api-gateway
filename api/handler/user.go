@@ -462,7 +462,7 @@ func (h *Handler) DeleteUserPhoto(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting photo"})
 		return
 	}
-	h.User.DeleteProfile(c, &pb.DeleteProfileRequest{Id: UserId})
+	h.User.DeletePhoto(c, &pb.DeletePhotoRequest{Id: UserId})
 
 	h.Log.Info("DeleteMediaProduct finished successfully")
 	c.JSON(200, gin.H{"message": "Photo deleted successfully"})

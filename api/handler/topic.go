@@ -139,10 +139,10 @@ func (h *Handler) GetAllTopics(c *gin.Context) {
 	}
 	resp, err := h.Topic.GetAllTopics(c, &pb.GetAllTopicsReq{
 		SubjectId: req.SubjectId,
-		Limit: int32(lim),
-		Offset: int32(off),
+		Limit:     int32(lim),
+		Offset:    int32(off),
 	})
-	if err != nil{
+	if err != nil {
 		h.Log.Error("GetAllTopics request error: %v", err)
 		c.JSON(500, model.Error{
 			Message: "Error",

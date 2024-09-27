@@ -3,6 +3,7 @@ package handler
 import (
 	"api/genproto/group"
 	"api/genproto/notification"
+	"api/genproto/topic"
 	"api/genproto/user"
 	"log"
 	"log/slog"
@@ -15,6 +16,7 @@ type Handler struct {
 	User         user.UsersClient
 	Group        group.GroupServiceClient
 	Notification notification.NotificationsClient
+	Topic        topic.TopicServiceClient
 	Log          *slog.Logger
 	Enforcer     *casbin.Enforcer
 }

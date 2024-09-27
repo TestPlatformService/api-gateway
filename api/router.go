@@ -76,5 +76,51 @@ func Router(hand *handler.Handler) *gin.Engine {
 		topic.GET("/getAll", hand.GetAllTopics)
 	}
 
+	question := router.Group("/api/questions")
+	question.Use(middleware.Check)
+	question.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		question.POST("/create", hand.CreateQuestion)
+		question.GET("/:id", hand.GetQuestionById)
+		question.PUT("/update", hand.UpdateQuestion)
+		question.DELETE("/delete", hand.DeleteQuestion)
+		question.GET("/getAll", hand.GetAllQuestions)
+		question.POST("/upload-image", hand.UploadImageToQuestion)
+		question.DELETE("/delete-image", hand.DeleteImageFromQuestion)
+	}
+
+	questionOutput := router.Group("/api/question-outputs")
+	questionOutput.Use(middleware.Check)
+	questionOutput.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		questionOutput.POST("/create", hand.CreateQuestionOutput)
+		questionOutput.GET("/:id", hand.GetQuestionOutputById)
+		questionOutput.PUT("/update", hand.UpdateQuestionOutput)
+		questionOutput.DELETE("/delete", hand.DeleteQuestionOutput)
+		questionOutput.GET("/:question_id", hand.GetQuestionOutputsByQuestionId)
+	}
+
+	questionInput := router.Group("/api/question-inputs")
+	questionInput.Use(middleware.Check)
+	questionInput.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		questionInput.POST("/create", hand.CreateQuestionInput)
+		questionInput.GET("/:id", hand.GetQuestionInputById)
+		questionInput.PUT("/update", hand.UpdateQuestionInput)
+		questionInput.DELETE("/delete", hand.DeleteQuestionInput)
+		questionInput.GET("/:question_id", hand.GetQuestionInputsByQuestionId)
+	}
+
+	testCase := router.Group("/api/test-cases")
+	testCase.Use(middleware.Check)
+	testCase.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		testCase.POST("/create", hand.CreateTestCase)
+		testCase.GET("/:id", hand.GetTestCaseById)
+		testCase.PUT("/update", hand.UpdateTestCase)
+		testCase.DELETE("/delete", hand.DeleteTestCase)
+		testCase.GET("/:question_id", hand.GetTestCasesByQuestionId)
+	}
+
 	return router
 }

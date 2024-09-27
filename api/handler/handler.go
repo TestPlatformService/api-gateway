@@ -3,6 +3,7 @@ package handler
 import (
 	"api/genproto/group"
 	"api/genproto/notification"
+	"api/genproto/question"
 	"api/genproto/topic"
 	"api/genproto/user"
 	"log"
@@ -13,12 +14,16 @@ import (
 )
 
 type Handler struct {
-	User         user.UsersClient
-	Group        group.GroupServiceClient
-	Notification notification.NotificationsClient
-	Topic        topic.TopicServiceClient
-	Log          *slog.Logger
-	Enforcer     *casbin.Enforcer
+	User           user.UsersClient
+	Group          group.GroupServiceClient
+	Notification   notification.NotificationsClient
+	Topic          topic.TopicServiceClient
+	Question       question.QuestionServiceClient
+	QuestionOutput question.OutputServiceClient
+	QuestionInput  question.InputServiceClient
+	TestCase       question.TestCaseServiceClient
+	Log            *slog.Logger
+	Enforcer       *casbin.Enforcer
 }
 
 func CORSMiddleware() gin.HandlerFunc {

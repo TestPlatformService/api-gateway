@@ -34,6 +34,8 @@ type GroupServiceClient interface {
 	GetStudentGroups(ctx context.Context, in *StudentId, opts ...grpc.CallOption) (*StudentGroups, error)
 	GetTeacherGroups(ctx context.Context, in *TeacherId, opts ...grpc.CallOption) (*TeacherGroups, error)
 	GetGroupStudents(ctx context.Context, in *GroupId, opts ...grpc.CallOption) (*GroupStudents, error)
+	CreateGroupDay(ctx context.Context, in *CreateGroupDayReq, opts ...grpc.CallOption) (*CreateGroupDayResp, error)
+	DeleteGroupDay(ctx context.Context, in *DeleteGroupDayReq, opts ...grpc.CallOption) (*DeleteGroupDayResp, error)
 }
 
 type groupServiceClient struct {
@@ -152,6 +154,24 @@ func (c *groupServiceClient) GetGroupStudents(ctx context.Context, in *GroupId, 
 	return out, nil
 }
 
+func (c *groupServiceClient) CreateGroupDay(ctx context.Context, in *CreateGroupDayReq, opts ...grpc.CallOption) (*CreateGroupDayResp, error) {
+	out := new(CreateGroupDayResp)
+	err := c.cc.Invoke(ctx, "/group.GroupService/CreateGroupDay", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *groupServiceClient) DeleteGroupDay(ctx context.Context, in *DeleteGroupDayReq, opts ...grpc.CallOption) (*DeleteGroupDayResp, error) {
+	out := new(DeleteGroupDayResp)
+	err := c.cc.Invoke(ctx, "/group.GroupService/DeleteGroupDay", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GroupServiceServer is the server API for GroupService service.
 // All implementations must embed UnimplementedGroupServiceServer
 // for forward compatibility
@@ -168,6 +188,8 @@ type GroupServiceServer interface {
 	GetStudentGroups(context.Context, *StudentId) (*StudentGroups, error)
 	GetTeacherGroups(context.Context, *TeacherId) (*TeacherGroups, error)
 	GetGroupStudents(context.Context, *GroupId) (*GroupStudents, error)
+	CreateGroupDay(context.Context, *CreateGroupDayReq) (*CreateGroupDayResp, error)
+	DeleteGroupDay(context.Context, *DeleteGroupDayReq) (*DeleteGroupDayResp, error)
 	mustEmbedUnimplementedGroupServiceServer()
 }
 
@@ -210,6 +232,12 @@ func (UnimplementedGroupServiceServer) GetTeacherGroups(context.Context, *Teache
 }
 func (UnimplementedGroupServiceServer) GetGroupStudents(context.Context, *GroupId) (*GroupStudents, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGroupStudents not implemented")
+}
+func (UnimplementedGroupServiceServer) CreateGroupDay(context.Context, *CreateGroupDayReq) (*CreateGroupDayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGroupDay not implemented")
+}
+func (UnimplementedGroupServiceServer) DeleteGroupDay(context.Context, *DeleteGroupDayReq) (*DeleteGroupDayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGroupDay not implemented")
 }
 func (UnimplementedGroupServiceServer) mustEmbedUnimplementedGroupServiceServer() {}
 
@@ -440,6 +468,42 @@ func _GroupService_GetGroupStudents_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GroupService_CreateGroupDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGroupDayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).CreateGroupDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/group.GroupService/CreateGroupDay",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).CreateGroupDay(ctx, req.(*CreateGroupDayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GroupService_DeleteGroupDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGroupDayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).DeleteGroupDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/group.GroupService/DeleteGroupDay",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).DeleteGroupDay(ctx, req.(*DeleteGroupDayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GroupService_ServiceDesc is the grpc.ServiceDesc for GroupService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +558,14 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGroupStudents",
 			Handler:    _GroupService_GetGroupStudents_Handler,
+		},
+		{
+			MethodName: "CreateGroupDay",
+			Handler:    _GroupService_CreateGroupDay_Handler,
+		},
+		{
+			MethodName: "DeleteGroupDay",
+			Handler:    _GroupService_DeleteGroupDay_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

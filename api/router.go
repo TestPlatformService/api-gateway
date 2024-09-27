@@ -21,12 +21,11 @@ import (
 func Router(hand *handler.Handler) *gin.Engine {
 	router := gin.Default()
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	router.Use(handler.CORSMiddleware())
 	// user
 	user := router.Group("/api/user")
 	user.Use(middleware.Check)
 	user.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
-	user.Use(handler.CORSMiddleware())
 	{
 		user.POST("/register", hand.Register)
 		user.GET("/getprofile", hand.GetProfile)
@@ -52,7 +51,6 @@ func Router(hand *handler.Handler) *gin.Engine {
 	group := router.Group("/api/groups")
 	group.Use(middleware.Check)
 	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
-	group.Use(handler.CORSMiddleware())
 	{
 		group.POST("/create", hand.CreateGroup)
 		group.PUT("/update", hand.UpdateGroup)
@@ -71,7 +69,6 @@ func Router(hand *handler.Handler) *gin.Engine {
 	topic := router.Group("/api/topics")
 	group.Use(middleware.Check)
 	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
-	topic.Use(handler.CORSMiddleware())
 	{
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)

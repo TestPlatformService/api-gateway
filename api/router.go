@@ -44,6 +44,11 @@ func Router(hand *handler.Handler) *gin.Engine {
 		all.POST("/refresh", hand.Refresh)
 	}
 
+	// websocket
+	router.GET("/ws", func(c *gin.Context) {
+		hand.HandleWebSocket(c.Writer, c.Request)
+	})
+
 	group := router.Group("/api/groups")
 	group.Use(middleware.Check)
 	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))

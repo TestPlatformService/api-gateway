@@ -32,7 +32,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 	}
 	resp, err := h.Topic.CreateTopic(c, &req)
 	if err != nil {
-		h.Log.Error("CreateTopic request error: %v", err)
+		h.Log.Error(fmt.Sprintf("CreateTopic request error: %v", err))
 		c.JSON(500, model.Error{
 			Message: "Error",
 		})
@@ -63,7 +63,7 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 	}
 	resp, err := h.Topic.UpdateTopic(c, &req)
 	if err != nil {
-		h.Log.Error("UpdateTopic request error: %v", err)
+		h.Log.Error(fmt.Sprintf("UpdateTopic request error: %v", err))
 		c.JSON(500, model.Error{
 			Message: "Error",
 		})
@@ -94,7 +94,7 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 	}
 	resp, err := h.Topic.DeleteTopic(c, &req)
 	if err != nil {
-		h.Log.Error("DeleteTopic request error: %v", err)
+		h.Log.Error(fmt.Sprintf("DeleteTopic request error: %v", err))
 		c.JSON(500, model.Error{
 			Message: "Error",
 		})
@@ -143,7 +143,7 @@ func (h *Handler) GetAllTopics(c *gin.Context) {
 		Offset:    int32(off),
 	})
 	if err != nil {
-		h.Log.Error("GetAllTopics request error: %v", err)
+		h.Log.Error(fmt.Sprintf("GetAllTopics request error: %v", err))
 		c.JSON(500, model.Error{
 			Message: "Error",
 		})

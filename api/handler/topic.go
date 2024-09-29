@@ -15,7 +15,7 @@ import (
 // @Tags Topic
 // @Accept json
 // @Produce json
-// @Param data body tpoic.CreateTopicReq true "Create Topic request body"
+// @Param data body topic.CreateTopicReq true "Create Topic request body"
 // @Success 200 {object} topic.CreateTopicResp "Muvaffaqiyatli yaratildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"

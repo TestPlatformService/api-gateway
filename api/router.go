@@ -82,11 +82,11 @@ func Router(hand *handler.Handler) *gin.Engine {
 	{
 		question.POST("/create", hand.CreateQuestion)
 		question.GET("/:id", hand.GetQuestionById)
-		question.PUT("/update", hand.UpdateQuestion)
-		question.DELETE("/delete", hand.DeleteQuestion)
+		question.PUT("/update/:id", hand.UpdateQuestion)
+		question.DELETE("/delete/:id", hand.DeleteQuestion)
 		question.GET("/getAll", hand.GetAllQuestions)
-		question.POST("/upload-image", hand.UploadImageToQuestion)
-		question.DELETE("/delete-image", hand.DeleteImageFromQuestion)
+		question.POST("/upload-image/:id", hand.UploadImageToQuestion)
+		question.DELETE("/delete-image/:id", hand.DeleteImageFromQuestion)
 	}
 
 	questionOutput := router.Group("/api/question-outputs")
@@ -95,8 +95,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	{
 		questionOutput.POST("/create", hand.CreateQuestionOutput)
 		questionOutput.GET("/:id", hand.GetQuestionOutputById)
-		questionOutput.PUT("/update", hand.UpdateQuestionOutput)
-		questionOutput.DELETE("/delete", hand.DeleteQuestionOutput)
+		questionOutput.DELETE("/delete/:id", hand.DeleteQuestionOutput)
 		questionOutput.GET("/:question_id", hand.GetQuestionOutputsByQuestionId)
 	}
 
@@ -106,8 +105,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	{
 		questionInput.POST("/create", hand.CreateQuestionInput)
 		questionInput.GET("/:id", hand.GetQuestionInputById)
-		questionInput.PUT("/update", hand.UpdateQuestionInput)
-		questionInput.DELETE("/delete", hand.DeleteQuestionInput)
+		questionInput.DELETE("/delete/:id", hand.DeleteQuestionInput)
 		questionInput.GET("/:question_id", hand.GetQuestionInputsByQuestionId)
 	}
 
@@ -117,8 +115,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	{
 		testCase.POST("/create", hand.CreateTestCase)
 		testCase.GET("/:id", hand.GetTestCaseById)
-		testCase.PUT("/update", hand.UpdateTestCase)
-		testCase.DELETE("/delete", hand.DeleteTestCase)
+		testCase.DELETE("/delete/:id", hand.DeleteTestCase)
 		testCase.GET("/:question_id", hand.GetTestCasesByQuestionId)
 	}
 

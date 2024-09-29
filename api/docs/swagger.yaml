@@ -184,6 +184,224 @@ definitions:
       message:
         type: string
     type: object
+  model.UpdateQuestionRequest:
+    properties:
+      difficulty:
+        type: string
+      input_info:
+        type: string
+      name:
+        type: string
+      number:
+        type: integer
+      output_info:
+        type: string
+      topic_id:
+        type: string
+      type:
+        type: string
+    type: object
+  question.CreateQuestionInputRequest:
+    properties:
+      input:
+        type: string
+      question_id:
+        type: string
+    type: object
+  question.CreateQuestionOutputRequest:
+    properties:
+      answer:
+        type: string
+      input_id:
+        type: string
+      question_id:
+        type: string
+    type: object
+  question.CreateTestCaseRequest:
+    properties:
+      case:
+        type: string
+      is_correct:
+        type: boolean
+      question_id:
+        type: string
+    type: object
+  question.GetAllQuestionInputsByQuestionIdResponse:
+    properties:
+      question_inputs:
+        items:
+          $ref: '#/definitions/question.GetQuestionInputResponse'
+        type: array
+    type: object
+  question.GetAllQuestionOutputsByQuestionIdResponse:
+    properties:
+      question_outputs:
+        items:
+          $ref: '#/definitions/question.GetQuestionOutputResponse'
+        type: array
+    type: object
+  question.GetAllTestCasesByQuestionIdResponse:
+    properties:
+      test_cases:
+        items:
+          $ref: '#/definitions/question.GetTestCaseResponse'
+        type: array
+    type: object
+  question.GetQuestionInputResponse:
+    properties:
+      id:
+        type: string
+      input:
+        type: string
+      question_id:
+        type: string
+    type: object
+  question.GetQuestionOutputResponse:
+    properties:
+      answer:
+        type: string
+      id:
+        type: string
+      input_id:
+        type: string
+      question_id:
+        type: string
+    type: object
+  question.GetQuestionResponse:
+    properties:
+      constrains:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      difficulty:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      input_info:
+        type: string
+      name:
+        type: string
+      number:
+        type: integer
+      output_info:
+        type: string
+      topic_id:
+        type: string
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  question.GetTestCaseResponse:
+    properties:
+      case:
+        type: string
+      id:
+        type: string
+      is_correct:
+        type: boolean
+      question_id:
+        type: string
+    type: object
+  question.QuestionId:
+    properties:
+      id:
+        type: string
+    type: object
+  question.QuestionInputId:
+    properties:
+      id:
+        type: string
+    type: object
+  question.QuestionOutputId:
+    properties:
+      id:
+        type: string
+    type: object
+  question.TestCaseId:
+    properties:
+      id:
+        type: string
+    type: object
+  question.Void:
+    type: object
+  topic.CreateTopicReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      subject_id:
+        type: string
+    type: object
+  topic.CreateTopicResp:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+    type: object
+  topic.DeleteTopicReq:
+    properties:
+      topic_id:
+        type: string
+    type: object
+  topic.DeleteTopicResp:
+    properties:
+      status:
+        type: string
+    type: object
+  topic.GetAllFilter:
+    properties:
+      subject_id:
+        type: string
+    type: object
+  topic.GetAllTopicsResp:
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      topics:
+        items:
+          $ref: '#/definitions/topic.Topic'
+        type: array
+    type: object
+  topic.Topic:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      subject_id:
+        type: string
+    type: object
+  topic.UpdateTopicReq:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      subject_id:
+        type: string
+    type: object
+  topic.UpdateTopicResp:
+    properties:
+      id:
+        type: string
+      updated_at:
+        type: string
+    type: object
   user.GetAllUsersResponse:
     properties:
       limit:
@@ -723,6 +941,560 @@ paths:
       summary: Update an existing group
       tags:
       - groups
+  /api/question-inputs/{id}:
+    get:
+      description: GetQuestionInputById
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/question.GetQuestionInputResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionInputById
+      tags:
+      - questionInput
+  /api/question-inputs/{question_id}:
+    get:
+      description: GetQuestionInputsByQuestionId
+      parameters:
+      - description: question_id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/question.GetAllQuestionInputsByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionInputsByQuestionId
+      tags:
+      - questionInput
+  /api/question-inputs/create:
+    post:
+      description: CreateQuestionInput
+      parameters:
+      - description: questionInput
+        in: body
+        name: questionInput
+        required: true
+        schema:
+          $ref: '#/definitions/question.CreateQuestionInputRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/question.QuestionInputId'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateQuestionInput
+      tags:
+      - questionInput
+  /api/question-inputs/delete/{id}:
+    delete:
+      description: DeleteQuestionInput
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Question input deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteQuestionInput
+      tags:
+      - questionInput
+  /api/question-outputs/{id}:
+    get:
+      description: GetQuestionOutputById
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: questionOutput info
+          schema:
+            $ref: '#/definitions/question.GetQuestionOutputResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionOutputById
+      tags:
+      - questionOutput
+  /api/question-outputs/{question_id}:
+    get:
+      description: GetQuestionOutputsByQuestionId
+      parameters:
+      - description: question_id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: questionOutput info
+          schema:
+            $ref: '#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionOutputsByQuestionId
+      tags:
+      - questionOutput
+  /api/question-outputs/create:
+    post:
+      description: CreateQuestionOutput
+      parameters:
+      - description: questionOutput info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/question.CreateQuestionOutputRequest'
+      responses:
+        "200":
+          description: id
+          schema:
+            $ref: '#/definitions/question.QuestionOutputId'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateQuestionOutput
+      tags:
+      - questionOutput
+  /api/question-outputs/delete/{id}:
+    delete:
+      description: DeleteQuestionOutput
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Void
+          schema:
+            $ref: '#/definitions/question.Void'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteQuestionOutput
+      tags:
+      - questionOutput
+  /api/questions/{id}:
+    get:
+      description: GetQuestionById
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: id
+          schema:
+            $ref: '#/definitions/question.GetQuestionResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionById
+      tags:
+      - question
+  /api/questions/create:
+    post:
+      description: CreateQuestion
+      parameters:
+      - description: question info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/question.QuestionId'
+      responses:
+        "200":
+          description: id
+          schema:
+            $ref: '#/definitions/question.QuestionId'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateQuestion
+      tags:
+      - question
+  /api/questions/delete-image/{id}:
+    delete:
+      description: DeleteImageFromQuestion
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Image deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteImageFromQuestion
+      tags:
+      - question
+  /api/questions/delete/{id}:
+    delete:
+      description: DeleteQuestion
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Question deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteQuestion
+      tags:
+      - question
+  /api/questions/getAll:
+    get:
+      description: CreateQuestion
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: topic_name
+        in: query
+        name: topic_name
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: number
+        in: query
+        name: number
+        type: string
+      - description: difficulty
+        in: query
+        name: difficulty
+        type: string
+      - description: input_info
+        in: query
+        name: input_info
+        type: string
+      - description: output_info
+        in: query
+        name: output_info
+        type: string
+      responses:
+        "200":
+          description: id
+          schema:
+            $ref: '#/definitions/question.QuestionId'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateQuestion
+      tags:
+      - question
+  /api/questions/update/{id}:
+    put:
+      description: UpdateQuestion
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: question info
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateQuestionRequest'
+      responses:
+        "200":
+          description: Question updated successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateQuestion
+      tags:
+      - question
+  /api/questions/upload-image/{id}:
+    post:
+      description: UploadImageToQuestion
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: Image uploaded successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: UploadImageToQuestion
+      tags:
+      - question
+  /api/test-cases/{id}:
+    get:
+      description: Get test case by id
+      parameters:
+      - description: Test case id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Test case retrieved successfully
+          schema:
+            $ref: '#/definitions/question.GetTestCaseResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetTestCaseById
+      tags:
+      - testCase
+  /api/test-cases/{question_id}:
+    get:
+      description: Get test cases by question id
+      parameters:
+      - description: Question id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Test cases retrieved successfully
+          schema:
+            $ref: '#/definitions/question.GetAllTestCasesByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetTestCasesByQuestionId
+      tags:
+      - testCase
+  /api/test-cases/create:
+    post:
+      description: Create a new test case
+      parameters:
+      - description: Create test case request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/question.CreateTestCaseRequest'
+      responses:
+        "200":
+          description: Test case created successfully
+          schema:
+            $ref: '#/definitions/question.TestCaseId'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateTestCase
+      tags:
+      - testCase
+  /api/test-cases/delete/{id}:
+    delete:
+      description: Delete test case
+      parameters:
+      - description: Test case id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Test case deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteTestCase
+      tags:
+      - testCase
   /api/user/all:
     get:
       consumes:
@@ -976,6 +1748,136 @@ paths:
       summary: Update User
       tags:
       - user
+  /topics/create:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu API orqali yangi topic yaratishingiz mumkin.
+      parameters:
+      - description: Create Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.CreateTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Muvaffaqiyatli yaratildi
+          schema:
+            $ref: '#/definitions/topic.CreateTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Create a new topic
+      tags:
+      - Topic
+  /topics/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Ushbu API orqali mavjud topicni o'chirishingiz mumkin.
+      parameters:
+      - description: Delete Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.DeleteTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mavzu muvaffaqiyatli o'chirildi
+          schema:
+            $ref: '#/definitions/topic.DeleteTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Delete an existing topic
+      tags:
+      - Topic
+  /topics/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Bu API barcha mavzularni qaytaradi.
+      parameters:
+      - default: 1000
+        description: Limit of topics (optional)
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for topics (optional)
+        in: query
+        name: offset
+        type: integer
+      - description: Filter for subjects
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.GetAllFilter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mavzular ro'yxati
+          schema:
+            $ref: '#/definitions/topic.GetAllTopicsResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritildi
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Ichki xatolik
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Get all topics
+      tags:
+      - topics
+  /topics/update:
+    put:
+      consumes:
+      - application/json
+      description: Ushbu API orqali mavjud topicni yangilashingiz mumkin.
+      parameters:
+      - description: Update Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.UpdateTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Muvaffaqiyatli yangilandi
+          schema:
+            $ref: '#/definitions/topic.UpdateTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Update an existing topic
+      tags:
+      - Topic
 securityDefinitions:
   ApiKeyAuth:
     description: API Gateway

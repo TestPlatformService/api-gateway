@@ -96,58 +96,52 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		//question
 		{"admin", "/api/questions/create", "POST"},
 		{"admin", "/api/questions/:id", "GET"},
-		{"admin", "/api/questions/update", "PUT"},
-		{"admin", "/api/questions/delete", "DELETE"},
+		{"admin", "/api/questions/update/:id", "PUT"},
+		{"admin", "/api/questions/delete/:id", "DELETE"},
 		{"admin", "/api/questions/getAll", "GET"},
-		{"admin", "/api/questions/upload-image", "POST"},
-		{"admin", "/api/questions/delete-image", "DELETE"},
+		{"admin", "/api/questions/upload-image/:id", "POST"},
+		{"admin", "/api/questions/delete-image/:id", "DELETE"},
 
 		{"teacher", "/api/questions/create", "POST"},
 		{"teacher", "/api/questions/:id", "GET"},
-		{"teacher", "/api/questions/update", "PUT"},
-		{"teacher", "/api/questions/delete", "DELETE"},
+		{"teacher", "/api/questions/update/:id", "PUT"},
+		{"teacher", "/api/questions/delete/:id", "DELETE"},
 		{"teacher", "/api/questions/getAll", "GET"},
-		{"teacher", "/api/questions/upload-image", "POST"},
-		{"teacher", "/api/questions/delete-image", "DELETE"},
+		{"teacher", "/api/questions/upload-image/:id", "POST"},
+		{"teacher", "/api/questions/delete-image/:id", "DELETE"},
 
 		//question output
 		{"admin", "/api/question-outputs/create", "POST"},
 		{"admin", "/api/question-outputs/:id", "GET"},
 		{"admin", "/api/question-outputs/:question_id", "GET"},
-		{"admin", "/api/question-outputs/update", "PUT"},
-		{"admin", "/api/question-outputs/delete", "DELETE"},
+		{"admin", "/api/question-outputs/delete/:id", "DELETE"},
 
 		{"teacher", "/api/question-outputs/create", "POST"},
 		{"teacher", "/api/question-outputs/:id", "GET"},
 		{"teacher", "/api/question-outputs/:question_id", "GET"},
-		{"teacher", "/api/question-outputs/update", "PUT"},
-		{"teacher", "/api/question-outputs/delete", "DELETE"},
+		{"teacher", "/api/question-outputs/delete/:id", "DELETE"},
 
 		//question input
 		{"admin", "/api/question-inputs/create", "POST"},
 		{"admin", "/api/question-inputs/:id", "GET"},
 		{"admin", "/api/question-inputs/:question_id", "GET"},
-		{"admin", "/api/question-inputs/update", "PUT"},
-		{"admin", "/api/question-inputs/delete", "DELETE"},
+		{"admin", "/api/question-inputs/delete/:id", "DELETE"},
 
 		{"teacher", "/api/question-inputs/create", "POST"},
 		{"teacher", "/api/question-inputs/:id", "GET"},
 		{"teacher", "/api/question-inputs/:question_id", "GET"},
-		{"teacher", "/api/question-inputs/update", "PUT"},
-		{"teacher", "/api/question-inputs/delete", "DELETE"},
+		{"teacher", "/api/question-inputs/delete/:id", "DELETE"},
 
 		//test case
 		{"admin", "/api/test-cases/create", "POST"},
 		{"admin", "/api/test-cases/:id", "GET"},
 		{"admin", "/api/test-cases/:question_id", "GET"},
-		{"admin", "/api/test-cases/update", "PUT"},
-		{"admin", "/api/test-cases/delete", "DELETE"},
+		{"admin", "/api/test-cases/delete/:id", "DELETE"},
 
 		{"teacher", "/api/test-cases/create", "POST"},
 		{"teacher", "/api/test-cases/:id", "GET"},
 		{"teacher", "/api/test-cases/:question_id", "GET"},
-		{"teacher", "/api/test-cases/update", "PUT"},
-		{"teacher", "/api/test-cases/delete", "DELETE"},
+		{"teacher", "/api/test-cases/delete/:id", "DELETE"},
 	}
 
 	_, err = enforcer.AddPolicies(policies)

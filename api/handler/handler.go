@@ -4,6 +4,7 @@ import (
 	"api/genproto/group"
 	"api/genproto/notification"
 	"api/genproto/question"
+	"api/genproto/subject"
 	"api/genproto/topic"
 	"api/genproto/user"
 	"log"
@@ -16,6 +17,7 @@ import (
 type Handler struct {
 	User           user.UsersClient
 	Group          group.GroupServiceClient
+	Subject        subject.SubjectServiceClient
 	Notification   notification.NotificationsClient
 	Topic          topic.TopicServiceClient
 	Question       question.QuestionServiceClient

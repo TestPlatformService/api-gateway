@@ -9,8 +9,9 @@ import (
 )
 
 type Config struct {
-	USER_SERVICE string
-	API_ROUTER   string
+	USER_SERVICE     string
+	API_ROUTER       string
+	QUESTION_SERVICE string
 
 	ACCES_KEY   string
 	REFRESH_KEY string
@@ -28,6 +29,7 @@ func Load() Config {
 	config.ACCES_KEY = cast.ToString(Coalesce("ACCES_KEY", "flashsalee"))
 	config.REFRESH_KEY = cast.ToString(Coalesce("REFRESH_KEY", "OzNur"))
 	config.MINIO_URL = cast.ToString(Coalesce("MINIO_URL", "localhost:9000"))
+	config.QUESTION_SERVICE = cast.ToString(Coalesce("QUESTION_SERVICE", ":50053"))
 
 	return config
 }

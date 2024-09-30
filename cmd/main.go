@@ -7,6 +7,9 @@ import (
 	"api/config"
 	"api/genproto/group"
 	"api/genproto/notification"
+	"api/genproto/question"
+	"api/genproto/subject"
+	"api/genproto/topic"
 	"api/genproto/user"
 	"api/logs"
 	"log"
@@ -29,10 +32,20 @@ func NewHandler() *handler.Handler {
 	if err != nil {
 		panic(err)
 	}
+	connQuestion, err := grpc.NewClient(conf.QUESTION_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		panic(err)
+	}
 
 	User := user.NewUsersClient(connUser)
 	Notification := notification.NewNotificationsClient(connUser)
 	Group := group.NewGroupServiceClient(connUser)
+	Topic := topic.NewTopicServiceClient(connQuestion)
+	Subject := subject.NewSubjectServiceClient(connQuestion)
+	Question := question.NewQuestionServiceClient(connQuestion)
+	QuestionOutput := question.NewOutputServiceClient(connQuestion)
+	QuestionInput := question.NewInputServiceClient(connQuestion)
+	QuestionTest := question.NewTestCaseServiceClient(connQuestion)
 
 	logs := logs.NewLogger()
 	en, err := casbin.CasbinEnforcer(logs)
@@ -40,10 +53,16 @@ func NewHandler() *handler.Handler {
 		log.Fatal("error in creating casbin enforcer", err)
 	}
 	return &handler.Handler{
-		User:         User,
-		Notification: Notification,
-		Group:        Group,
-		Log:          logs,
-		Enforcer:     en,
+		User:           User,
+		Notification:   Notification,
+		Group:          Group,
+		Log:            logs,
+		Enforcer:       en,
+		Question:       Question,
+		QuestionOutput: QuestionOutput,
+		QuestionInput:  QuestionInput,
+		TestCase:       QuestionTest,
+		Topic:          Topic,
+		Subject:        Subject,
 	}
 }

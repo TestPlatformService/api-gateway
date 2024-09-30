@@ -151,8 +151,6 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 		Name:       req2.Name,
 		Number:     req2.Number,
 		Difficulty: req2.Difficulty,
-		InputInfo:  req2.InputInfo,
-		OutputInfo: req2.OutputInfo,
 	})
 	if err != nil {
 		h.Log.Error("Failed to get questions", "error", err.Error())

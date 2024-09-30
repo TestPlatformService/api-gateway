@@ -10,8 +10,6 @@ type GetAllQuestionsRequest struct {
 	Name       string `form:"name"`
 	Number     int64  `form:"number"`
 	Difficulty string `form:"difficulty"`
-	InputInfo  string `form:"input_info"`
-	OutputInfo string `form:"output_info"`
 }
 
 type UpdateQuestionRequest struct {

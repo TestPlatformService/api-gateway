@@ -151,6 +151,7 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 		Name:       req2.Name,
 		Number:     req2.Number,
 		Difficulty: req2.Difficulty,
+		Language:   req2.Language,
 	})
 	if err != nil {
 		h.Log.Error("Failed to get questions", "error", err.Error())
@@ -187,14 +188,17 @@ func (h *Handler) UpdateQuestion(c *gin.Context) {
 		return
 	}
 	req2 := question.UpdateQuestionRequest{
-		Id:         Id,
-		TopicId:    req.TopicId,
-		Type:       req.Type,
-		Name:       req.Name,
-		Number:     req.Number,
-		Difficulty: req.Difficulty,
-		InputInfo:  req.InputInfo,
-		OutputInfo: req.OutputInfo,
+		Id:          Id,
+		TopicId:     req.TopicId,
+		Type:        req.Type,
+		Name:        req.Name,
+		Number:      req.Number,
+		Difficulty:  req.Difficulty,
+		InputInfo:   req.InputInfo,
+		OutputInfo:  req.OutputInfo,
+		Language:    req.Language,
+		TimeLimit:   req.TimeLimit,
+		MemoryLimit: req.MemoryLimit,
 	}
 	_, err := h.Question.UpdateQuestion(c, &req2)
 	if err != nil {

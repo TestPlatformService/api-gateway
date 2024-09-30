@@ -190,12 +190,18 @@ definitions:
         type: string
       input_info:
         type: string
+      language:
+        type: string
+      memory_limit:
+        type: integer
       name:
         type: string
       number:
         type: integer
       output_info:
         type: string
+      time_limit:
+        type: integer
       topic_id:
         type: string
       type:
@@ -283,12 +289,18 @@ definitions:
         type: string
       input_info:
         type: string
+      language:
+        type: string
+      memory_limit:
+        type: integer
       name:
         type: string
       number:
         type: integer
       output_info:
         type: string
+      time_limit:
+        type: integer
       topic_id:
         type: string
       type:
@@ -328,6 +340,51 @@ definitions:
         type: string
     type: object
   question.Void:
+    type: object
+  subject.CreateSubjectRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  subject.GetAll:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  subject.GetAllSubjectsResponse:
+    properties:
+      subjects:
+        items:
+          $ref: '#/definitions/subject.GetAll'
+        type: array
+    type: object
+  subject.GetSubjectResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  subject.UpdateSubjectRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
     type: object
   topic.CreateTopicReq:
     properties:
@@ -1386,6 +1443,175 @@ paths:
       summary: UploadImageToQuestion
       tags:
       - question
+  /api/subjects/create:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint is used to create a new Subject in the system.
+      parameters:
+      - description: Subject creation request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/subject.CreateSubjectRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Subject creation
+          schema:
+            type: string
+        "400":
+          description: 'Bad request: invalid input data'
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Create a new Subject
+      tags:
+      - subjects
+  /api/subjects/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes a subject by its ID.
+      parameters:
+      - description: Subject ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Subject deletion
+          schema:
+            type: string
+        "400":
+          description: 'Bad request: invalid input data'
+          schema:
+            $ref: '#/definitions/model.Error'
+        "404":
+          description: Subject not found
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Delete a Subject by ID
+      tags:
+      - subjects
+  /api/subjects/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retrieves a specific subject by its ID.
+      parameters:
+      - description: Subject ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful retrieval of the subject
+          schema:
+            $ref: '#/definitions/subject.GetSubjectResponse'
+        "400":
+          description: 'Bad request: invalid input data'
+          schema:
+            $ref: '#/definitions/model.Error'
+        "404":
+          description: Subject not found
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Get a Subject by ID
+      tags:
+      - subjects
+  /api/subjects/getall:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retrieves all subjects with pagination.
+      parameters:
+      - description: Limit of subjects
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful retrieval of subjects
+          schema:
+            $ref: '#/definitions/subject.GetAllSubjectsResponse'
+        "400":
+          description: 'Bad request: invalid input data'
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Get all Subjects
+      tags:
+      - subjects
+  /api/subjects/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: This endpoint updates an existing subject by its ID.
+      parameters:
+      - description: Subject ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Subject update request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/subject.UpdateSubjectRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Subject update
+          schema:
+            type: string
+        "400":
+          description: 'Bad request: invalid input data'
+          schema:
+            $ref: '#/definitions/model.Error'
+        "404":
+          description: Subject not found
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Update a Subject
+      tags:
+      - subjects
   /api/test-cases/{id}:
     get:
       description: Get test case by id

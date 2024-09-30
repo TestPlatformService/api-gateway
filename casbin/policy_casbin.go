@@ -93,6 +93,14 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"teacher", "/api/topics/delete", "DELETE"},
 		{"teacher", "/api/topics/getAll", "GET"},
 
+		//subject
+		{"admin", "/api/subjects/create", "POST"},
+		{"admin", "/api/subjects/get/:id", "GET"},
+		{"admin", "/api/subjects/getall", "GET"},
+		{"admin", "/api/subjects/update/:id", "PUT"},
+		{"admin", "/api/subjects/delete/:id", "DELETE"},
+
+
 		//question
 		{"admin", "/api/questions/create", "POST"},
 		{"admin", "/api/questions/:id", "GET"},

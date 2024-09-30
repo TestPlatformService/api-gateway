@@ -100,7 +100,7 @@ func (h *Handler) DeleteQuestionOutput(c *gin.Context) {
 // @Success 200 {object} question.GetAllQuestionOutputsByQuestionIdResponse "questionOutput info"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
-// @Router /api/question-outputs/{question_id} [get]
+// @Router /api/question-outputs/question/{question_id} [get]
 func (h *Handler) GetQuestionOutputsByQuestionId(c *gin.Context) {
 	h.Log.Info("GetQuestionOutputsByQuestionId is starting")
 	questionId := c.Param("question_id")

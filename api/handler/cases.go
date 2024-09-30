@@ -72,7 +72,7 @@ func (h *Handler) GetTestCaseById(c *gin.Context) {
 // @Success 200 {object} question.GetAllTestCasesByQuestionIdResponse "Test cases retrieved successfully"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
-// @Router /api/test-cases/{question_id} [get]
+// @Router /api/test-cases/question/{question_id} [get]
 func (h *Handler) GetTestCasesByQuestionId(c *gin.Context) {
 	h.Log.Info("GetTestCasesByQuestionId is starting")
 	questionId := c.Param("question_id")

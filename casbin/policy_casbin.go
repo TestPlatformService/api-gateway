@@ -100,7 +100,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"admin", "/api/subjects/update/:id", "PUT"},
 		{"admin", "/api/subjects/delete/:id", "DELETE"},
 
-
 		//question
 		{"admin", "/api/questions/create", "POST"},
 		{"admin", "/api/questions/:id", "GET"},
@@ -121,34 +120,34 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		//question output
 		{"admin", "/api/question-outputs/create", "POST"},
 		{"admin", "/api/question-outputs/:id", "GET"},
-		{"admin", "/api/question-outputs/:question_id", "GET"},
+		{"admin", "/api/question-outputs/question/:question_id", "GET"},
 		{"admin", "/api/question-outputs/delete/:id", "DELETE"},
 
 		{"teacher", "/api/question-outputs/create", "POST"},
 		{"teacher", "/api/question-outputs/:id", "GET"},
-		{"teacher", "/api/question-outputs/:question_id", "GET"},
+		{"teacher", "/api/question-outputs/question/:question_id", "GET"},
 		{"teacher", "/api/question-outputs/delete/:id", "DELETE"},
 
 		//question input
 		{"admin", "/api/question-inputs/create", "POST"},
 		{"admin", "/api/question-inputs/:id", "GET"},
-		{"admin", "/api/question-inputs/:question_id", "GET"},
+		{"admin", "/api/question-inputs/question/:question_id", "GET"},
 		{"admin", "/api/question-inputs/delete/:id", "DELETE"},
 
 		{"teacher", "/api/question-inputs/create", "POST"},
 		{"teacher", "/api/question-inputs/:id", "GET"},
-		{"teacher", "/api/question-inputs/:question_id", "GET"},
+		{"teacher", "/api/question-inputs/question/:question_id", "GET"},
 		{"teacher", "/api/question-inputs/delete/:id", "DELETE"},
 
 		//test case
 		{"admin", "/api/test-cases/create", "POST"},
 		{"admin", "/api/test-cases/:id", "GET"},
-		{"admin", "/api/test-cases/:question_id", "GET"},
+		{"admin", "/api/test-cases/question/:question_id", "GET"},
 		{"admin", "/api/test-cases/delete/:id", "DELETE"},
 
 		{"teacher", "/api/test-cases/create", "POST"},
 		{"teacher", "/api/test-cases/:id", "GET"},
-		{"teacher", "/api/test-cases/:question_id", "GET"},
+		{"teacher", "/api/test-cases/question/:question_id", "GET"},
 		{"teacher", "/api/test-cases/delete/:id", "DELETE"},
 	}
 

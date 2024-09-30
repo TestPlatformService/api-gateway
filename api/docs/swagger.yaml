@@ -1025,33 +1025,6 @@ paths:
       summary: GetQuestionInputById
       tags:
       - questionInput
-  /api/question-inputs/{question_id}:
-    get:
-      description: GetQuestionInputsByQuestionId
-      parameters:
-      - description: question_id
-        in: path
-        name: question_id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/question.GetAllQuestionInputsByQuestionIdResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: GetQuestionInputsByQuestionId
-      tags:
-      - questionInput
   /api/question-inputs/create:
     post:
       description: CreateQuestionInput
@@ -1107,6 +1080,33 @@ paths:
       summary: DeleteQuestionInput
       tags:
       - questionInput
+  /api/question-inputs/question/{question_id}:
+    get:
+      description: GetQuestionInputsByQuestionId
+      parameters:
+      - description: question_id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/question.GetAllQuestionInputsByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionInputsByQuestionId
+      tags:
+      - questionInput
   /api/question-outputs/{id}:
     get:
       description: GetQuestionOutputById
@@ -1132,33 +1132,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: GetQuestionOutputById
-      tags:
-      - questionOutput
-  /api/question-outputs/{question_id}:
-    get:
-      description: GetQuestionOutputsByQuestionId
-      parameters:
-      - description: question_id
-        in: path
-        name: question_id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: questionOutput info
-          schema:
-            $ref: '#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: GetQuestionOutputsByQuestionId
       tags:
       - questionOutput
   /api/question-outputs/create:
@@ -1214,6 +1187,33 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: DeleteQuestionOutput
+      tags:
+      - questionOutput
+  /api/question-outputs/question/{question_id}:
+    get:
+      description: GetQuestionOutputsByQuestionId
+      parameters:
+      - description: question_id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: questionOutput info
+          schema:
+            $ref: '#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetQuestionOutputsByQuestionId
       tags:
       - questionOutput
   /api/questions/{id}:
@@ -1639,33 +1639,6 @@ paths:
       summary: GetTestCaseById
       tags:
       - testCase
-  /api/test-cases/{question_id}:
-    get:
-      description: Get test cases by question id
-      parameters:
-      - description: Question id
-        in: path
-        name: question_id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Test cases retrieved successfully
-          schema:
-            $ref: '#/definitions/question.GetAllTestCasesByQuestionIdResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: GetTestCasesByQuestionId
-      tags:
-      - testCase
   /api/test-cases/create:
     post:
       description: Create a new test case
@@ -1719,6 +1692,33 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: DeleteTestCase
+      tags:
+      - testCase
+  /api/test-cases/question/{question_id}:
+    get:
+      description: Get test cases by question id
+      parameters:
+      - description: Question id
+        in: path
+        name: question_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Test cases retrieved successfully
+          schema:
+            $ref: '#/definitions/question.GetAllTestCasesByQuestionIdResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: GetTestCasesByQuestionId
       tags:
       - testCase
   /api/user/all:

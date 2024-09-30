@@ -762,6 +762,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/question-inputs/question/{question_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "GetQuestionInputsByQuestionId",
+                "tags": [
+                    "questionInput"
+                ],
+                "summary": "GetQuestionInputsByQuestionId",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "question_id",
+                        "name": "question_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/question.GetAllQuestionInputsByQuestionIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/question-inputs/{id}": {
             "get": {
                 "security": [
@@ -788,49 +831,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/question.GetQuestionInputResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-inputs/{question_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "GetQuestionInputsByQuestionId",
-                "tags": [
-                    "questionInput"
-                ],
-                "summary": "GetQuestionInputsByQuestionId",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "question_id",
-                        "name": "question_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/question.GetAllQuestionInputsByQuestionIdResponse"
                         }
                     },
                     "400": {
@@ -936,6 +936,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/question-outputs/question/{question_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "GetQuestionOutputsByQuestionId",
+                "tags": [
+                    "questionOutput"
+                ],
+                "summary": "GetQuestionOutputsByQuestionId",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "question_id",
+                        "name": "question_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "questionOutput info",
+                        "schema": {
+                            "$ref": "#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/question-outputs/{id}": {
             "get": {
                 "security": [
@@ -962,49 +1005,6 @@ const docTemplate = `{
                         "description": "questionOutput info",
                         "schema": {
                             "$ref": "#/definitions/question.GetQuestionOutputResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-outputs/{question_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "GetQuestionOutputsByQuestionId",
-                "tags": [
-                    "questionOutput"
-                ],
-                "summary": "GetQuestionOutputsByQuestionId",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "question_id",
-                        "name": "question_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "questionOutput info",
-                        "schema": {
-                            "$ref": "#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse"
                         }
                     },
                     "400": {
@@ -1725,6 +1725,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/test-cases/question/{question_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get test cases by question id",
+                "tags": [
+                    "testCase"
+                ],
+                "summary": "GetTestCasesByQuestionId",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Question id",
+                        "name": "question_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Test cases retrieved successfully",
+                        "schema": {
+                            "$ref": "#/definitions/question.GetAllTestCasesByQuestionIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/test-cases/{id}": {
             "get": {
                 "security": [
@@ -1751,49 +1794,6 @@ const docTemplate = `{
                         "description": "Test case retrieved successfully",
                         "schema": {
                             "$ref": "#/definitions/question.GetTestCaseResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/test-cases/{question_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Get test cases by question id",
-                "tags": [
-                    "testCase"
-                ],
-                "summary": "GetTestCasesByQuestionId",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Question id",
-                        "name": "question_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Test cases retrieved successfully",
-                        "schema": {
-                            "$ref": "#/definitions/question.GetAllTestCasesByQuestionIdResponse"
                         }
                     },
                     "400": {

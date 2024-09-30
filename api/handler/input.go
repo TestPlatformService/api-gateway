@@ -72,7 +72,7 @@ func (h *Handler) GetQuestionInputById(c *gin.Context) {
 // @Success 200 {object} question.GetAllQuestionInputsByQuestionIdResponse
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
-// @Router /api/question-inputs/{question_id} [get]
+// @Router /api/question-inputs/question/{question_id} [get]
 func (h *Handler) GetQuestionInputsByQuestionId(c *gin.Context) {
 	h.Log.Info("GetQuestionInputsByQuestionId is starting")
 	questionId := c.Param("question_id")

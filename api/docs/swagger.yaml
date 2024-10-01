@@ -223,6 +223,35 @@ definitions:
       question_id:
         type: string
     type: object
+  question.CreateQuestionRequest:
+    properties:
+      constrains:
+        type: string
+      description:
+        type: string
+      difficulty:
+        type: string
+      image:
+        type: string
+      input_info:
+        type: string
+      language:
+        type: string
+      memory_limit:
+        type: integer
+      name:
+        type: string
+      number:
+        type: integer
+      output_info:
+        type: string
+      time_limit:
+        type: integer
+      topic_id:
+        type: string
+      type:
+        type: string
+    type: object
   question.CreateTestCaseRequest:
     properties:
       case:
@@ -598,7 +627,7 @@ paths:
             type: string
       summary: Login a user
       tags:
-      - user
+      - all
   /all/user/refresh:
     post:
       description: it generates new access token
@@ -1252,7 +1281,7 @@ paths:
         name: info
         required: true
         schema:
-          $ref: '#/definitions/question.QuestionId'
+          $ref: '#/definitions/question.CreateQuestionRequest'
       responses:
         "200":
           description: id
@@ -2073,7 +2102,7 @@ paths:
             $ref: '#/definitions/model.Error'
       summary: Get all topics
       tags:
-      - topics
+      - Topic
   /topics/update:
     put:
       consumes:

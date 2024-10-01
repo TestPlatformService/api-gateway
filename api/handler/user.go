@@ -52,7 +52,7 @@ func (h Handler) Register(c *gin.Context) {
 
 // @Summary      Login a user
 // @Description  This endpoint logs in a user by checking the credentials and generating JWT tokens.
-// @Tags         user
+// @Tags         all
 // @Accept       json
 // @Produce      json
 // @Param        credentials  body user.LoginRequest  true  "User Login Data"

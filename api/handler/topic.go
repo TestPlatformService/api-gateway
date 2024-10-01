@@ -106,7 +106,7 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // GetAllTopics godoc
 // @Summary Get all topics
 // @Description Bu API barcha mavzularni qaytaradi.
-// @Tags topics
+// @Tags Topic
 // @Accept  json
 // @Produce  json
 // @Param limit query int false "Limit of topics (optional)" default(1000)

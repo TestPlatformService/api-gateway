@@ -22,7 +22,7 @@ import (
 // @Description CreateQuestion
 // @Tags question
 // @Security ApiKeyAuth
-// @Param info body question.QuestionId true "question info"
+// @Param info body question.CreateQuestionRequest true "question info"
 // @Success 200 {object} question.QuestionId "id"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"

@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "all"
                 ],
                 "summary": "Login a user",
                 "parameters": [
@@ -1041,7 +1041,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/question.QuestionId"
+                            "$ref": "#/definitions/question.CreateQuestionRequest"
                         }
                     }
                 ],
@@ -2312,7 +2312,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "topics"
+                    "Topic"
                 ],
                 "summary": "Get all topics",
                 "parameters": [
@@ -2754,6 +2754,50 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "question_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "question.CreateQuestionRequest": {
+            "type": "object",
+            "properties": {
+                "constrains": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "difficulty": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "input_info": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "memory_limit": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "output_info": {
+                    "type": "string"
+                },
+                "time_limit": {
+                    "type": "integer"
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

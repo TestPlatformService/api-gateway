@@ -15,6 +15,7 @@ import (
 // @Tags Topic
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
 // @Param data body topic.CreateTopicReq true "Create Topic request body"
 // @Success 200 {object} topic.CreateTopicResp "Muvaffaqiyatli yaratildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
@@ -46,6 +47,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 // @Tags Topic
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
 // @Param data body topic.UpdateTopicReq true "Update Topic request body"
 // @Success 200 {object} topic.UpdateTopicResp "Muvaffaqiyatli yangilandi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
@@ -77,6 +79,7 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 // @Tags Topic
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
 // @Param data body topic.DeleteTopicReq true "Delete Topic request body"
 // @Success 200 {object} topic.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
@@ -109,6 +112,7 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // @Tags Topic
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param limit query int false "Limit of topics (optional)" default(1000)
 // @Param offset query int false "Offset for topics (optional)" default(0)
 // @Param data body topic.GetAllFilter true "Filter for subjects"

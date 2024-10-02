@@ -15,6 +15,7 @@ import (
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.CreateGroupReq true "Group creation request"
 // @Success 200 {object} group.CreateGroupResp "Successful group creation"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -46,6 +47,7 @@ func(h *Handler) CreateGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.UpdateGroupReq true "Group update request"
 // @Success 200 {object} group.UpdateGroupResp "Successful group update"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -77,6 +79,7 @@ func(h *Handler) UpdateGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.GroupId true "Group deletion request"
 // @Success 200 {object} group.DeleteResp "Successful group deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -108,6 +111,7 @@ func(h *Handler) DeleteGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.GroupId true "Group ID request"
 // @Success 200 {object} group.Group "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -139,6 +143,7 @@ func(h *Handler) GetGroupById(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param room query string false "Room filter"
 // @Param subject_id query string false "Subject ID filter"
 // @Param limit query string false "Limit for pagination"
@@ -190,6 +195,7 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.AddStudentReq true "Student addition request"
 // @Success 200 {object} group.AddStudentResp "Successful student addition"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -222,6 +228,7 @@ func(h *Handler) AddStudentToGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.DeleteStudentReq true "Student deletion request"
 // @Success 200 {object} group.DeleteResp "Successful student deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -253,6 +260,7 @@ func(h *Handler) DeleteStudentFromGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.AddTeacherReq true "Teacher addition request"
 // @Success 200 {object} group.AddTeacherResp "Successful teacher addition"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -284,6 +292,7 @@ func(h *Handler) AddTeacherToGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.DeleteTeacherReq true "Teacher deletion request"
 // @Success 200 {object} group.DeleteResp "Successful teacher deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -315,6 +324,7 @@ func(h *Handler) DeleteTeacherFromGroup(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.StudentId true "Student ID"
 // @Success 200 {object} group.StudentGroups "Successful retrieval of student groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -346,6 +356,7 @@ func(h *Handler) GetStudentGroups(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.TeacherId true "Teacher ID"
 // @Success 200 {object} group.TeacherGroups "Successful retrieval of teacher groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -377,6 +388,7 @@ func(h *Handler) GetTeacherGroups(c *gin.Context){
 // @Tags groups
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body group.GroupId true "Group ID"
 // @Success 200 {object} group.GroupStudents "Successful retrieval of group students"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"

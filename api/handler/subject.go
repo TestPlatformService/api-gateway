@@ -15,6 +15,7 @@ import (
 // @Tags subjects
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param data body subject.CreateSubjectRequest true "Subject creation request"
 // @Success 200 {object} string "Successful Subject creation"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -48,6 +49,7 @@ func (h *Handler) CreateSubject(c *gin.Context) {
 // @Tags subjects
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path string true "Subject ID"
 // @Success 200 {object} subject.GetSubjectResponse "Successful retrieval of the subject"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
@@ -75,6 +77,7 @@ func (h *Handler) GetSubject(c *gin.Context) {
 // @Tags subjects
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param limit query int true "Limit of subjects"
 // @Param offset query int true "Offset for pagination"
 // @Success 200 {object} subject.GetAllSubjectsResponse "Successful retrieval of subjects"
@@ -107,6 +110,7 @@ func (h *Handler) GetAllSubjects(c *gin.Context) {
 // @Tags subjects
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path string true "Subject ID"
 // @Param data body subject.UpdateSubjectRequest true "Subject update request"
 // @Success 200 {object} string "Successful Subject update"
@@ -144,6 +148,7 @@ func (h *Handler) UpdateSubject(c *gin.Context) {
 // @Tags subjects
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path string true "Subject ID"
 // @Success 200 {object} string "Successful Subject deletion"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"

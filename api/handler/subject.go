@@ -64,7 +64,7 @@ func (h *Handler) GetSubject(c *gin.Context) {
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("GetSubject request error: %v", err))
 		c.JSON(http.StatusInternalServerError, model.Error{
-			Message: "Error retrieving subject",
+			Message: err.Error(),
 		})
 		return
 	}

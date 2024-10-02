@@ -681,6 +681,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Add student to group
       tags:
       - groups
@@ -711,6 +713,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Add teacher to group
       tags:
       - groups
@@ -741,6 +745,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Create a new group
       tags:
       - groups
@@ -771,6 +777,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Delete a group
       tags:
       - groups
@@ -801,6 +809,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Delete student from group
       tags:
       - groups
@@ -831,6 +841,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Delete teacher from group
       tags:
       - groups
@@ -872,6 +884,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get all groups
       tags:
       - groups
@@ -902,6 +916,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get group by ID
       tags:
       - groups
@@ -933,6 +949,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get student groups
       tags:
       - groups
@@ -963,6 +981,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get students of a group
       tags:
       - groups
@@ -994,6 +1014,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get teacher groups
       tags:
       - groups
@@ -1024,6 +1046,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Update an existing group
       tags:
       - groups
@@ -1499,6 +1523,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Create a new Subject
       tags:
       - subjects
@@ -1532,6 +1558,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Delete a Subject by ID
       tags:
       - subjects
@@ -1565,6 +1593,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get a Subject by ID
       tags:
       - subjects
@@ -1599,6 +1629,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get all Subjects
       tags:
       - subjects
@@ -1638,6 +1670,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Update a Subject
       tags:
       - subjects
@@ -2030,6 +2064,8 @@ paths:
           description: Serverda xatolik yuz berdi
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Create a new topic
       tags:
       - Topic
@@ -2060,6 +2096,8 @@ paths:
           description: Serverda xatolik yuz berdi
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Delete an existing topic
       tags:
       - Topic
@@ -2100,6 +2138,8 @@ paths:
           description: Ichki xatolik
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Get all topics
       tags:
       - Topic
@@ -2130,6 +2170,8 @@ paths:
           description: Serverda xatolik yuz berdi
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Update an existing topic
       tags:
       - Topic

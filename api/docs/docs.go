@@ -109,6 +109,11 @@ const docTemplate = `{
         },
         "/api/groups/add-student": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint allows adding a student to a specific group.",
                 "consumes": [
                     "application/json"
@@ -155,6 +160,11 @@ const docTemplate = `{
         },
         "/api/groups/add-teacher": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint allows adding a teacher to a specific group.",
                 "consumes": [
                     "application/json"
@@ -201,6 +211,11 @@ const docTemplate = `{
         },
         "/api/groups/create": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint is used to create a new group in the system.",
                 "consumes": [
                     "application/json"
@@ -247,6 +262,11 @@ const docTemplate = `{
         },
         "/api/groups/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint is used to delete a group from the system.",
                 "consumes": [
                     "application/json"
@@ -293,6 +313,11 @@ const docTemplate = `{
         },
         "/api/groups/delete-student": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint allows deleting a student from a specific group.",
                 "consumes": [
                     "application/json"
@@ -339,6 +364,11 @@ const docTemplate = `{
         },
         "/api/groups/delete-teacher": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint allows deleting a teacher from a specific group.",
                 "consumes": [
                     "application/json"
@@ -385,6 +415,11 @@ const docTemplate = `{
         },
         "/api/groups/getAll": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves all groups with optional filters like room and subject.",
                 "consumes": [
                     "application/json"
@@ -446,6 +481,11 @@ const docTemplate = `{
         },
         "/api/groups/getById": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves the details of a group by its ID.",
                 "consumes": [
                     "application/json"
@@ -492,6 +532,11 @@ const docTemplate = `{
         },
         "/api/groups/student-groups": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves the list of groups a specific student belongs to.",
                 "consumes": [
                     "application/json"
@@ -538,6 +583,11 @@ const docTemplate = `{
         },
         "/api/groups/students": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves the list of students in a specific group.",
                 "consumes": [
                     "application/json"
@@ -584,6 +634,11 @@ const docTemplate = `{
         },
         "/api/groups/teacher-groups": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves the list of groups a specific teacher belongs to.",
                 "consumes": [
                     "application/json"
@@ -630,6 +685,11 @@ const docTemplate = `{
         },
         "/api/groups/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint is used to update the details of an existing group.",
                 "consumes": [
                     "application/json"
@@ -1383,6 +1443,11 @@ const docTemplate = `{
         },
         "/api/subjects/create": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint is used to create a new Subject in the system.",
                 "consumes": [
                     "application/json"
@@ -1429,6 +1494,11 @@ const docTemplate = `{
         },
         "/api/subjects/delete/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint deletes a subject by its ID.",
                 "consumes": [
                     "application/json"
@@ -1479,6 +1549,11 @@ const docTemplate = `{
         },
         "/api/subjects/get/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves a specific subject by its ID.",
                 "consumes": [
                     "application/json"
@@ -1529,6 +1604,11 @@ const docTemplate = `{
         },
         "/api/subjects/getall": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves all subjects with pagination.",
                 "consumes": [
                     "application/json"
@@ -1580,6 +1660,11 @@ const docTemplate = `{
         },
         "/api/subjects/update/{id}": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint updates an existing subject by its ID.",
                 "consumes": [
                     "application/json"
@@ -2212,6 +2297,11 @@ const docTemplate = `{
         },
         "/topics/create": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Ushbu API orqali yangi topic yaratishingiz mumkin.",
                 "consumes": [
                     "application/json"
@@ -2258,6 +2348,11 @@ const docTemplate = `{
         },
         "/topics/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Ushbu API orqali mavjud topicni o'chirishingiz mumkin.",
                 "consumes": [
                     "application/json"
@@ -2304,6 +2399,11 @@ const docTemplate = `{
         },
         "/topics/getAll": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Bu API barcha mavzularni qaytaradi.",
                 "consumes": [
                     "application/json"
@@ -2364,6 +2464,11 @@ const docTemplate = `{
         },
         "/topics/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Ushbu API orqali mavjud topicni yangilashingiz mumkin.",
                 "consumes": [
                     "application/json"

@@ -431,11 +431,6 @@ definitions:
       status:
         type: string
     type: object
-  topic.GetAllFilter:
-    properties:
-      subject_id:
-        type: string
-    type: object
   topic.GetAllTopicsResp:
     properties:
       limit:
@@ -2108,12 +2103,10 @@ paths:
         in: query
         name: offset
         type: integer
-      - description: Filter for subjects
-        in: body
+      - description: Filter for subjects (subject_id)
+        in: query
         name: data
-        required: true
-        schema:
-          $ref: '#/definitions/topic.GetAllFilter'
+        type: string
       produces:
       - application/json
       responses:

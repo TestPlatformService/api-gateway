@@ -2430,13 +2430,10 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "description": "Filter for subjects",
+                        "type": "string",
+                        "description": "Filter for subjects (subject_id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.GetAllFilter"
-                        }
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -3180,14 +3177,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "topic.GetAllFilter": {
-            "type": "object",
-            "properties": {
-                "subject_id": {
                     "type": "string"
                 }
             }

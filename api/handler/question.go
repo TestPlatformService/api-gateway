@@ -187,6 +187,7 @@ func (h *Handler) UpdateQuestion(c *gin.Context) {
 		h.Log.Error("questions ID is required")
 		return
 	}
+
 	req2 := question.UpdateQuestionRequest{
 		Id:          Id,
 		TopicId:     req.TopicId,
@@ -200,6 +201,8 @@ func (h *Handler) UpdateQuestion(c *gin.Context) {
 		TimeLimit:   req.TimeLimit,
 		MemoryLimit: req.MemoryLimit,
 	}
+
+	fmt.Println("req2", req2)
 	_, err := h.Question.UpdateQuestion(c, &req2)
 	if err != nil {
 		h.Log.Error("Failed to update question", "error", err.Error())
@@ -245,6 +248,7 @@ func (h *Handler) DeleteQuestion(c *gin.Context) {
 // @Tags question
 // @Security ApiKeyAuth
 // @Param file formData file true "file"
+// @Param id path string true "id"
 // @Success 200 {object} string "Image uploaded successfully"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"

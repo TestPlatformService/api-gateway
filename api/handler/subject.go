@@ -79,18 +79,18 @@ func (h *Handler) GetSubject(c *gin.Context) {
 // @Produce  json
 // @Security ApiKeyAuth
 // @Param limit query int true "Limit of subjects"
-// @Param offset query int true "Offset for pagination"
+// @Param page query int true "Page for pagination"
 // @Success 200 {object} subject.GetAllSubjectsResponse "Successful retrieval of subjects"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
 // @Router /api/subjects/getall [get]
 func (h *Handler) GetAllSubjects(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.Query("limit"))
-	offset, _ := strconv.Atoi(c.Query("offset"))
+	page, _ := strconv.Atoi(c.Query("page"))
 
 	req := pb.GetAllSubjectsRequest{
 		Limit:  int64(limit),
-		Offset: int64(offset),
+		Page: int64(page),
 	}
 
 	resp, err := h.Subject.GetAllSubjects(c, &req)

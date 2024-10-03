@@ -72,13 +72,15 @@ definitions:
     type: object
   group.GetAllGroupsResp:
     properties:
+      count:
+        type: integer
       groups:
         items:
           $ref: '#/definitions/group.Group'
         type: array
       limit:
         type: integer
-      offset:
+      page:
         type: integer
     type: object
   group.Group:
@@ -405,6 +407,70 @@ definitions:
       name:
         type: string
     type: object
+  task.CreateTaskReq:
+    properties:
+      group_id:
+        type: string
+      topic_id:
+        type: string
+    type: object
+  task.CreateTaskResp:
+    properties:
+      created_at:
+        type: string
+      task_id:
+        type: string
+    type: object
+  task.DeleteTaskReq:
+    properties:
+      task_id:
+        type: string
+    type: object
+  task.DeleteTaskResp:
+    properties:
+      status:
+        type: string
+    type: object
+  task.GetTaskResp:
+    properties:
+      questions:
+        items:
+          $ref: '#/definitions/task.Question'
+        type: array
+      task_id:
+        type: string
+    type: object
+  task.Question:
+    properties:
+      constrains:
+        type: string
+      description:
+        type: string
+      difficulty:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      input_info:
+        type: string
+      language:
+        type: string
+      memory_limit:
+        type: integer
+      name:
+        type: string
+      number:
+        type: integer
+      output_info:
+        type: string
+      time_limit:
+        type: integer
+      topic_id:
+        type: string
+      type:
+        type: string
+    type: object
   topic.CreateTopicReq:
     properties:
       description:
@@ -433,9 +499,11 @@ definitions:
     type: object
   topic.GetAllTopicsResp:
     properties:
+      count:
+        type: integer
       limit:
         type: integer
-      offset:
+      page:
         type: integer
       topics:
         items:
@@ -850,9 +918,9 @@ paths:
         in: query
         name: limit
         type: string
-      - description: Offset for pagination
+      - description: page for pagination
         in: query
-        name: offset
+        name: page
         type: string
       produces:
       - application/json
@@ -1367,9 +1435,9 @@ paths:
         in: query
         name: limit
         type: string
-      - description: offset
+      - description: page
         in: query
-        name: offset
+        name: page
         type: string
       - description: topic_name
         in: query
@@ -1595,9 +1663,9 @@ paths:
         name: limit
         required: true
         type: integer
-      - description: Offset for pagination
+      - description: Page for pagination
         in: query
-        name: offset
+        name: page
         required: true
         type: integer
       produces:
@@ -1845,10 +1913,10 @@ paths:
         in: query
         name: limit
         type: integer
-      - default: 0
-        description: Offset for topics (optional)
+      - default: 1
+        description: Page for topics (optional)
         in: query
-        name: offset
+        name: page
         type: integer
       - description: Filter for subjects (subject_id)
         in: query
@@ -2159,6 +2227,101 @@ paths:
       summary: Update User
       tags:
       - user
+  /task/create:
+    post:
+      consumes:
+      - application/json
+      description: Yangi task yaratish uchun ma'lumotlarni qabul qiladi
+      parameters:
+      - description: Task yaratish uchun zarur ma'lumotlar
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/task.CreateTaskReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Yaratilgan task haqida ma'lumot
+          schema:
+            $ref: '#/definitions/task.CreateTaskResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritilgan
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xato
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Task yaratish
+      tags:
+      - tasks
+  /task/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Berilgan ID bo'yicha taskni o'chiradi
+      parameters:
+      - description: O'chirilishi kerak bo'lgan task ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/task.DeleteTaskReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: O'chirilgan task haqida ma'lumot
+          schema:
+            $ref: '#/definitions/task.DeleteTaskResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritilgan
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xato
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Task o'chirish
+      tags:
+      - tasks
+  /task/get:
+    get:
+      consumes:
+      - application/json
+      description: Berilgan IDlar bo'yicha task ma'lumotlarini olish
+      parameters:
+      - description: Olish uchun task ID
+        in: query
+        name: task_id
+        required: true
+        type: string
+      - description: Foydalanuvchi ID
+        in: query
+        name: user_id
+        required: true
+        type: string
+      - description: Mavzu ID
+        in: query
+        name: topic_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Olingan task haqida ma'lumot
+          schema:
+            $ref: '#/definitions/task.GetTaskResp'
+        "500":
+          description: Serverda xato
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Taskni olish
+      tags:
+      - tasks
 securityDefinitions:
   ApiKeyAuth:
     description: API Gateway

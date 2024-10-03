@@ -140,7 +140,7 @@ func(h *Handler) GetGroupById(c *gin.Context){
 // @Param room query string false "Room filter"
 // @Param subject_id query string false "Subject ID filter"
 // @Param limit query string false "Limit for pagination"
-// @Param offset query string false "Offset for pagination"
+// @Param page query string false "page for pagination"
 // @Success 200 {object} group.GetAllGroupsResp "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
@@ -150,13 +150,13 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 	req.Room = c.Query("room")
 	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
-	offset := c.Query("offset")
+	page := c.Query("page")
 	var lim, off int
 	lim, err := strconv.Atoi(limit)
 	if err != nil{
 		lim = 1000
 	}
-	off, err = strconv.Atoi(offset)
+	off, err = strconv.Atoi(page)
 	if err != nil{
 		off = 0
 	}
@@ -165,7 +165,7 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 		Room: req.Room,
 		SubjectId: req.SubjectId,
 		Limit: int32(lim),
-		Offset: int32(off),
+		Page: int32(off),
 	})
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetAllGroups request error: %v", err))

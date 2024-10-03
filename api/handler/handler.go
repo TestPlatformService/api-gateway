@@ -5,6 +5,7 @@ import (
 	"api/genproto/notification"
 	"api/genproto/question"
 	"api/genproto/subject"
+	"api/genproto/task"
 	"api/genproto/topic"
 	"api/genproto/user"
 	"log"
@@ -24,6 +25,7 @@ type Handler struct {
 	QuestionOutput question.OutputServiceClient
 	QuestionInput  question.InputServiceClient
 	TestCase       question.TestCaseServiceClient
+	Task           task.TaskServiceClient
 	Log            *slog.Logger
 	Enforcer       *casbin.Enforcer
 }

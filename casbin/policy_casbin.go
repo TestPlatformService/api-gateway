@@ -152,6 +152,12 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"teacher", "/api/test-cases/:id", "GET"},
 		{"teacher", "/api/test-cases/question/:question_id", "GET"},
 		{"teacher", "/api/test-cases/delete/:id", "DELETE"},
+
+		//task
+		{"teacher", "/api/task/create", "POST"},
+		{"teacher", "/api/task/delete", "DELETE"},
+		{"teacher", "api/task/get", "GET"},
+		{"student", "api/task/get", "GET"},
 	}
 
 	_, err = enforcer.AddPolicies(policies)

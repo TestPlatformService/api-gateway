@@ -114,7 +114,7 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // @Produce  json
 // @Security ApiKeyAuth
 // @Param limit query int false "Limit of topics (optional)" default(1000)
-// @Param offset query int false "Offset for topics (optional)" default(0)
+// @Param page query int false "Page for topics (optional)" default(1)
 // @Param data query string false "Filter for subjects (subject_id)"
 // @Success 200 {object} topic.GetAllTopicsResp "Mavzular ro'yxati"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritildi"
@@ -124,20 +124,20 @@ func (h *Handler) GetAllTopics(c *gin.Context) {
 	req := pb.GetAllFilter{}
 	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
-	offset := c.Query("offset")
+	page := c.Query("page")
 	var lim, off int
 	lim, err := strconv.Atoi(limit)
 	if err != nil {
 		lim = 1000
 	}
-	off, err = strconv.Atoi(offset)
+	off, err = strconv.Atoi(page)
 	if err != nil {
-		off = 0
+		off = 1
 	}
 	resp, err := h.Topic.GetAllTopics(c, &pb.GetAllTopicsReq{
 		SubjectId: req.SubjectId,
 		Limit:     int32(lim),
-		Offset:    int32(off),
+		Page:    int32(off),
 	})
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("GetAllTopics request error: %v", err))

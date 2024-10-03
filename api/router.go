@@ -130,6 +130,15 @@ func Router(hand *handler.Handler) *gin.Engine {
 		testCase.GET("/question/:question_id", hand.GetTestCasesByQuestionId)
 	}
 
+	task := router.Group("/api/task")
+	task.Use(middleware.Check)
+	task.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		task.POST("/create", hand.CreateTask)
+		task.DELETE("/delete", hand.DeleteTask)
+		task.GET("get", hand.GetTask)
+	}
+
 	return router
 }
 

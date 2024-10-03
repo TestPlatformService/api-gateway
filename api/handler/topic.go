@@ -115,25 +115,18 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param limit query int false "Limit of topics (optional)" default(1000)
 // @Param offset query int false "Offset for topics (optional)" default(0)
-// @Param data body topic.GetAllFilter true "Filter for subjects"
+// @Param data query string false "Filter for subjects (subject_id)"
 // @Success 200 {object} topic.GetAllTopicsResp "Mavzular ro'yxati"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritildi"
 // @Failure 500 {object} model.Error "Ichki xatolik"
 // @Router /topics/getAll [get]
 func (h *Handler) GetAllTopics(c *gin.Context) {
 	req := pb.GetAllFilter{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatolik: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritdingiz",
-		})
-		return
-	}
+	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
 	offset := c.Query("offset")
 	var lim, off int
-	lim, err = strconv.Atoi(limit)
+	lim, err := strconv.Atoi(limit)
 	if err != nil {
 		lim = 1000
 	}

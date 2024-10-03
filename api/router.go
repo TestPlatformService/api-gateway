@@ -73,7 +73,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)
 		topic.DELETE("/delete", hand.DeleteTopic)
-		topic.GET("/getAll", hand.GetAllTopics)
+		topic.GET("/getAll/", hand.GetAllTopics)
 	}
 
 	subject := router.Group("/api/subjects")

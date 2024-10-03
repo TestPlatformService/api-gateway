@@ -1834,6 +1834,46 @@ paths:
       summary: Delete an existing topic
       tags:
       - Topic
+  /api/topics/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Bu API barcha mavzularni qaytaradi.
+      parameters:
+      - default: 1000
+        description: Limit of topics (optional)
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for topics (optional)
+        in: query
+        name: offset
+        type: integer
+      - description: Filter for subjects (subject_id)
+        in: query
+        name: data
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mavzular ro'yxati
+          schema:
+            $ref: '#/definitions/topic.GetAllTopicsResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritildi
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Ichki xatolik
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all topics
+      tags:
+      - Topic
   /api/topics/update:
     put:
       consumes:
@@ -2119,46 +2159,6 @@ paths:
       summary: Update User
       tags:
       - user
-  /topics/getAll:
-    get:
-      consumes:
-      - application/json
-      description: Bu API barcha mavzularni qaytaradi.
-      parameters:
-      - default: 1000
-        description: Limit of topics (optional)
-        in: query
-        name: limit
-        type: integer
-      - default: 0
-        description: Offset for topics (optional)
-        in: query
-        name: offset
-        type: integer
-      - description: Filter for subjects (subject_id)
-        in: query
-        name: data
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Mavzular ro'yxati
-          schema:
-            $ref: '#/definitions/topic.GetAllTopicsResp'
-        "400":
-          description: Noto'g'ri ma'lumot kiritildi
-          schema:
-            $ref: '#/definitions/model.Error'
-        "500":
-          description: Ichki xatolik
-          schema:
-            $ref: '#/definitions/model.Error'
-      security:
-      - ApiKeyAuth: []
-      summary: Get all topics
-      tags:
-      - Topic
 securityDefinitions:
   ApiKeyAuth:
     description: API Gateway

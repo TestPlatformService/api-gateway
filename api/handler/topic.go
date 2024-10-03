@@ -119,7 +119,7 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // @Success 200 {object} topic.GetAllTopicsResp "Mavzular ro'yxati"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritildi"
 // @Failure 500 {object} model.Error "Ichki xatolik"
-// @Router /topics/getAll [get]
+// @Router /api/topics/getAll [get]
 func (h *Handler) GetAllTopics(c *gin.Context) {
 	req := pb.GetAllFilter{}
 	req.SubjectId = c.Query("subject_id")

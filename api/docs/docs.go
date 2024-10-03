@@ -1997,6 +1997,68 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/topics/getAll": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Bu API barcha mavzularni qaytaradi.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Get all topics",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1000,
+                        "description": "Limit of topics (optional)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset for topics (optional)",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter for subjects (subject_id)",
+                        "name": "data",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mavzular ro'yxati",
+                        "schema": {
+                            "$ref": "#/definitions/topic.GetAllTopicsResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritildi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Ichki xatolik",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/api/topics/update": {
             "put": {
                 "security": [
@@ -2442,68 +2504,6 @@ const docTemplate = `{
                         "description": "Server error",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/getAll": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Bu API barcha mavzularni qaytaradi.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Get all topics",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "default": 1000,
-                        "description": "Limit of topics (optional)",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "default": 0,
-                        "description": "Offset for topics (optional)",
-                        "name": "offset",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter for subjects (subject_id)",
-                        "name": "data",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Mavzular ro'yxati",
-                        "schema": {
-                            "$ref": "#/definitions/topic.GetAllTopicsResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritildi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Ichki xatolik",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
                         }
                     }
                 }

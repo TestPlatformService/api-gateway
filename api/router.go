@@ -132,3 +132,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 
 	return router
 }
+
+// get question by Id
+// Topic
+// group

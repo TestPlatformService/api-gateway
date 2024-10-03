@@ -158,7 +158,7 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
 		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritildi",
+			Message: err.Error(),
 		})
 		return
 	}

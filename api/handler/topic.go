@@ -35,7 +35,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("CreateTopic request error: %v", err))
 		c.JSON(500, model.Error{
-			Message: "Error",
+			Message: err.Error(),
 		})
 		return
 	}

@@ -1770,6 +1770,102 @@ paths:
       summary: GetTestCasesByQuestionId
       tags:
       - testCase
+  /api/topics/create:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu API orqali yangi topic yaratishingiz mumkin.
+      parameters:
+      - description: Create Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.CreateTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Muvaffaqiyatli yaratildi
+          schema:
+            $ref: '#/definitions/topic.CreateTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new topic
+      tags:
+      - Topic
+  /api/topics/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Ushbu API orqali mavjud topicni o'chirishingiz mumkin.
+      parameters:
+      - description: Delete Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.DeleteTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Mavzu muvaffaqiyatli o'chirildi
+          schema:
+            $ref: '#/definitions/topic.DeleteTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete an existing topic
+      tags:
+      - Topic
+  /api/topics/update:
+    put:
+      consumes:
+      - application/json
+      description: Ushbu API orqali mavjud topicni yangilashingiz mumkin.
+      parameters:
+      - description: Update Topic request body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/topic.UpdateTopicReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Muvaffaqiyatli yangilandi
+          schema:
+            $ref: '#/definitions/topic.UpdateTopicResp'
+        "400":
+          description: Noto'g'ri ma'lumot kiritdingiz
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Serverda xatolik yuz berdi
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Update an existing topic
+      tags:
+      - Topic
   /api/user/all:
     get:
       consumes:
@@ -2023,70 +2119,6 @@ paths:
       summary: Update User
       tags:
       - user
-  /topics/create:
-    post:
-      consumes:
-      - application/json
-      description: Ushbu API orqali yangi topic yaratishingiz mumkin.
-      parameters:
-      - description: Create Topic request body
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/topic.CreateTopicReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Muvaffaqiyatli yaratildi
-          schema:
-            $ref: '#/definitions/topic.CreateTopicResp'
-        "400":
-          description: Noto'g'ri ma'lumot kiritdingiz
-          schema:
-            $ref: '#/definitions/model.Error'
-        "500":
-          description: Serverda xatolik yuz berdi
-          schema:
-            $ref: '#/definitions/model.Error'
-      security:
-      - ApiKeyAuth: []
-      summary: Create a new topic
-      tags:
-      - Topic
-  /topics/delete:
-    delete:
-      consumes:
-      - application/json
-      description: Ushbu API orqali mavjud topicni o'chirishingiz mumkin.
-      parameters:
-      - description: Delete Topic request body
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/topic.DeleteTopicReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Mavzu muvaffaqiyatli o'chirildi
-          schema:
-            $ref: '#/definitions/topic.DeleteTopicResp'
-        "400":
-          description: Noto'g'ri ma'lumot kiritdingiz
-          schema:
-            $ref: '#/definitions/model.Error'
-        "500":
-          description: Serverda xatolik yuz berdi
-          schema:
-            $ref: '#/definitions/model.Error'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete an existing topic
-      tags:
-      - Topic
   /topics/getAll:
     get:
       consumes:
@@ -2125,38 +2157,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get all topics
-      tags:
-      - Topic
-  /topics/update:
-    put:
-      consumes:
-      - application/json
-      description: Ushbu API orqali mavjud topicni yangilashingiz mumkin.
-      parameters:
-      - description: Update Topic request body
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/topic.UpdateTopicReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Muvaffaqiyatli yangilandi
-          schema:
-            $ref: '#/definitions/topic.UpdateTopicResp'
-        "400":
-          description: Noto'g'ri ma'lumot kiritdingiz
-          schema:
-            $ref: '#/definitions/model.Error'
-        "500":
-          description: Serverda xatolik yuz berdi
-          schema:
-            $ref: '#/definitions/model.Error'
-      security:
-      - ApiKeyAuth: []
-      summary: Update an existing topic
       tags:
       - Topic
 securityDefinitions:

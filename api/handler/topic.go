@@ -20,7 +20,7 @@ import (
 // @Success 200 {object} topic.CreateTopicResp "Muvaffaqiyatli yaratildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/create [post]
+// @Router /api/topics/create [post]
 func (h *Handler) CreateTopic(c *gin.Context) {
 	req := pb.CreateTopicReq{}
 	err := c.ShouldBindJSON(&req)
@@ -52,7 +52,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 // @Success 200 {object} topic.UpdateTopicResp "Muvaffaqiyatli yangilandi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/update [put]
+// @Router /api/topics/update [put]
 func (h *Handler) UpdateTopic(c *gin.Context) {
 	req := pb.UpdateTopicReq{}
 	err := c.ShouldBindJSON(&req)
@@ -84,7 +84,7 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 // @Success 200 {object} topic.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/delete [delete]
+// @Router /api/topics/delete [delete]
 func (h *Handler) DeleteTopic(c *gin.Context) {
 	req := pb.DeleteTopicReq{}
 	err := c.ShouldBindJSON(&req)

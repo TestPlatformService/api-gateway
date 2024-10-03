@@ -1895,6 +1895,159 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/topics/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali yangi topic yaratishingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Create a new topic",
+                "parameters": [
+                    {
+                        "description": "Create Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.CreateTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Muvaffaqiyatli yaratildi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.CreateTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali mavjud topicni o'chirishingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Delete an existing topic",
+                "parameters": [
+                    {
+                        "description": "Delete Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.DeleteTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mavzu muvaffaqiyatli o'chirildi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.DeleteTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/update": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali mavjud topicni yangilashingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Update an existing topic",
+                "parameters": [
+                    {
+                        "description": "Update Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.UpdateTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Muvaffaqiyatli yangilandi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.UpdateTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/all": {
             "get": {
                 "security": [
@@ -2294,108 +2447,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/topics/create": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali yangi topic yaratishingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Create a new topic",
-                "parameters": [
-                    {
-                        "description": "Create Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.CreateTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Muvaffaqiyatli yaratildi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.CreateTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/delete": {
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali mavjud topicni o'chirishingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Delete an existing topic",
-                "parameters": [
-                    {
-                        "description": "Delete Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.DeleteTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Mavzu muvaffaqiyatli o'chirildi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.DeleteTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
         "/topics/getAll": {
             "get": {
                 "security": [
@@ -2451,57 +2502,6 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Ichki xatolik",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/update": {
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali mavjud topicni yangilashingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Update an existing topic",
-                "parameters": [
-                    {
-                        "description": "Update Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.UpdateTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Muvaffaqiyatli yangilandi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.UpdateTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
                         "schema": {
                             "$ref": "#/definitions/model.Error"
                         }

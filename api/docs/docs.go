@@ -479,7 +479,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/getById": {
+        "/api/groups/getById/{group_id}": {
             "get": {
                 "security": [
                     {
@@ -499,13 +499,11 @@ const docTemplate = `{
                 "summary": "Get group by ID",
                 "parameters": [
                     {
-                        "description": "Group ID request",
+                        "type": "string",
+                        "description": "Group ID request (group_id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.GroupId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -530,7 +528,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/student-groups": {
+        "/api/groups/student-groups/{hh_id}": {
             "get": {
                 "security": [
                     {
@@ -550,13 +548,11 @@ const docTemplate = `{
                 "summary": "Get student groups",
                 "parameters": [
                     {
-                        "description": "Student ID",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.StudentId"
-                        }
+                        "type": "string",
+                        "description": "Student ID (hh_id)",
+                        "name": "hh_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -581,7 +577,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/students": {
+        "/api/groups/students/{group_id}": {
             "get": {
                 "security": [
                     {
@@ -601,13 +597,11 @@ const docTemplate = `{
                 "summary": "Get students of a group",
                 "parameters": [
                     {
-                        "description": "Group ID",
+                        "type": "string",
+                        "description": "Group ID (group_id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.GroupId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -632,7 +626,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/teacher-groups": {
+        "/api/groups/teacher-groups/{id}": {
             "get": {
                 "security": [
                     {
@@ -652,13 +646,11 @@ const docTemplate = `{
                 "summary": "Get teacher groups",
                 "parameters": [
                     {
-                        "description": "Teacher ID",
+                        "type": "string",
+                        "description": "Teacher ID (id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.TeacherId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1373,6 +1365,13 @@ const docTemplate = `{
                         "description": "file",
                         "name": "file",
                         "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -2734,14 +2733,6 @@ const docTemplate = `{
                 }
             }
         },
-        "group.StudentId": {
-            "type": "object",
-            "properties": {
-                "hh_id": {
-                    "type": "string"
-                }
-            }
-        },
         "group.TeacherGroups": {
             "type": "object",
             "properties": {
@@ -2750,14 +2741,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/group.Group"
                     }
-                }
-            }
-        },
-        "group.TeacherId": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
                 }
             }
         },

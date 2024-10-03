@@ -140,22 +140,12 @@ definitions:
           $ref: '#/definitions/group.Group'
         type: array
     type: object
-  group.StudentId:
-    properties:
-      hh_id:
-        type: string
-    type: object
   group.TeacherGroups:
     properties:
       groups:
         items:
           $ref: '#/definitions/group.Group'
         type: array
-    type: object
-  group.TeacherId:
-    properties:
-      id:
-        type: string
     type: object
   group.UpdateGroupReq:
     properties:
@@ -889,18 +879,17 @@ paths:
       summary: Get all groups
       tags:
       - groups
-  /api/groups/getById:
+  /api/groups/getById/{group_id}:
     get:
       consumes:
       - application/json
       description: This endpoint retrieves the details of a group by its ID.
       parameters:
-      - description: Group ID request
-        in: body
+      - description: Group ID request (group_id)
+        in: path
         name: data
         required: true
-        schema:
-          $ref: '#/definitions/group.GroupId'
+        type: string
       produces:
       - application/json
       responses:
@@ -921,19 +910,18 @@ paths:
       summary: Get group by ID
       tags:
       - groups
-  /api/groups/student-groups:
+  /api/groups/student-groups/{hh_id}:
     get:
       consumes:
       - application/json
       description: This endpoint retrieves the list of groups a specific student belongs
         to.
       parameters:
-      - description: Student ID
-        in: body
-        name: data
+      - description: Student ID (hh_id)
+        in: path
+        name: hh_id
         required: true
-        schema:
-          $ref: '#/definitions/group.StudentId'
+        type: string
       produces:
       - application/json
       responses:
@@ -954,18 +942,17 @@ paths:
       summary: Get student groups
       tags:
       - groups
-  /api/groups/students:
+  /api/groups/students/{group_id}:
     get:
       consumes:
       - application/json
       description: This endpoint retrieves the list of students in a specific group.
       parameters:
-      - description: Group ID
-        in: body
+      - description: Group ID (group_id)
+        in: path
         name: data
         required: true
-        schema:
-          $ref: '#/definitions/group.GroupId'
+        type: string
       produces:
       - application/json
       responses:
@@ -986,19 +973,18 @@ paths:
       summary: Get students of a group
       tags:
       - groups
-  /api/groups/teacher-groups:
+  /api/groups/teacher-groups/{id}:
     get:
       consumes:
       - application/json
       description: This endpoint retrieves the list of groups a specific teacher belongs
         to.
       parameters:
-      - description: Teacher ID
-        in: body
+      - description: Teacher ID (id)
+        in: path
         name: data
         required: true
-        schema:
-          $ref: '#/definitions/group.TeacherId'
+        type: string
       produces:
       - application/json
       responses:

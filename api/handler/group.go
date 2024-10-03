@@ -154,18 +154,12 @@ func(h *Handler) GetGroupById(c *gin.Context){
 // @Router /api/groups/getAll [get]
 func(h *Handler) GetAllGroups(c *gin.Context){
 	req := &pb.AllGroupsFilter{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: err.Error(),
-		})
-		return
-	}
+	req.Room = c.Query("room")
+	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
 	offset := c.Query("offset")
 	var lim, off int
-	lim, err = strconv.Atoi(limit)
+	lim, err := strconv.Atoi(limit)
 	if err != nil{
 		lim = 1000
 	}

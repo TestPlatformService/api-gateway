@@ -96,6 +96,8 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"teacher", "/api/topics/delete", "DELETE"},
 		{"teacher", "/api/topics/getAll", "GET"},
 
+		{"student", "/api/topics/getAll", "GET"},
+
 		//subject
 		{"admin", "/api/subjects/create", "POST"},
 		{"admin", "/api/subjects/get/:id", "GET"},

@@ -72,7 +72,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	{
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)
-		topic.DELETE("/delete", hand.DeleteTopic)
+		topic.DELETE("/delete/:topic_id", hand.DeleteTopic)
 		topic.GET("/getAll", hand.GetAllTopics)
 	}
 

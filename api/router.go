@@ -67,8 +67,8 @@ func Router(hand *handler.Handler) *gin.Engine {
 	}
 
 	topic := router.Group("/api/topics")
-	group.Use(middleware.Check)
-	group.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	topic.Use(middleware.Check)
+	topic.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
 	{
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)

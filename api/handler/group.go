@@ -112,21 +112,14 @@ func(h *Handler) DeleteGroup(c *gin.Context){
 // @Accept  json
 // @Produce  json
 // @Security ApiKeyAuth
-// @Param data body group.GroupId true "Group ID request"
+// @Param data path string true "Group ID request (group_id)"
 // @Success 200 {object} group.Group "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /api/groups/getById [get]
+// @Router /api/groups/getById/{group_id} [get]
 func(h *Handler) GetGroupById(c *gin.Context){
 	req := pb.GroupId{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritildi",
-		})
-		return
-	}
+	req.Id = c.Param("group_id")
 	resp, err := h.Group.GetGroupById(c, &req)
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetGroupById request error: %v", err))
@@ -147,7 +140,7 @@ func(h *Handler) GetGroupById(c *gin.Context){
 // @Param room query string false "Room filter"
 // @Param subject_id query string false "Subject ID filter"
 // @Param limit query string false "Limit for pagination"
-// @Param offset query string false "Offset for pagination"
+// @Param page query string false "page for pagination"
 // @Success 200 {object} group.GetAllGroupsResp "Successful group retrieval"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
@@ -157,13 +150,13 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 	req.Room = c.Query("room")
 	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
-	offset := c.Query("offset")
+	page := c.Query("page")
 	var lim, off int
 	lim, err := strconv.Atoi(limit)
 	if err != nil{
 		lim = 1000
 	}
-	off, err = strconv.Atoi(offset)
+	off, err = strconv.Atoi(page)
 	if err != nil{
 		off = 0
 	}
@@ -172,7 +165,7 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 		Room: req.Room,
 		SubjectId: req.SubjectId,
 		Limit: int32(lim),
-		Offset: int32(off),
+		Page: int32(off),
 	})
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetAllGroups request error: %v", err))
@@ -319,21 +312,14 @@ func(h *Handler) DeleteTeacherFromGroup(c *gin.Context){
 // @Accept  json
 // @Produce  json
 // @Security ApiKeyAuth
-// @Param data body group.StudentId true "Student ID"
+// @Param hh_id path string true "Student ID (hh_id)"
 // @Success 200 {object} group.StudentGroups "Successful retrieval of student groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /api/groups/student-groups [get]
+// @Router /api/groups/student-groups/{hh_id} [get]
 func(h *Handler) GetStudentGroups(c *gin.Context){
 	req := pb.StudentId{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritildi",
-		})
-		return
-	}
+	req.HhId = c.Param("hh_id")
 	resp, err := h.Group.GetStudentGroups(c, &req)
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetStudentGroups request error: %v", err))
@@ -351,21 +337,14 @@ func(h *Handler) GetStudentGroups(c *gin.Context){
 // @Accept  json
 // @Produce  json
 // @Security ApiKeyAuth
-// @Param data body group.TeacherId true "Teacher ID"
+// @Param data path string true "Teacher ID (id)"
 // @Success 200 {object} group.TeacherGroups "Successful retrieval of teacher groups"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /api/groups/teacher-groups [get]
+// @Router /api/groups/teacher-groups/{id} [get]
 func(h *Handler) GetTeacherGroups(c *gin.Context){
 	req := pb.TeacherId{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritildi",
-		})
-		return
-	}
+	req.Id = c.Param("id")
 	resp, err := h.Group.GetTeacherGroups(c, &req)
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetTeacherGroups request error: %v", err))
@@ -383,21 +362,14 @@ func(h *Handler) GetTeacherGroups(c *gin.Context){
 // @Accept  json
 // @Produce  json
 // @Security ApiKeyAuth
-// @Param data body group.GroupId true "Group ID"
+// @Param data path string true "Group ID (group_id)"
 // @Success 200 {object} group.GroupStudents "Successful retrieval of group students"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"
-// @Router /api/groups/students [get]
+// @Router /api/groups/students/{group_id} [get]
 func(h *Handler) GetGroupStudents(c *gin.Context){
 	req := pb.GroupId{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatoli: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritildi",
-		})
-		return
-	}
+	req.Id = c.Param("group_id")
 	resp, err := h.Group.GetGroupStudents(c, &req)
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetGroupStudents request error: %v", err))

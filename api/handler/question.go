@@ -84,7 +84,7 @@ func (h *Handler) GetQuestionById(c *gin.Context) {
 // @Tags question
 // @Security ApiKeyAuth
 // @Param limit query string false "limit"
-// @Param offset query string false "offset"
+// @Param page query string false "page"
 // @Param topic_name query string false "topic_name"
 // @Param type query string false "type"
 // @Param name query string false "name"
@@ -99,14 +99,14 @@ func (h *Handler) GetQuestionById(c *gin.Context) {
 func (h *Handler) GetAllQuestions(c *gin.Context) {
 	h.Log.Info("GetQuestions is starting")
 	req2 := model.GetAllQuestionsRequest{}
-	var limitstr, offsetstr int64
+	var limitstr, pagestr int64
 	if err := c.ShouldBindQuery(&req2); err != nil {
 		h.Log.Error("Invalid query parameters", "error", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid query parameters"})
 		return
 	}
 	limitStr := c.Query("limit")
-	offsetStr := c.Query("offset")
+	pageStr := c.Query("page")
 	if limitStr != "" {
 		limit, err := strconv.Atoi(limitStr)
 		if err != nil {
@@ -120,17 +120,17 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 		limitstr = 10
 	}
 
-	if offsetStr != "" {
-		offset, err := strconv.Atoi(offsetStr)
+	if pageStr != "" {
+		offset, err := strconv.Atoi(pageStr)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest,
 				gin.H{"error": err.Error()})
 			h.Log.Error(err.Error())
 			return
 		}
-		offsetstr = int64(offset)
+		pagestr = int64(offset)
 	} else {
-		offsetstr = 1
+		pagestr = 1
 	}
 	topicid := ""
 	if req2.TopicName != "" {
@@ -145,7 +145,7 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 
 	res, err := h.Question.GetAllQuestions(c, &question.GetAllQuestionsRequest{
 		Limit:      limitstr,
-		Offset:     offsetstr,
+		Page:     pagestr,
 		TopicId:    topicid,
 		Type:       req2.Type,
 		Name:       req2.Name,

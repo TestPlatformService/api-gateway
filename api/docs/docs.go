@@ -452,8 +452,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Offset for pagination",
-                        "name": "offset",
+                        "description": "page for pagination",
+                        "name": "page",
                         "in": "query"
                     }
                 ],
@@ -479,7 +479,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/getById": {
+        "/api/groups/getById/{group_id}": {
             "get": {
                 "security": [
                     {
@@ -499,13 +499,11 @@ const docTemplate = `{
                 "summary": "Get group by ID",
                 "parameters": [
                     {
-                        "description": "Group ID request",
+                        "type": "string",
+                        "description": "Group ID request (group_id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.GroupId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -530,7 +528,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/student-groups": {
+        "/api/groups/student-groups/{hh_id}": {
             "get": {
                 "security": [
                     {
@@ -550,13 +548,11 @@ const docTemplate = `{
                 "summary": "Get student groups",
                 "parameters": [
                     {
-                        "description": "Student ID",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.StudentId"
-                        }
+                        "type": "string",
+                        "description": "Student ID (hh_id)",
+                        "name": "hh_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -581,7 +577,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/students": {
+        "/api/groups/students/{group_id}": {
             "get": {
                 "security": [
                     {
@@ -601,13 +597,11 @@ const docTemplate = `{
                 "summary": "Get students of a group",
                 "parameters": [
                     {
-                        "description": "Group ID",
+                        "type": "string",
+                        "description": "Group ID (group_id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.GroupId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -632,7 +626,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/groups/teacher-groups": {
+        "/api/groups/teacher-groups/{id}": {
             "get": {
                 "security": [
                     {
@@ -652,13 +646,11 @@ const docTemplate = `{
                 "summary": "Get teacher groups",
                 "parameters": [
                     {
-                        "description": "Teacher ID",
+                        "type": "string",
+                        "description": "Teacher ID (id)",
                         "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/group.TeacherId"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1234,8 +1226,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "offset",
-                        "name": "offset",
+                        "description": "page",
+                        "name": "page",
                         "in": "query"
                     },
                     {
@@ -1637,8 +1629,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Offset for pagination",
-                        "name": "offset",
+                        "description": "Page for pagination",
+                        "name": "page",
                         "in": "query",
                         "required": true
                     }
@@ -1722,6 +1714,165 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Yangi task yaratish uchun ma'lumotlarni qabul qiladi",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Task yaratish",
+                "parameters": [
+                    {
+                        "description": "Task yaratish uchun zarur ma'lumotlar",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.CreateTaskReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Yaratilgan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.CreateTaskResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritilgan",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Berilgan ID bo'yicha taskni o'chiradi",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Task o'chirish",
+                "parameters": [
+                    {
+                        "description": "O'chirilishi kerak bo'lgan task ID",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.DeleteTaskReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "O'chirilgan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.DeleteTaskResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritilgan",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/get": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Berilgan IDlar bo'yicha task ma'lumotlarini olish",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Taskni olish",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Olish uchun task ID",
+                        "name": "task_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Foydalanuvchi ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Mavzu ID",
+                        "name": "topic_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Olingan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.GetTaskResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
                         "schema": {
                             "$ref": "#/definitions/model.Error"
                         }
@@ -1898,6 +2049,221 @@ const docTemplate = `{
                         "description": "Server error",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali yangi topic yaratishingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Create a new topic",
+                "parameters": [
+                    {
+                        "description": "Create Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.CreateTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Muvaffaqiyatli yaratildi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.CreateTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali mavjud topicni o'chirishingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Delete an existing topic",
+                "parameters": [
+                    {
+                        "description": "Delete Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.DeleteTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mavzu muvaffaqiyatli o'chirildi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.DeleteTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/getAll": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Bu API barcha mavzularni qaytaradi.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Get all topics",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1000,
+                        "description": "Limit of topics (optional)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page for topics (optional)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter for subjects (subject_id)",
+                        "name": "data",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mavzular ro'yxati",
+                        "schema": {
+                            "$ref": "#/definitions/topic.GetAllTopicsResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritildi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Ichki xatolik",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topics/update": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Ushbu API orqali mavjud topicni yangilashingiz mumkin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "Update an existing topic",
+                "parameters": [
+                    {
+                        "description": "Update Topic request body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/topic.UpdateTopicReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Muvaffaqiyatli yangilandi",
+                        "schema": {
+                            "$ref": "#/definitions/topic.UpdateTopicResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritdingiz",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xatolik yuz berdi",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
                         }
                     }
                 }
@@ -2301,224 +2667,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/topics/create": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali yangi topic yaratishingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Create a new topic",
-                "parameters": [
-                    {
-                        "description": "Create Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.CreateTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Muvaffaqiyatli yaratildi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.CreateTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/delete": {
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali mavjud topicni o'chirishingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Delete an existing topic",
-                "parameters": [
-                    {
-                        "description": "Delete Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.DeleteTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Mavzu muvaffaqiyatli o'chirildi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.DeleteTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/getAll": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Bu API barcha mavzularni qaytaradi.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Get all topics",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "default": 1000,
-                        "description": "Limit of topics (optional)",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "default": 0,
-                        "description": "Offset for topics (optional)",
-                        "name": "offset",
-                        "in": "query"
-                    },
-                    {
-                        "description": "Filter for subjects",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.GetAllFilter"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Mavzular ro'yxati",
-                        "schema": {
-                            "$ref": "#/definitions/topic.GetAllTopicsResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritildi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Ichki xatolik",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/topics/update": {
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Ushbu API orqali mavjud topicni yangilashingiz mumkin.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Topic"
-                ],
-                "summary": "Update an existing topic",
-                "parameters": [
-                    {
-                        "description": "Update Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.UpdateTopicReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Muvaffaqiyatli yangilandi",
-                        "schema": {
-                            "$ref": "#/definitions/topic.UpdateTopicResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritdingiz",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xatolik yuz berdi",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -2636,6 +2784,9 @@ const docTemplate = `{
         "group.GetAllGroupsResp": {
             "type": "object",
             "properties": {
+                "count": {
+                    "type": "integer"
+                },
                 "groups": {
                     "type": "array",
                     "items": {
@@ -2645,7 +2796,7 @@ const docTemplate = `{
                 "limit": {
                     "type": "integer"
                 },
-                "offset": {
+                "page": {
                     "type": "integer"
                 }
             }
@@ -2741,14 +2892,6 @@ const docTemplate = `{
                 }
             }
         },
-        "group.StudentId": {
-            "type": "object",
-            "properties": {
-                "hh_id": {
-                    "type": "string"
-                }
-            }
-        },
         "group.TeacherGroups": {
             "type": "object",
             "properties": {
@@ -2757,14 +2900,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/group.Group"
                     }
-                }
-            }
-        },
-        "group.TeacherId": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
                 }
             }
         },
@@ -3167,6 +3302,105 @@ const docTemplate = `{
                 }
             }
         },
+        "task.CreateTaskReq": {
+            "type": "object",
+            "properties": {
+                "group_id": {
+                    "type": "string"
+                },
+                "topic_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "task.CreateTaskResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "task.DeleteTaskReq": {
+            "type": "object",
+            "properties": {
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "task.DeleteTaskResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "task.GetTaskResp": {
+            "type": "object",
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/task.Question"
+                    }
+                },
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "task.Question": {
+            "type": "object",
+            "properties": {
+                "constrains": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "difficulty": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "input_info": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "memory_limit": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "output_info": {
+                    "type": "string"
+                },
+                "time_limit": {
+                    "type": "integer"
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "topic.CreateTopicReq": {
             "type": "object",
             "properties": {
@@ -3208,21 +3442,16 @@ const docTemplate = `{
                 }
             }
         },
-        "topic.GetAllFilter": {
-            "type": "object",
-            "properties": {
-                "subject_id": {
-                    "type": "string"
-                }
-            }
-        },
         "topic.GetAllTopicsResp": {
             "type": "object",
             "properties": {
+                "count": {
+                    "type": "integer"
+                },
                 "limit": {
                     "type": "integer"
                 },
-                "offset": {
+                "page": {
                     "type": "integer"
                 },
                 "topics": {

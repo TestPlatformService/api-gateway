@@ -20,7 +20,7 @@ import (
 // @Success 200 {object} topic.CreateTopicResp "Muvaffaqiyatli yaratildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/create [post]
+// @Router /api/topics/create [post]
 func (h *Handler) CreateTopic(c *gin.Context) {
 	req := pb.CreateTopicReq{}
 	err := c.ShouldBindJSON(&req)
@@ -35,7 +35,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("CreateTopic request error: %v", err))
 		c.JSON(500, model.Error{
-			Message: "Error",
+			Message: err.Error(),
 		})
 		return
 	}
@@ -52,7 +52,7 @@ func (h *Handler) CreateTopic(c *gin.Context) {
 // @Success 200 {object} topic.UpdateTopicResp "Muvaffaqiyatli yangilandi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/update [put]
+// @Router /api/topics/update [put]
 func (h *Handler) UpdateTopic(c *gin.Context) {
 	req := pb.UpdateTopicReq{}
 	err := c.ShouldBindJSON(&req)
@@ -84,7 +84,7 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 // @Success 200 {object} topic.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /topics/delete [delete]
+// @Router /api/topics/delete [delete]
 func (h *Handler) DeleteTopic(c *gin.Context) {
 	req := pb.DeleteTopicReq{}
 	err := c.ShouldBindJSON(&req)
@@ -114,37 +114,30 @@ func (h *Handler) DeleteTopic(c *gin.Context) {
 // @Produce  json
 // @Security ApiKeyAuth
 // @Param limit query int false "Limit of topics (optional)" default(1000)
-// @Param offset query int false "Offset for topics (optional)" default(0)
-// @Param data body topic.GetAllFilter true "Filter for subjects"
+// @Param page query int false "Page for topics (optional)" default(1)
+// @Param data query string false "Filter for subjects (subject_id)"
 // @Success 200 {object} topic.GetAllTopicsResp "Mavzular ro'yxati"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritildi"
 // @Failure 500 {object} model.Error "Ichki xatolik"
-// @Router /topics/getAll [get]
+// @Router /api/topics/getAll [get]
 func (h *Handler) GetAllTopics(c *gin.Context) {
 	req := pb.GetAllFilter{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatolik: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritdingiz",
-		})
-		return
-	}
+	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
-	offset := c.Query("offset")
+	page := c.Query("page")
 	var lim, off int
-	lim, err = strconv.Atoi(limit)
+	lim, err := strconv.Atoi(limit)
 	if err != nil {
 		lim = 1000
 	}
-	off, err = strconv.Atoi(offset)
+	off, err = strconv.Atoi(page)
 	if err != nil {
-		off = 0
+		off = 1
 	}
 	resp, err := h.Topic.GetAllTopics(c, &pb.GetAllTopicsReq{
 		SubjectId: req.SubjectId,
 		Limit:     int32(lim),
-		Offset:    int32(off),
+		Page:    int32(off),
 	})
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("GetAllTopics request error: %v", err))

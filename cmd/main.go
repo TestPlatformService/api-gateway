@@ -9,6 +9,7 @@ import (
 	"api/genproto/notification"
 	"api/genproto/question"
 	"api/genproto/subject"
+	"api/genproto/task"
 	"api/genproto/topic"
 	"api/genproto/user"
 	"api/logs"
@@ -46,6 +47,7 @@ func NewHandler() *handler.Handler {
 	QuestionOutput := question.NewOutputServiceClient(connQuestion)
 	QuestionInput := question.NewInputServiceClient(connQuestion)
 	QuestionTest := question.NewTestCaseServiceClient(connQuestion)
+	Task := task.NewTaskServiceClient(connQuestion)
 
 	logs := logs.NewLogger()
 	en, err := casbin.CasbinEnforcer(logs)
@@ -64,5 +66,6 @@ func NewHandler() *handler.Handler {
 		TestCase:       QuestionTest,
 		Topic:          Topic,
 		Subject:        Subject,
+		Task:           Task,
 	}
 }

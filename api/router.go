@@ -55,15 +55,15 @@ func Router(hand *handler.Handler) *gin.Engine {
 		group.POST("/create", hand.CreateGroup)
 		group.PUT("/update", hand.UpdateGroup)
 		group.DELETE("/delete", hand.DeleteGroup)
-		group.GET("/getById", hand.GetGroupById)
+		group.GET("/getById/:group_id", hand.GetGroupById)
 		group.GET("/getAll", hand.GetAllGroups)
 		group.POST("/add-student", hand.AddStudentToGroup)
 		group.DELETE("delete-student", hand.DeleteStudentFromGroup)
 		group.POST("add-teacher", hand.AddTeacherToGroup)
 		group.DELETE("delete-teacher", hand.DeleteTeacherFromGroup)
-		group.GET("student-groups", hand.GetStudentGroups)
-		group.GET("tacher-groups", hand.GetTeacherGroups)
-		group.GET("students", hand.GetGroupStudents)
+		group.GET("student-groups/:hh_id", hand.GetStudentGroups)
+		group.GET("tacher-groups/:id", hand.GetTeacherGroups)
+		group.GET("students/:group_id", hand.GetGroupStudents)
 	}
 
 	topic := router.Group("/api/topics")
@@ -73,7 +73,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)
 		topic.DELETE("/delete", hand.DeleteTopic)
-		topic.GET("/getAll", hand.GetAllTopics)
+		topic.GET("/getAll/", hand.GetAllTopics)
 	}
 
 	subject := router.Group("/api/subjects")
@@ -128,6 +128,15 @@ func Router(hand *handler.Handler) *gin.Engine {
 		testCase.GET("/:id", hand.GetTestCaseById)
 		testCase.DELETE("/delete/:id", hand.DeleteTestCase)
 		testCase.GET("/question/:question_id", hand.GetTestCasesByQuestionId)
+	}
+
+	task := router.Group("/api/task")
+	task.Use(middleware.Check)
+	task.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		task.POST("/create", hand.CreateTask)
+		task.DELETE("/delete", hand.DeleteTask)
+		task.GET("get", hand.GetTask)
 	}
 
 	return router

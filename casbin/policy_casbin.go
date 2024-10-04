@@ -72,15 +72,18 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"admin", "/api/groups/create", "POST"},
 		{"admin", "/api/groups/update", "PUT"},
 		{"admin", "/api/groups/delete", "DELETE"},
-		{"admin", "/api/groups/getById", "GET"},
+		{"admin", "/api/groups/getById/:group_id", "GET"},
 		{"admin", "/api/groups/getAll", "GET"},
 		{"admin", "/api/groups/add-student", "POST"},
 		{"admin", "/api/groups/delete-student", "DELETE"},
 		{"admin", "/api/groups/add-teacher", "POST"},
 		{"admin", "/api/groups/delete-teacher", "DELETE"},
-		{"admin", "/api/groups/student-groups", "GET"},
-		{"admin", "/api/groups/teacher-groups", "GET"},
-		{"admin", "/api/group-students", "GET"},
+		{"admin", "/api/groups/student-groups/:hh_id", "GET"},
+		{"admin", "/api/groups/teacher-groups/:id", "GET"},
+		{"admin", "/api/group-students/:group_id", "GET"},
+		{"student", "/api/groups/student-groups/:hh_id", "GET"},
+		{"teacher", "/api/groups/teacher-groups/:id", "GET"},
+
 
 		//topic
 		{"admin", "/api/topics/create", "POST"},
@@ -149,6 +152,17 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"teacher", "/api/test-cases/:id", "GET"},
 		{"teacher", "/api/test-cases/question/:question_id", "GET"},
 		{"teacher", "/api/test-cases/delete/:id", "DELETE"},
+
+		//task
+		{"teacher", "/api/task/create", "POST"},
+		{"teacher", "/api/task/delete", "DELETE"},
+		{"teacher", "api/task/get", "GET"},
+		{"student", "api/task/get", "GET"},
+
+		// admin
+		{"admin", "/api/task/create", "POST"},
+		{"admin", "/api/task/delete", "DELETE"},
+		{"admin", "api/task/get", "GET"},
 	}
 
 	_, err = enforcer.AddPolicies(policies)

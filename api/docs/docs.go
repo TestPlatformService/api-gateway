@@ -1721,6 +1721,165 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/task/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Yangi task yaratish uchun ma'lumotlarni qabul qiladi",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Task yaratish",
+                "parameters": [
+                    {
+                        "description": "Task yaratish uchun zarur ma'lumotlar",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.CreateTaskReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Yaratilgan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.CreateTaskResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritilgan",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Berilgan ID bo'yicha taskni o'chiradi",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Task o'chirish",
+                "parameters": [
+                    {
+                        "description": "O'chirilishi kerak bo'lgan task ID",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.DeleteTaskReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "O'chirilgan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.DeleteTaskResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Noto'g'ri ma'lumot kiritilgan",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/get": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Berilgan IDlar bo'yicha task ma'lumotlarini olish",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Taskni olish",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Olish uchun task ID",
+                        "name": "task_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Foydalanuvchi ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Mavzu ID",
+                        "name": "topic_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Olingan task haqida ma'lumot",
+                        "schema": {
+                            "$ref": "#/definitions/task.GetTaskResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Serverda xato",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/api/test-cases/create": {
             "post": {
                 "security": [
@@ -2033,7 +2192,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Filter for subjects (subject_id)",
-                        "name": "data",
+                        "name": "subject_id",
                         "in": "query"
                     }
                 ],
@@ -2504,150 +2663,6 @@ const docTemplate = `{
                         "description": "Server error",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/task/create": {
-            "post": {
-                "description": "Yangi task yaratish uchun ma'lumotlarni qabul qiladi",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "Task yaratish",
-                "parameters": [
-                    {
-                        "description": "Task yaratish uchun zarur ma'lumotlar",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/task.CreateTaskReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Yaratilgan task haqida ma'lumot",
-                        "schema": {
-                            "$ref": "#/definitions/task.CreateTaskResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritilgan",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xato",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/task/delete": {
-            "delete": {
-                "description": "Berilgan ID bo'yicha taskni o'chiradi",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "Task o'chirish",
-                "parameters": [
-                    {
-                        "description": "O'chirilishi kerak bo'lgan task ID",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/task.DeleteTaskReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "O'chirilgan task haqida ma'lumot",
-                        "schema": {
-                            "$ref": "#/definitions/task.DeleteTaskResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Noto'g'ri ma'lumot kiritilgan",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xato",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/task/get": {
-            "get": {
-                "description": "Berilgan IDlar bo'yicha task ma'lumotlarini olish",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tasks"
-                ],
-                "summary": "Taskni olish",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Olish uchun task ID",
-                        "name": "task_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Foydalanuvchi ID",
-                        "name": "user_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Mavzu ID",
-                        "name": "topic_id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Olingan task haqida ma'lumot",
-                        "schema": {
-                            "$ref": "#/definitions/task.GetTaskResp"
-                        }
-                    },
-                    "500": {
-                        "description": "Serverda xato",
-                        "schema": {
-                            "$ref": "#/definitions/model.Error"
                         }
                     }
                 }

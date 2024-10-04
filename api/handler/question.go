@@ -202,7 +202,6 @@ func (h *Handler) UpdateQuestion(c *gin.Context) {
 		MemoryLimit: req.MemoryLimit,
 	}
 
-	fmt.Println("req2", req2)
 	_, err := h.Question.UpdateQuestion(c, &req2)
 	if err != nil {
 		h.Log.Error("Failed to update question", "error", err.Error())

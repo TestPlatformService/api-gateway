@@ -2192,7 +2192,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Filter for subjects (subject_id)",
-                        "name": "data",
+                        "name": "subject_id",
                         "in": "query"
                     }
                 ],

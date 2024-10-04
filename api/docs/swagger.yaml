@@ -2021,7 +2021,7 @@ paths:
         type: integer
       - description: Filter for subjects (subject_id)
         in: query
-        name: data
+        name: subject_id
         type: string
       produces:
       - application/json

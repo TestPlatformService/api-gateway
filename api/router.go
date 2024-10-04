@@ -69,6 +69,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	topic := router.Group("/api/topics")
 	topic.Use(middleware.Check)
 	topic.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	topic.Use(handler.CORSMiddleware())
 	{
 		topic.POST("/create", hand.CreateTopic)
 		topic.PUT("/update", hand.UpdateTopic)

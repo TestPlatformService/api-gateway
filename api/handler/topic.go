@@ -81,7 +81,7 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 // @Produce json
 // @Security ApiKeyAuth
 // @Param topic_id path string true "Topic ID"
-// @Success 200 {object} pb.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
+// @Success 200 {object} topic.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
 // @Router /api/topics/delete/{topic_id} [delete]

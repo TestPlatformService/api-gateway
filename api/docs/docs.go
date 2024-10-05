@@ -2105,7 +2105,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/topics/delete": {
+        "/api/topics/delete/{topic_id}": {
             "delete": {
                 "security": [
                     {
@@ -2125,13 +2125,11 @@ const docTemplate = `{
                 "summary": "Delete an existing topic",
                 "parameters": [
                     {
-                        "description": "Delete Topic request body",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/topic.DeleteTopicReq"
-                        }
+                        "type": "string",
+                        "description": "Topic ID",
+                        "name": "topic_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3428,14 +3426,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "topic.DeleteTopicReq": {
-            "type": "object",
-            "properties": {
-                "topic_id": {
                     "type": "string"
                 }
             }

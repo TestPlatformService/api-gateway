@@ -491,11 +491,6 @@ definitions:
       id:
         type: string
     type: object
-  topic.DeleteTopicReq:
-    properties:
-      topic_id:
-        type: string
-    type: object
   topic.DeleteTopicResp:
     properties:
       status:
@@ -1979,18 +1974,17 @@ paths:
       summary: Create a new topic
       tags:
       - Topic
-  /api/topics/delete:
+  /api/topics/delete/{topic_id}:
     delete:
       consumes:
       - application/json
       description: Ushbu API orqali mavjud topicni o'chirishingiz mumkin.
       parameters:
-      - description: Delete Topic request body
-        in: body
-        name: data
+      - description: Topic ID
+        in: path
+        name: topic_id
         required: true
-        schema:
-          $ref: '#/definitions/topic.DeleteTopicReq'
+        type: string
       produces:
       - application/json
       responses:

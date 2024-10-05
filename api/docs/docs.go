@@ -3412,7 +3412,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "question_count": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "subject_id": {
                     "type": "string"
@@ -3494,7 +3494,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "question_count": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "subject_id": {
                     "type": "string"

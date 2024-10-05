@@ -480,7 +480,7 @@ definitions:
       name:
         type: string
       question_count:
-        type: string
+        type: integer
       subject_id:
         type: string
     type: object
@@ -533,7 +533,7 @@ definitions:
       name:
         type: string
       question_count:
-        type: string
+        type: integer
       subject_id:
         type: string
     type: object

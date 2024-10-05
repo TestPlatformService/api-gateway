@@ -3401,7 +3401,7 @@
                     "type": "string"
                 },
                 "question_count": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "subject_id": {
                     "type": "string"
@@ -3483,7 +3483,7 @@
                     "type": "string"
                 },
                 "question_count": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "subject_id": {
                     "type": "string"

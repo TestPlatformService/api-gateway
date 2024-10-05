@@ -151,21 +151,21 @@ func(h *Handler) GetAllGroups(c *gin.Context){
 	req.SubjectId = c.Query("subject_id")
 	limit := c.Query("limit")
 	page := c.Query("page")
-	var lim, off int
+	var lim, pag int
 	lim, err := strconv.Atoi(limit)
 	if err != nil{
 		lim = 1000
 	}
-	off, err = strconv.Atoi(page)
+	pag, err = strconv.Atoi(page)
 	if err != nil{
-		off = 0
+		pag = 1
 	}
 	
 	resp, err := h.Group.GetAllGroups(c, &pb.GetAllGroupsReq{
 		Room: req.Room,
 		SubjectId: req.SubjectId,
 		Limit: int32(lim),
-		Page: int32(off),
+		Page: int32(pag),
 	})
 	if err != nil{
 		h.Log.Error(fmt.Sprintf("GetAllGroups request error: %v", err))

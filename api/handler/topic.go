@@ -80,21 +80,14 @@ func (h *Handler) UpdateTopic(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
-// @Param data body topic.DeleteTopicReq true "Delete Topic request body"
-// @Success 200 {object} topic.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
+// @Param topic_id path string true "Topic ID"
+// @Success 200 {object} pb.DeleteTopicResp "Mavzu muvaffaqiyatli o'chirildi"
 // @Failure 400 {object} model.Error "Noto'g'ri ma'lumot kiritdingiz"
 // @Failure 500 {object} model.Error "Serverda xatolik yuz berdi"
-// @Router /api/topics/delete [delete]
+// @Router /api/topics/delete/{topic_id} [delete]
 func (h *Handler) DeleteTopic(c *gin.Context) {
 	req := pb.DeleteTopicReq{}
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		h.Log.Error(fmt.Sprintf("Ma'lumotlarni olishda xatolik: %v", err))
-		c.JSON(http.StatusBadRequest, model.Error{
-			Message: "Noto'g'ri ma'lumot kiritdingiz",
-		})
-		return
-	}
+	req.TopicId = c.Param("topic_id")
 	resp, err := h.Topic.DeleteTopic(c, &req)
 	if err != nil {
 		h.Log.Error(fmt.Sprintf("DeleteTopic request error: %v", err))

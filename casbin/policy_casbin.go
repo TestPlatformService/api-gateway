@@ -56,6 +56,7 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"admin", "/api/user/all", "GET"},
 		{"admin", "/api/user/updateprofile", "PUT"},
 		{"admin", "/api/user/update", "PUT"},
+		{"admin", ".api/user/photo", "POST"},
 
 		{"student", "/api/user/getprofile", "GET"},
 		{"student", "/api/user/updateprofile", "PUT"},
@@ -64,9 +65,11 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 
 		{"teacher", "/api/user/getprofile", "GET"},
 		{"teacher", "/api/user/updateprofile", "PUT"},
+		{"teacher", ".api/user/photo", "POST"},
 
 		{"support", "/api/user/getprofile", "GET"},
 		{"support", "/api/user/updateprofile", "PUT"},
+		{"support", ".api/user/photo", "POST"},
 
 		//group
 		{"admin", "/api/groups/create", "POST"},
@@ -93,6 +96,7 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 
 		{"teacher", "/api/topics/create", "POST"},
 		{"teacher", "/api/topics/update", "PUT"},
+
 		{"teacher", "/api/topics/delete/:topic_id", "DELETE"},
 		{"teacher", "/api/topics/getAll", "GET"},
 

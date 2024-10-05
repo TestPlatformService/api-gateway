@@ -1233,7 +1233,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "topic_name",
-                        "name": "topic_name",
+                        "name": "topic_id",
                         "in": "query"
                     },
                     {

@@ -85,7 +85,7 @@ func (h *Handler) GetQuestionById(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param limit query string false "limit"
 // @Param page query string false "page"
-// @Param topic_name query string false "topic_name"
+// @Param topic_id query string false "topic_name"
 // @Param type query string false "type"
 // @Param name query string false "name"
 // @Param number query string false "number"
@@ -133,7 +133,7 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 		pagestr = 1
 	}
 	topicid := ""
-	if req2.TopicName != "" {
+	if req2.TopicId != "" {
 		topicId, err := h.Topic.GetTopicIdByName(c, &topic.TopicNameReq{Name: req2.Name})
 		if err != nil {
 			h.Log.Error("Failed to get topic", "error", err.Error())

@@ -1444,7 +1444,7 @@ paths:
         type: string
       - description: topic_name
         in: query
-        name: topic_name
+        name: topic_id
         type: string
       - description: type
         in: query

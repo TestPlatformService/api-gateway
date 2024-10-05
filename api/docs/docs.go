@@ -3260,6 +3260,9 @@ const docTemplate = `{
         "subject.GetAllSubjectsResponse": {
             "type": "object",
             "properties": {
+                "count": {
+                    "type": "integer"
+                },
                 "subjects": {
                     "type": "array",
                     "items": {
@@ -3410,6 +3413,9 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "question_count": {
+                    "type": "string"
+                },
                 "subject_id": {
                     "type": "string"
                 }
@@ -3477,6 +3483,9 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "question_count": {
+                    "type": "integer"
+                },
                 "subject_id": {
                     "type": "string"
                 }
@@ -3492,6 +3501,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "question_count": {
                     "type": "string"
                 },
                 "subject_id": {

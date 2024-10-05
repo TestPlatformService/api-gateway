@@ -3249,6 +3249,9 @@
         "subject.GetAllSubjectsResponse": {
             "type": "object",
             "properties": {
+                "count": {
+                    "type": "integer"
+                },
                 "subjects": {
                     "type": "array",
                     "items": {
@@ -3399,6 +3402,9 @@
                 "name": {
                     "type": "string"
                 },
+                "question_count": {
+                    "type": "string"
+                },
                 "subject_id": {
                     "type": "string"
                 }
@@ -3466,6 +3472,9 @@
                 "name": {
                     "type": "string"
                 },
+                "question_count": {
+                    "type": "integer"
+                },
                 "subject_id": {
                     "type": "string"
                 }
@@ -3481,6 +3490,9 @@
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "question_count": {
                     "type": "string"
                 },
                 "subject_id": {

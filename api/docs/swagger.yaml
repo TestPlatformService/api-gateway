@@ -380,6 +380,8 @@ definitions:
     type: object
   subject.GetAllSubjectsResponse:
     properties:
+      count:
+        type: integer
       subjects:
         items:
           $ref: '#/definitions/subject.GetAll'
@@ -477,6 +479,8 @@ definitions:
         type: string
       name:
         type: string
+      question_count:
+        type: string
       subject_id:
         type: string
     type: object
@@ -520,6 +524,8 @@ definitions:
         type: string
       name:
         type: string
+      question_count:
+        type: integer
       subject_id:
         type: string
     type: object
@@ -530,6 +536,8 @@ definitions:
       id:
         type: string
       name:
+        type: string
+      question_count:
         type: string
       subject_id:
         type: string

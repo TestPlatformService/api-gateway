@@ -189,6 +189,9 @@ func (h *Handler) UpdateQuestion(c *gin.Context) {
 		Language:    req.Language,
 		TimeLimit:   req.TimeLimit,
 		MemoryLimit: req.MemoryLimit,
+		Description: req.Description,
+		Constrains:  req.Constrains,
+		Image:       req.Image,
 	}
 
 	_, err := h.Question.UpdateQuestion(c, &req2)

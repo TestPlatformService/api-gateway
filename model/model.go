@@ -24,4 +24,7 @@ type UpdateQuestionRequest struct {
 	Language    string `json:"language"`
 	TimeLimit   int64  `json:"time_limit"`
 	MemoryLimit int64  `json:"memory_limit"`
+	Description string `json:"description"`
+	Constrains  string `json:"constrains"`
+	Image       string `json:"image"`
 }

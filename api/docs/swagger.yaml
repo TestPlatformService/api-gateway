@@ -178,7 +178,13 @@ definitions:
     type: object
   model.UpdateQuestionRequest:
     properties:
+      constrains:
+        type: string
+      description:
+        type: string
       difficulty:
+        type: string
+      image:
         type: string
       input_info:
         type: string

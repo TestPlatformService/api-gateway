@@ -2946,7 +2946,16 @@ const docTemplate = `{
         "model.UpdateQuestionRequest": {
             "type": "object",
             "properties": {
+                "constrains": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
                 "difficulty": {
+                    "type": "string"
+                },
+                "image": {
                     "type": "string"
                 },
                 "input_info": {

@@ -3,7 +3,6 @@ package handler
 import (
 	"api/config"
 	"api/genproto/question"
-	"api/genproto/topic"
 	"api/model"
 	"context"
 	"fmt"
@@ -85,7 +84,7 @@ func (h *Handler) GetQuestionById(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param limit query string false "limit"
 // @Param page query string false "page"
-// @Param topic_id query string false "topic_name"
+// @Param topic_id query string false "topic_id"
 // @Param type query string false "type"
 // @Param name query string false "name"
 // @Param number query string false "number"
@@ -132,21 +131,11 @@ func (h *Handler) GetAllQuestions(c *gin.Context) {
 	} else {
 		pagestr = 1
 	}
-	topicid := ""
-	if req2.TopicId != "" {
-		topicId, err := h.Topic.GetTopicIdByName(c, &topic.TopicNameReq{Name: req2.Name})
-		if err != nil {
-			h.Log.Error("Failed to get topic", "error", err.Error())
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
-			return
-		}
-		topicid = topicId.Id
-	}
 
 	res, err := h.Question.GetAllQuestions(c, &question.GetAllQuestionsRequest{
 		Limit:      limitstr,
-		Page:     pagestr,
-		TopicId:    topicid,
+		Page:       pagestr,
+		TopicId:    req2.TopicId,
 		Type:       req2.Type,
 		Name:       req2.Name,
 		Number:     req2.Number,

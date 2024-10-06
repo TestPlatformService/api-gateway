@@ -599,7 +599,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Group ID (group_id)",
-                        "name": "data",
+                        "name": "group_id",
                         "in": "path",
                         "required": true
                     }
@@ -1232,7 +1232,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "topic_name",
+                        "description": "topic_id",
                         "name": "topic_id",
                         "in": "query"
                     },

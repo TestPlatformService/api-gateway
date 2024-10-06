@@ -362,7 +362,7 @@ func(h *Handler) GetTeacherGroups(c *gin.Context){
 // @Accept  json
 // @Produce  json
 // @Security ApiKeyAuth
-// @Param data path string true "Group ID (group_id)"
+// @Param group_id path string true "Group ID (group_id)"
 // @Success 200 {object} group.GroupStudents "Successful retrieval of group students"
 // @Failure 400 {object} model.Error "Bad request: invalid input data"
 // @Failure 500 {object} model.Error "Internal server error"

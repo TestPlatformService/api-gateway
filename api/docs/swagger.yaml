@@ -1808,11 +1808,6 @@ paths:
       - application/json
       description: Berilgan IDlar bo'yicha task ma'lumotlarini olish
       parameters:
-      - description: Olish uchun task ID
-        in: query
-        name: task_id
-        required: true
-        type: string
       - description: Foydalanuvchi ID
         in: query
         name: user_id

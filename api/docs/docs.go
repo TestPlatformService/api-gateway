@@ -1844,13 +1844,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Olish uchun task ID",
-                        "name": "task_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
                         "description": "Foydalanuvchi ID",
                         "name": "user_id",
                         "in": "query",

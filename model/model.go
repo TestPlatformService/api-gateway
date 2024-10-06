@@ -5,7 +5,7 @@ type Error struct {
 }
 
 type GetAllQuestionsRequest struct {
-	TopicName  string `form:"topic_name"`
+	TopicId    string `form:"topic_id"`
 	Type       string `form:"type"`
 	Name       string `form:"name"`
 	Number     int64  `form:"number"`

@@ -46,7 +46,6 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("WebSocket upgrade failed: %v", err), http.StatusBadRequest)
 		return
 	}
-	defer conn.Close()
 
 	conn.SetReadLimit(maxMessageSize)
 	conn.SetReadDeadline(time.Now().Add(pongWait))
@@ -80,6 +79,18 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+
+	// Ulanishni saqlash
+	h.ConnMutex.Lock()
+	h.Connections[userID] = conn
+	h.ConnMutex.Unlock()
+
+	defer func() {
+		h.ConnMutex.Lock()
+		delete(h.Connections, userID)
+		h.ConnMutex.Unlock()
+		conn.Close()
+	}()
 
 	// Dastlabki bildirishnomalarni yuborish
 	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
@@ -140,9 +151,35 @@ func (h *Handler) sendNotifications(conn *websocket.Conn, userID string) {
 	log.Printf("Olingan bildirishnomalar soni: %d", len(notifications.Notifications))
 
 	conn.SetWriteDeadline(time.Now().Add(writeWait))
-	if err := conn.WriteJSON(notifications); err != nil {
+	if err := conn.WriteJSON(map[string]interface{}{
+		"action":        "updateNotifications",
+		"notifications": notifications.Notifications,
+	}); err != nil {
 		log.Printf("Bildirishnomalarni yuborishda xatolik: %v", err)
 	} else {
 		log.Printf("Bildirishnomalar muvaffaqiyatli yuborildi")
+	}
+}
+
+func (h *Handler) CreateNotification(ctx context.Context, req *pb.CreateNotificationsReq) (*pb.CreateNotificationsRes, error) {
+	// Xabarnomani yaratish logikasi...
+	res, err := h.Notification.CreateNotification(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	// Yangi xabarnomani yaratgandan so'ng, uni WebSocket orqali yuborish
+	go h.broadcastNewNotification(req.UserId)
+
+	return res, nil
+}
+
+func (h *Handler) broadcastNewNotification(userID string) {
+	h.ConnMutex.Lock()
+	conn, ok := h.Connections[userID]
+	h.ConnMutex.Unlock()
+
+	if ok {
+		h.sendNotifications(conn, userID)
 	}
 }

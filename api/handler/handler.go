@@ -11,9 +11,11 @@ import (
 	"log"
 	"log/slog"
 	"strings"
+	"sync"
 
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 type Handler struct {
@@ -29,6 +31,8 @@ type Handler struct {
 	Task           task.TaskServiceClient
 	Log            *slog.Logger
 	Enforcer       *casbin.Enforcer
+	Connections    map[string]*websocket.Conn
+	ConnMutex      sync.Mutex
 }
 
 func CORSMiddleware() gin.HandlerFunc {

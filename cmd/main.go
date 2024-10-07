@@ -15,6 +15,7 @@ import (
 	"api/logs"
 	"log"
 
+	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -67,5 +68,6 @@ func NewHandler() *handler.Handler {
 		Topic:          Topic,
 		Subject:        Subject,
 		Task:           Task,
+		Connections:    make(map[string]*websocket.Conn),
 	}
 }

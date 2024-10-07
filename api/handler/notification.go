@@ -25,8 +25,8 @@ var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
-		// TODO: Ishlab chiqarish muhitida bu funksiyani xavfsizroq qiling
-		return true
+		log.Printf("WebSocket so'rovi keldi. Origin: %s", r.Header.Get("Origin"))
+		return true // Ishlab chiqarish muhitida bu funksiyani xavfsizroq qiling
 	},
 }
 
@@ -69,6 +69,7 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if msg.Action == "auth" {
+			log.Printf("Auth so'rovi keldi. Token: %s", msg.Token)
 			userID, _, err = token.GetUserInfoFromAccessToken(msg.Token)
 			if err != nil {
 				log.Printf("Noto'g'ri access token: %v", err)
@@ -81,6 +82,7 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Dastlabki bildirishnomalarni yuborish
+	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
 	h.sendNotifications(conn, userID)
 
 	// Ping yuborish uchun go-routine
@@ -114,11 +116,13 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if msg.Action == "markAsRead" {
+			log.Printf("markAsRead so'rovi keldi. ID: %s", msg.ID)
 			_, err = h.Notification.MarkNotificationAsRead(context.Background(), &pb.MarkNotificationAsReadReq{NotificationId: msg.ID})
 			if err != nil {
 				log.Println("mark as read:", err)
 				conn.WriteMessage(websocket.TextMessage, []byte("Failed to mark as read"))
 			} else {
+				log.Println("Xabar o'qilgan deb belgilandi")
 				h.sendNotifications(conn, userID)
 			}
 		}
@@ -126,15 +130,19 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) sendNotifications(conn *websocket.Conn, userID string) {
+	log.Printf("sendNotifications funksiyasi chaqirildi. UserID: %s", userID)
 	notifications, err := h.Notification.GetAllNotifications(context.Background(), &pb.GetNotificationsReq{UserId: userID})
 	if err != nil {
-		log.Println("Bildirishnomalarni olishda xatolik:", err)
+		log.Printf("Bildirishnomalarni olishda xatolik: %v", err)
 		conn.WriteMessage(websocket.TextMessage, []byte("Failed to get notifications"))
 		return
 	}
+	log.Printf("Olingan bildirishnomalar soni: %d", len(notifications.Notifications))
 
 	conn.SetWriteDeadline(time.Now().Add(writeWait))
 	if err := conn.WriteJSON(notifications); err != nil {
-		log.Println("Bildirishnomalarni yuborishda xatolik:", err)
+		log.Printf("Bildirishnomalarni yuborishda xatolik: %v", err)
+	} else {
+		log.Printf("Bildirishnomalar muvaffaqiyatli yuborildi")
 	}
 }

@@ -81,14 +81,14 @@ func (h *Handler) DeleteTask(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
-// @Param user_id query string true "Foydalanuvchi ID"
+// @Param hh_id query string true "Foydalanuvchi ID"
 // @Param topic_id query string true "Mavzu ID"
 // @Success 200 {object} task.GetTaskResp "Olingan task haqida ma'lumot"
 // @Failure 500 {object} model.Error "Serverda xato"
 // @Router /api/task/get [get]
 func (h *Handler) GetTask(c *gin.Context) {
 	req := pb.GetTaskReq{}
-	req.UserId = c.Query("user_id")
+	req.UserId = c.Query("hh_id")
 	req.TopicId = c.Query("topic_id")
 
 	resp, err := h.Task.GetTask(c, &req)

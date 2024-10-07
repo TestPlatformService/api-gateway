@@ -1866,7 +1866,7 @@ paths:
       parameters:
       - description: Foydalanuvchi ID
         in: query
-        name: user_id
+        name: hh_id
         required: true
         type: string
       - description: Mavzu ID

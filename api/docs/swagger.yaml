@@ -171,6 +171,33 @@ definitions:
       updated_at:
         type: string
     type: object
+  handler.InputOutput:
+    properties:
+      in:
+        type: string
+      out:
+        type: string
+    type: object
+  handler.RunRequest:
+    properties:
+      code:
+        description: Kod
+        type: string
+      io:
+        description: I/O ma'lumotlari
+        items:
+          $ref: '#/definitions/handler.InputOutput'
+        type: array
+      lang:
+        description: Dasturlash tili
+        type: string
+      memoryLimit:
+        description: Xotira cheklovi
+        type: integer
+      timeLimit:
+        description: Vaqt cheklovi
+        type: integer
+    type: object
   model.Error:
     properties:
       message:
@@ -716,6 +743,35 @@ paths:
       summary: Refresh token
       tags:
       - all
+  /api/check/submit:
+    post:
+      consumes:
+      - application/json
+      description: This API checks the submitted code using the checker service and
+        returns the result via SSE.
+      parameters:
+      - description: Request body containing code, language, limits, and I/O
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RunRequest'
+      produces:
+      - text/event-stream
+      responses:
+        "200":
+          description: Event stream with results
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/model.Error'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.Error'
+      summary: Check code with the checker service
   /api/groups/add-student:
     post:
       consumes:

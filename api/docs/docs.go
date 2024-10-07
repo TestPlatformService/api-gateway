@@ -1888,7 +1888,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Foydalanuvchi ID",
-                        "name": "user_id",
+                        "name": "hh_id",
                         "in": "query",
                         "required": true
                     },

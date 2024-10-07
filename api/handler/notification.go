@@ -100,8 +100,9 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 			h.sendNotifications(conn, userID)
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 				log.Printf("Foydalanuvchi chiqib ketdi: %v", err)
+				return
 			}
-			return
+
 		}
 	}()
 

@@ -6,7 +6,6 @@ import (
 	pb "api/genproto/notification"
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -15,108 +14,84 @@ import (
 )
 
 const (
-	writeWait      = 10 * time.Second
-	pongWait       = 60 * time.Second
-	pingPeriod     = (pongWait * 9) / 10
-	maxMessageSize = 512
+	writeWait  = 10 * time.Second
+	pongWait   = 60 * time.Second
+	pingPeriod = (pongWait * 9) / 10
 )
 
 var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		// TODO: Ishlab chiqarish muhitida bu funksiyani xavfsizroq qiling
+		return true
+	},
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
-	CheckOrigin: func(r *http.Request) bool {
-		log.Printf("WebSocket so'rovi keldi. Origin: %s", r.Header.Get("Origin"))
-		return true // Ishlab chiqarish muhitida bu funksiyani xavfsizroq qiling
-	},
 }
 
 type WebSocketMessage struct {
-	Action string `json:"action"`
-	ID     string `json:"id"`
-	Token  string `json:"token"`
+	Type    string      `json:"type"`
+	Action  string      `json:"action,omitempty"`
+	ID      string      `json:"id,omitempty"`
+	Token   string      `json:"token,omitempty"`
+	Payload interface{} `json:"payload,omitempty"`
 }
 
 func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
-	log.Printf("WebSocket ulanish so'rovi: %s", r.URL)
-	log.Printf("WebSocket ulanish headerlari: %v", r.Header)
+	log.Println("WebSocket ulanish so'rovi qabul qilindi")
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Printf("WebSocket upgrade xatosi: %v", err)
-		http.Error(w, fmt.Sprintf("WebSocket upgrade failed: %v", err), http.StatusBadRequest)
+		log.Printf("WebSocket upgrader xatosi: %v", err)
 		return
 	}
 
-	conn.SetReadLimit(maxMessageSize)
-	conn.SetReadDeadline(time.Now().Add(pongWait))
-	conn.SetPongHandler(func(string) error { conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	ctx, cancel := context.WithCancel(r.Context())
+	defer cancel()
 
-	// Autentifikatsiya
-	var userID string
-	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
-	h.sendNotifications(conn, userID)
-	for {
-		_, message, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("read:", err)
-			return
-		}
-
-		var msg WebSocketMessage
-		err = json.Unmarshal(message, &msg)
-		if err != nil {
-			log.Println("unmarshal:", err)
-			continue
-		}
-
-		if msg.Action == "auth" {
-			log.Printf("Auth so'rovi keldi. Token: %s", msg.Token)
-			userID, _, err = token.GetUserInfoFromAccessToken(msg.Token)
-			if err != nil {
-				log.Printf("Noto'g'ri access token: %v", err)
-				conn.WriteMessage(websocket.TextMessage, []byte("Invalid access token"))
-				return
-			}
-			log.Printf("Foydalanuvchi autentifikatsiyadan o'tdi: %s", userID)
-			break
-		}
-	}
-
-	// Ulanishni saqlash
-	h.ConnMutex.Lock()
-	h.Connections[userID] = conn
-	h.ConnMutex.Unlock()
-
-	defer func() {
-		h.ConnMutex.Lock()
-		delete(h.Connections, userID)
-		h.ConnMutex.Unlock()
+	go func() {
+		<-ctx.Done()
 		conn.Close()
 	}()
 
-	// Dastlabki bildirishnomalarni yuborish
-	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
-	h.sendNotifications(conn, userID)
+	defer func() {
+		if err := conn.Close(); err != nil {
+			log.Printf("WebSocket ulanishini yopishda xatolik: %v", err)
+		}
+	}()
 
-	// Ping yuborish uchun go-routine
+	log.Println("WebSocket ulanishi muvaffaqiyatli o'rnatildi")
+
+	conn.SetReadLimit(512)
+	conn.SetReadDeadline(time.Now().Add(pongWait))
+	conn.SetPongHandler(func(string) error {
+		conn.SetReadDeadline(time.Now().Add(pongWait))
+		return nil
+	})
+
+	var userID string
+
+	ticker := time.NewTicker(pingPeriod)
+	defer ticker.Stop()
+
 	go func() {
-		ticker := time.NewTicker(pingPeriod)
-		defer ticker.Stop()
 		for {
-			<-ticker.C
-			conn.SetWriteDeadline(time.Now().Add(writeWait))
-			if err := conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+			select {
+			case <-ticker.C:
+				if err := conn.WriteControl(websocket.PingMessage, []byte{}, time.Now().Add(writeWait)); err != nil {
+					log.Println("Ping yuborishda xatolik:", err)
+					return
+				}
+			case <-ctx.Done():
 				return
 			}
 		}
 	}()
 
-	// Asosiy xabarlarni o'qish tsikli
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("Xatoni o'qish: %v", err)
+				log.Printf("Xabarni o'qishda xatolik: %v", err)
 			}
 			break
 		}
@@ -124,64 +99,59 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		var msg WebSocketMessage
 		err = json.Unmarshal(message, &msg)
 		if err != nil {
-			log.Println("unmarshal:", err)
+			log.Println("JSON ni ochishda xatolik:", err)
+			sendError(conn, "Invalid message format")
 			continue
 		}
 
-		if msg.Action == "markAsRead" {
-			log.Printf("markAsRead so'rovi keldi. ID: %s", msg.ID)
-			_, err = h.Notification.MarkNotificationAsRead(context.Background(), &pb.MarkNotificationAsReadReq{NotificationId: msg.ID})
+		switch msg.Type {
+		case "auth":
+			userID, _, err = token.GetUserInfoFromAccessToken(msg.Token)
 			if err != nil {
-				log.Println("mark as read:", err)
-				conn.WriteMessage(websocket.TextMessage, []byte("Failed to mark as read"))
+				log.Printf("Noto'g'ri access token: %v", err)
+				sendError(conn, "Invalid access token")
+				continue
+			}
+			log.Printf("Foydalanuvchi ID: %s autentifikatsiyadan o'tdi", userID)
+			h.sendNotifications(conn, userID)
+
+		case "markAsRead":
+			if userID == "" {
+				sendError(conn, "Not authenticated")
+				continue
+			}
+			_, err = h.Notification.MarkNotificationAsRead(ctx, &pb.MarkNotificationAsReadReq{NotificationId: msg.ID})
+			if err != nil {
+				log.Println("O'qilgan deb belgilashda xatolik:", err)
+				sendError(conn, "Failed to mark as read")
 			} else {
-				log.Println("Xabar o'qilgan deb belgilandi")
 				h.sendNotifications(conn, userID)
 			}
+
+		default:
+			log.Printf("Noma'lum xabar turi: %s", msg.Type)
+			sendError(conn, "Unknown message type")
 		}
 	}
 }
 
 func (h *Handler) sendNotifications(conn *websocket.Conn, userID string) {
-	log.Printf("sendNotifications funksiyasi chaqirildi. UserID: %s", userID)
 	notifications, err := h.Notification.GetAllNotifications(context.Background(), &pb.GetNotificationsReq{UserId: userID})
 	if err != nil {
-		log.Printf("Bildirishnomalarni olishda xatolik: %v", err)
-		conn.WriteMessage(websocket.TextMessage, []byte("Failed to get notifications"))
+		log.Println("Bildirishnomalarni olishda xatolik:", err)
+		sendError(conn, "Failed to get notifications")
 		return
 	}
-	log.Printf("Olingan bildirishnomalar soni: %d", len(notifications.Notifications))
 
 	conn.SetWriteDeadline(time.Now().Add(writeWait))
-	if err := conn.WriteJSON(map[string]interface{}{
-		"action":        "updateNotifications",
-		"notifications": notifications.Notifications,
-	}); err != nil {
-		log.Printf("Bildirishnomalarni yuborishda xatolik: %v", err)
-	} else {
-		log.Printf("Bildirishnomalar muvaffaqiyatli yuborildi")
+	if err := conn.WriteJSON(WebSocketMessage{Type: "notifications", Payload: notifications}); err != nil {
+		log.Println("Bildirishnomalarni yuborishda xatolik:", err)
 	}
 }
 
-func (h *Handler) CreateNotification(ctx context.Context, req *pb.CreateNotificationsReq) (*pb.CreateNotificationsRes, error) {
-	// Xabarnomani yaratish logikasi...
-	res, err := h.Notification.CreateNotification(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-
-	// Yangi xabarnomani yaratgandan so'ng, uni WebSocket orqali yuborish
-	go h.broadcastNewNotification(req.UserId)
-
-	return res, nil
-}
-
-func (h *Handler) broadcastNewNotification(userID string) {
-	h.ConnMutex.Lock()
-	conn, ok := h.Connections[userID]
-	h.ConnMutex.Unlock()
-
-	if ok {
-		h.sendNotifications(conn, userID)
+func sendError(conn *websocket.Conn, message string) {
+	conn.SetWriteDeadline(time.Now().Add(writeWait))
+	if err := conn.WriteJSON(WebSocketMessage{Type: "error", Payload: message}); err != nil {
+		log.Printf("Xato xabarini yuborishda muammo: %v", err)
 	}
 }

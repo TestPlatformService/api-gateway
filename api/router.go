@@ -139,9 +139,12 @@ func Router(hand *handler.Handler) *gin.Engine {
 		task.GET("get", hand.GetTask)
 	}
 
+	check := router.Group("/api/check")
+	check.Use(middleware.Check)
+	check.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
+	{
+		task.POST("/submit", hand.ProxyChecker)
+	}
+
 	return router
 }
-
-// get question by Id
-// Topic
-// group

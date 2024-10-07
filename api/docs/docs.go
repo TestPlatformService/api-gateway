@@ -107,6 +107,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/check/submit": {
+            "post": {
+                "description": "This API checks the submitted code using the checker service and returns the result via SSE.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/event-stream"
+                ],
+                "summary": "Check code with the checker service",
+                "parameters": [
+                    {
+                        "description": "Request body containing code, language, limits, and I/O",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.RunRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event stream with results",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/api/groups/add-student": {
             "post": {
                 "security": [
@@ -2925,6 +2968,45 @@ const docTemplate = `{
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "handler.InputOutput": {
+            "type": "object",
+            "properties": {
+                "in": {
+                    "type": "string"
+                },
+                "out": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.RunRequest": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Kod",
+                    "type": "string"
+                },
+                "io": {
+                    "description": "I/O ma'lumotlari",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handler.InputOutput"
+                    }
+                },
+                "lang": {
+                    "description": "Dasturlash tili",
+                    "type": "string"
+                },
+                "memoryLimit": {
+                    "description": "Xotira cheklovi",
+                    "type": "integer"
+                },
+                "timeLimit": {
+                    "description": "Vaqt cheklovi",
+                    "type": "integer"
                 }
             }
         },

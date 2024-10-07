@@ -68,7 +68,7 @@ func (h *Handler) GetQuestionById(c *gin.Context) {
 	}
 	res, err := h.Question.GetQuestion(c, &req)
 	if err != nil {
-		h.Log.Error("Failed to create question", "error", err.Error())
+		h.Log.Error("Failed to get question", "error", err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
 		return
 	}

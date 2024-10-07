@@ -53,12 +53,8 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Autentifikatsiya
 	var userID string
-	go func() {
-		for {
-			time.Sleep(5 * time.Second)
-			h.sendNotifications(conn, userID)
-		}
-	}()
+	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
+	h.sendNotifications(conn, userID)
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {

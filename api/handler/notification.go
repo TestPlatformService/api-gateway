@@ -87,6 +87,17 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
+	go func() {
+		for {
+			time.Sleep(5 * time.Second)
+			h.sendNotifications(conn, userID)
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Printf("Foydalanuvchi chiqib ketdi: %v", err)
+				return
+			}
+		}
+	}()
+
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {

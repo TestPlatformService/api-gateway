@@ -62,7 +62,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 		group.POST("add-teacher", hand.AddTeacherToGroup)
 		group.DELETE("delete-teacher", hand.DeleteTeacherFromGroup)
 		group.GET("student-groups/:hh_id", hand.GetStudentGroups)
-		group.GET("tacher-groups/:id", hand.GetTeacherGroups)
+		group.GET("teacher-groups/:id", hand.GetTeacherGroups)
 		group.GET("students/:group_id", hand.GetGroupStudents)
 	}
 

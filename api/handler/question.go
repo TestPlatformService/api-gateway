@@ -21,25 +21,63 @@ import (
 // @Description CreateQuestion
 // @Tags question
 // @Security ApiKeyAuth
-// @Param info body question.CreateQuestionRequest true "question info"
+// @Param info body model.CreateQuestionRequest true "question info"
 // @Success 200 {object} question.QuestionId "id"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
 // @Router /api/questions/create [post]
 func (h *Handler) CreateQuestion(c *gin.Context) {
 	h.Log.Info("CreateQuestion is starting")
-	req := question.CreateQuestionRequest{}
+	req := model.CreateQuestionRequest{}
 	if err := c.BindJSON(&req); err != nil {
 		h.Log.Error("Invalid request body", "error", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	res, err := h.Question.CreateQuestion(c, &req)
+	reqquestion := question.CreateQuestionRequest{
+		TopicId:     req.TopicID,
+		Type:        req.Type,
+		Name:        req.Name,
+		Number:      req.Number,
+		Difficulty:  req.Difficulty,
+		Description: req.Description,
+		Image:       req.Image,
+		Constrains:  req.Constrains,
+		InputInfo:   req.InputInfo,
+		OutputInfo:  req.OutputInfo,
+		Language:    req.Language,
+	}
+	res, err := h.Question.CreateQuestion(c, &reqquestion)
 	if err != nil {
 		h.Log.Error("Failed to create question", "error", err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
 		return
+	}
+	for _, io := range req.InputsOutputs {
+		// Create question input
+		inputReq := question.CreateQuestionInputRequest{
+			QuestionId: res.Id,   // Assuming res.Id contains the created question ID
+			Input:      io.Input, // Assuming io.Input is the input
+		}
+		inputRes, err := h.QuestionInput.CreateQuestionInput(c, &inputReq)
+		if err != nil {
+			h.Log.Error("Failed to create question input", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
+		// Create question output
+		outputReq := question.CreateQuestionOutputRequest{
+			QuestionId: res.Id,      // Assuming res.Id contains the created question ID
+			InputId:    inputRes.Id, // Assuming io.Input is the input ID
+			Answer:     io.Output,   // Assuming io.Output is the answer
+		}
+		_, err = h.QuestionOutput.CreateQuestionOutput(c, &outputReq)
+		if err != nil {
+			h.Log.Error("Failed to create question output", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
 	}
 
 	h.Log.Info("CreateQuestion ended successfully")
@@ -223,12 +261,51 @@ func (h *Handler) DeleteQuestion(c *gin.Context) {
 		h.Log.Error("questions ID is required")
 		return
 	}
-	_, err := h.Question.DeleteQuestion(c, &question.DeleteQuestionRequest{Id: req.Id})
+
+	// First, retrieve all inputs associated with the question
+	inputsRes, err := h.QuestionInput.GetAllQuestionInputsByQuestionId(c, &question.GetAllQuestionInputsByQuestionIdRequest{QuestionId: req.Id})
+	if err != nil {
+		h.Log.Error("Failed to retrieve question inputs", "error", err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+		return
+	}
+
+	// Delete all associated inputs
+	for _, input := range inputsRes.QuestionInputs {
+		_, err := h.QuestionInput.DeleteQuestionInput(c, &question.DeleteQuestionInputRequest{Id: input.Id})
+		if err != nil {
+			h.Log.Error("Failed to delete question input", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
+	}
+
+	// Now, retrieve all outputs associated with the question
+	outputsRes, err := h.QuestionOutput.GetAllQuestionOutputsByQuestionId(c, &question.GetAllQuestionOutputsByQuestionIdRequest{QuestionId: req.Id})
+	if err != nil {
+		h.Log.Error("Failed to retrieve question outputs", "error", err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+		return
+	}
+
+	// Delete all associated outputs
+	for _, output := range outputsRes.QuestionOutputs {
+		_, err := h.QuestionOutput.DeleteQuestionOutput(c, &question.DeleteQuestionOutputRequest{Id: output.Id})
+		if err != nil {
+			h.Log.Error("Failed to delete question output", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
+	}
+
+	// Finally, delete the question itself
+	_, err = h.Question.DeleteQuestion(c, &question.DeleteQuestionRequest{Id: req.Id})
 	if err != nil {
 		h.Log.Error("Failed to delete question", "error", err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
 		return
 	}
+
 	h.Log.Info("DeleteQuestion ended successfully")
 	c.JSON(http.StatusOK, gin.H{"message": "Question deleted successfully"})
 }

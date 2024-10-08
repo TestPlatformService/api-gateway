@@ -100,21 +100,10 @@ func Router(hand *handler.Handler) *gin.Engine {
 		question.DELETE("/delete-image/:id", hand.DeleteImageFromQuestion)
 	}
 
-	questionOutput := router.Group("/api/question-outputs")
-	questionOutput.Use(middleware.Check)
-	questionOutput.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
-	{
-		questionOutput.POST("/create", hand.CreateQuestionOutput)
-		questionOutput.GET("/:id", hand.GetQuestionOutputById)
-		questionOutput.DELETE("/delete/:id", hand.DeleteQuestionOutput)
-		questionOutput.GET("/question/:question_id", hand.GetQuestionOutputsByQuestionId)
-	}
-
 	questionInput := router.Group("/api/question-inputs")
 	questionInput.Use(middleware.Check)
 	questionInput.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
 	{
-		questionInput.POST("/create", hand.CreateQuestionInput)
 		questionInput.GET("/:id", hand.GetQuestionInputById)
 		questionInput.DELETE("/delete/:id", hand.DeleteQuestionInput)
 		questionInput.GET("/question/:question_id", hand.GetQuestionInputsByQuestionId)

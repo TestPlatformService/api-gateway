@@ -198,12 +198,7 @@ definitions:
         description: Vaqt cheklovi
         type: integer
     type: object
-  model.Error:
-    properties:
-      message:
-        type: string
-    type: object
-  model.UpdateQuestionRequest:
+  model.CreateQuestionRequest:
     properties:
       constrains:
         type: string
@@ -215,40 +210,59 @@ definitions:
         type: string
       input_info:
         type: string
+      inputs_outputs:
+        items:
+          $ref: '#/definitions/model.InputOutput'
+        type: array
       language:
         type: string
-      memory_limit:
-        type: integer
       name:
         type: string
       number:
         type: integer
       output_info:
         type: string
-      time_limit:
-        type: integer
       topic_id:
         type: string
       type:
         type: string
     type: object
-  question.CreateQuestionInputRequest:
+  model.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  model.GetAllQuestionInputsWithOutputsByQuestionIdResponse:
+    properties:
+      inputs_with_outputs:
+        items:
+          $ref: '#/definitions/model.GetQuestionInputWithOutput'
+        type: array
+    type: object
+  model.GetQuestionInputWithOutput:
+    properties:
+      input:
+        $ref: '#/definitions/question.GetQuestionInputResponse'
+      output:
+        allOf:
+        - $ref: '#/definitions/question.GetQuestionOutputResponse'
+        description: Output maydoni
+    type: object
+  model.GetQuestionInputWithOutputsResponse:
+    properties:
+      input:
+        $ref: '#/definitions/question.GetQuestionInputResponse'
+      output:
+        $ref: '#/definitions/question.GetQuestionOutputResponse'
+    type: object
+  model.InputOutput:
     properties:
       input:
         type: string
-      question_id:
+      output:
         type: string
     type: object
-  question.CreateQuestionOutputRequest:
-    properties:
-      answer:
-        type: string
-      input_id:
-        type: string
-      question_id:
-        type: string
-    type: object
-  question.CreateQuestionRequest:
+  model.UpdateQuestionRequest:
     properties:
       constrains:
         type: string
@@ -285,20 +299,6 @@ definitions:
         type: boolean
       question_id:
         type: string
-    type: object
-  question.GetAllQuestionInputsByQuestionIdResponse:
-    properties:
-      question_inputs:
-        items:
-          $ref: '#/definitions/question.GetQuestionInputResponse'
-        type: array
-    type: object
-  question.GetAllQuestionOutputsByQuestionIdResponse:
-    properties:
-      question_outputs:
-        items:
-          $ref: '#/definitions/question.GetQuestionOutputResponse'
-        type: array
     type: object
   question.GetAllTestCasesByQuestionIdResponse:
     properties:
@@ -378,22 +378,10 @@ definitions:
       id:
         type: string
     type: object
-  question.QuestionInputId:
-    properties:
-      id:
-        type: string
-    type: object
-  question.QuestionOutputId:
-    properties:
-      id:
-        type: string
-    type: object
   question.TestCaseId:
     properties:
       id:
         type: string
-    type: object
-  question.Void:
     type: object
   subject.CreateSubjectRequest:
     properties:
@@ -1178,7 +1166,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/question.GetQuestionInputResponse'
+            $ref: '#/definitions/model.GetQuestionInputWithOutputsResponse'
         "400":
           description: Invalid request body
           schema:
@@ -1191,35 +1179,7 @@ paths:
       - ApiKeyAuth: []
       summary: GetQuestionInputById
       tags:
-      - questionInput
-  /api/question-inputs/create:
-    post:
-      description: CreateQuestionInput
-      parameters:
-      - description: questionInput
-        in: body
-        name: questionInput
-        required: true
-        schema:
-          $ref: '#/definitions/question.CreateQuestionInputRequest'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/question.QuestionInputId'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: CreateQuestionInput
-      tags:
-      - questionInput
+      - questionInputAndOutput
   /api/question-inputs/delete/{id}:
     delete:
       description: DeleteQuestionInput
@@ -1246,7 +1206,7 @@ paths:
       - ApiKeyAuth: []
       summary: DeleteQuestionInput
       tags:
-      - questionInput
+      - questionInputAndOutput
   /api/question-inputs/question/{question_id}:
     get:
       description: GetQuestionInputsByQuestionId
@@ -1260,7 +1220,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/question.GetAllQuestionInputsByQuestionIdResponse'
+            $ref: '#/definitions/model.GetAllQuestionInputsWithOutputsByQuestionIdResponse'
         "400":
           description: Invalid request body
           schema:
@@ -1273,116 +1233,7 @@ paths:
       - ApiKeyAuth: []
       summary: GetQuestionInputsByQuestionId
       tags:
-      - questionInput
-  /api/question-outputs/{id}:
-    get:
-      description: GetQuestionOutputById
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: questionOutput info
-          schema:
-            $ref: '#/definitions/question.GetQuestionOutputResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: GetQuestionOutputById
-      tags:
-      - questionOutput
-  /api/question-outputs/create:
-    post:
-      description: CreateQuestionOutput
-      parameters:
-      - description: questionOutput info
-        in: body
-        name: info
-        required: true
-        schema:
-          $ref: '#/definitions/question.CreateQuestionOutputRequest'
-      responses:
-        "200":
-          description: id
-          schema:
-            $ref: '#/definitions/question.QuestionOutputId'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: CreateQuestionOutput
-      tags:
-      - questionOutput
-  /api/question-outputs/delete/{id}:
-    delete:
-      description: DeleteQuestionOutput
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Void
-          schema:
-            $ref: '#/definitions/question.Void'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteQuestionOutput
-      tags:
-      - questionOutput
-  /api/question-outputs/question/{question_id}:
-    get:
-      description: GetQuestionOutputsByQuestionId
-      parameters:
-      - description: question_id
-        in: path
-        name: question_id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: questionOutput info
-          schema:
-            $ref: '#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse'
-        "400":
-          description: Invalid request body
-          schema:
-            type: string
-        "500":
-          description: Server error
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: GetQuestionOutputsByQuestionId
-      tags:
-      - questionOutput
+      - questionInputAndOutput
   /api/questions/{id}:
     get:
       description: GetQuestionById
@@ -1419,7 +1270,7 @@ paths:
         name: info
         required: true
         schema:
-          $ref: '#/definitions/question.CreateQuestionRequest'
+          $ref: '#/definitions/model.CreateQuestionRequest'
       responses:
         "200":
           description: id
@@ -1866,7 +1717,7 @@ paths:
       parameters:
       - description: Foydalanuvchi ID
         in: query
-        name: user_id
+        name: hh_id
         required: true
         type: string
       - description: Mavzu ID

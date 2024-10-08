@@ -29,7 +29,7 @@ import (
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
 // @Router /api/user/register [post]
-func (h Handler) Register(c *gin.Context) {
+func (h *Handler) Register(c *gin.Context) {
 	h.Log.Info("Register is starting")
 	req := pb.RegisterRequest{}
 
@@ -61,7 +61,7 @@ func (h Handler) Register(c *gin.Context) {
 // @Failure      401   {object}  string "Unauthorized"
 // @Failure      500   {object}  string "Server error"
 // @Router       /all/user/login [post]
-func (h Handler) Login(c *gin.Context) {
+func (h *Handler) Login(c *gin.Context) {
 	h.Log.Info("Login starting")
 	req := pb.LoginRequest{}
 
@@ -104,7 +104,7 @@ func (h Handler) Login(c *gin.Context) {
 // @Failure      400    {object}  string "Invalid token"
 // @Failure      500    {object}  string "Server error"
 // @Router       /api/user/getprofile [get]
-func (h Handler) GetProfile(c *gin.Context) {
+func (h *Handler) GetProfile(c *gin.Context) {
 	h.Log.Info("GetProfile starting")
 	tokenn := c.GetHeader("Authorization")
 
@@ -149,7 +149,7 @@ func (h Handler) GetProfile(c *gin.Context) {
 // @Failure      400   {object}  string "Invalid request parameters"
 // @Failure      500   {object}  string "Internal server error"
 // @Router       /api/user/all [get]
-func (h Handler) GetAllUsers(c *gin.Context) {
+func (h *Handler) GetAllUsers(c *gin.Context) {
 	h.Log.Info("GetAllUsers starting")
 
 	req := pb.GetAllUsersRequest{}
@@ -257,7 +257,7 @@ func (h *Handler) UpdateProfileAdmin(c *gin.Context) {
 // @Failure      404  {object}  string "User not found"
 // @Failure      500  {object}  string "Internal server error"
 // @Router       /api/user/delete/{id} [delete]
-func (h Handler) DeleteProfile(c *gin.Context) {
+func (h *Handler) DeleteProfile(c *gin.Context) {
 	h.Log.Info("DeleteProfile starting")
 	id := c.Param("id")
 
@@ -289,7 +289,7 @@ func (h Handler) DeleteProfile(c *gin.Context) {
 // @Failure 400 {object} string "Invalid date"
 // @Failure 500 {object} string "error while reading from server"
 // @Router /all/user/refresh [post]
-func (h Handler) Refresh(c *gin.Context) {
+func (h *Handler) Refresh(c *gin.Context) {
 	h.Log.Info("Refresh is working")
 	tok := pb.Tokens{}
 	if err := c.BindJSON(&tok); err != nil {

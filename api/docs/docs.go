@@ -109,6 +109,11 @@ const docTemplate = `{
         },
         "/api/check/submit": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This API checks the submitted code using the checker service and returns the result via SSE.",
                 "consumes": [
                     "application/json"

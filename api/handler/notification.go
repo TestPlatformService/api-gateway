@@ -53,6 +53,16 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Autentifikatsiya
 	var userID string
+	go func() {
+		for {
+			time.Sleep(5 * time.Second)
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Printf("Foydalanuvchi chiqib ketdi: %v", err)
+				break
+			}
+			h.sendNotifications(conn, userID)
+		}
+	}()
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
@@ -94,17 +104,7 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Dastlabki bildirishnomalarni yuborish
 	log.Printf("Dastlabki bildirishnomalar yuborilmoqda userID: %s uchun", userID)
-	go func() {
-		for {
-			time.Sleep(5 * time.Second)
-			h.sendNotifications(conn, userID)
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("Foydalanuvchi chiqib ketdi: %v", err)
-				return
-			}
-
-		}
-	}()
+	h.sendNotifications(conn, userID)
 
 	// Ping yuborish uchun go-routine
 	go func() {

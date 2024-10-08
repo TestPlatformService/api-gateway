@@ -59,7 +59,7 @@ func (h *Handler) GetQuestionInputById(c *gin.Context) {
 // @Tags questionInputAndOutput
 // @Security ApiKeyAuth
 // @Param question_id path string true "question_id"
-// @Success 200 {object} GetAllQuestionInputsWithOutputsByQuestionIdResponse
+// @Success 200 {object} model.GetAllQuestionInputsWithOutputsByQuestionIdResponse
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 500 {object} string "Server error"
 // @Router /api/question-inputs/question/{question_id} [get]

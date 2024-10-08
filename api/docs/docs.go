@@ -769,51 +769,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/question-inputs/create": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "CreateQuestionInput",
-                "tags": [
-                    "questionInput"
-                ],
-                "summary": "CreateQuestionInput",
-                "parameters": [
-                    {
-                        "description": "questionInput",
-                        "name": "questionInput",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/question.CreateQuestionInputRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/question.QuestionInputId"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/api/question-inputs/delete/{id}": {
             "delete": {
                 "security": [
@@ -823,7 +778,7 @@ const docTemplate = `{
                 ],
                 "description": "DeleteQuestionInput",
                 "tags": [
-                    "questionInput"
+                    "questionInputAndOutput"
                 ],
                 "summary": "DeleteQuestionInput",
                 "parameters": [
@@ -866,7 +821,7 @@ const docTemplate = `{
                 ],
                 "description": "GetQuestionInputsByQuestionId",
                 "tags": [
-                    "questionInput"
+                    "questionInputAndOutput"
                 ],
                 "summary": "GetQuestionInputsByQuestionId",
                 "parameters": [
@@ -882,7 +837,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/question.GetAllQuestionInputsByQuestionIdResponse"
+                            "$ref": "#/definitions/model.GetAllQuestionInputsWithOutputsByQuestionIdResponse"
                         }
                     },
                     "400": {
@@ -909,7 +864,7 @@ const docTemplate = `{
                 ],
                 "description": "GetQuestionInputById",
                 "tags": [
-                    "questionInput"
+                    "questionInputAndOutput"
                 ],
                 "summary": "GetQuestionInputById",
                 "parameters": [
@@ -925,181 +880,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/question.GetQuestionInputResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-outputs/create": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "CreateQuestionOutput",
-                "tags": [
-                    "questionOutput"
-                ],
-                "summary": "CreateQuestionOutput",
-                "parameters": [
-                    {
-                        "description": "questionOutput info",
-                        "name": "info",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/question.CreateQuestionOutputRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "id",
-                        "schema": {
-                            "$ref": "#/definitions/question.QuestionOutputId"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-outputs/delete/{id}": {
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "DeleteQuestionOutput",
-                "tags": [
-                    "questionOutput"
-                ],
-                "summary": "DeleteQuestionOutput",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Void",
-                        "schema": {
-                            "$ref": "#/definitions/question.Void"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-outputs/question/{question_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "GetQuestionOutputsByQuestionId",
-                "tags": [
-                    "questionOutput"
-                ],
-                "summary": "GetQuestionOutputsByQuestionId",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "question_id",
-                        "name": "question_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "questionOutput info",
-                        "schema": {
-                            "$ref": "#/definitions/question.GetAllQuestionOutputsByQuestionIdResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/question-outputs/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "GetQuestionOutputById",
-                "tags": [
-                    "questionOutput"
-                ],
-                "summary": "GetQuestionOutputById",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "questionOutput info",
-                        "schema": {
-                            "$ref": "#/definitions/question.GetQuestionOutputResponse"
+                            "$ref": "#/definitions/model.GetQuestionInputWithOutputsResponse"
                         }
                     },
                     "400": {
@@ -1136,7 +917,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/question.CreateQuestionRequest"
+                            "$ref": "#/definitions/model.CreateQuestionRequest"
                         }
                     }
                 ],
@@ -3010,15 +2791,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.Error": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.UpdateQuestionRequest": {
+        "model.CreateQuestionRequest": {
             "type": "object",
             "properties": {
                 "constrains": {
@@ -3036,11 +2809,14 @@ const docTemplate = `{
                 "input_info": {
                     "type": "string"
                 },
+                "inputs_outputs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.InputOutput"
+                    }
+                },
                 "language": {
                     "type": "string"
-                },
-                "memory_limit": {
-                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -3051,9 +2827,6 @@ const docTemplate = `{
                 "output_info": {
                     "type": "string"
                 },
-                "time_limit": {
-                    "type": "integer"
-                },
                 "topic_id": {
                     "type": "string"
                 },
@@ -3062,32 +2835,64 @@ const docTemplate = `{
                 }
             }
         },
-        "question.CreateQuestionInputRequest": {
+        "model.Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.GetAllQuestionInputsWithOutputsByQuestionIdResponse": {
+            "type": "object",
+            "properties": {
+                "inputs_with_outputs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.GetQuestionInputWithOutput"
+                    }
+                }
+            }
+        },
+        "model.GetQuestionInputWithOutput": {
+            "type": "object",
+            "properties": {
+                "input": {
+                    "$ref": "#/definitions/question.GetQuestionInputResponse"
+                },
+                "output": {
+                    "description": "Output maydoni",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/question.GetQuestionOutputResponse"
+                        }
+                    ]
+                }
+            }
+        },
+        "model.GetQuestionInputWithOutputsResponse": {
+            "type": "object",
+            "properties": {
+                "input": {
+                    "$ref": "#/definitions/question.GetQuestionInputResponse"
+                },
+                "output": {
+                    "$ref": "#/definitions/question.GetQuestionOutputResponse"
+                }
+            }
+        },
+        "model.InputOutput": {
             "type": "object",
             "properties": {
                 "input": {
                     "type": "string"
                 },
-                "question_id": {
+                "output": {
                     "type": "string"
                 }
             }
         },
-        "question.CreateQuestionOutputRequest": {
-            "type": "object",
-            "properties": {
-                "answer": {
-                    "type": "string"
-                },
-                "input_id": {
-                    "type": "string"
-                },
-                "question_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "question.CreateQuestionRequest": {
+        "model.UpdateQuestionRequest": {
             "type": "object",
             "properties": {
                 "constrains": {
@@ -3142,28 +2947,6 @@ const docTemplate = `{
                 },
                 "question_id": {
                     "type": "string"
-                }
-            }
-        },
-        "question.GetAllQuestionInputsByQuestionIdResponse": {
-            "type": "object",
-            "properties": {
-                "question_inputs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/question.GetQuestionInputResponse"
-                    }
-                }
-            }
-        },
-        "question.GetAllQuestionOutputsByQuestionIdResponse": {
-            "type": "object",
-            "properties": {
-                "question_outputs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/question.GetQuestionOutputResponse"
-                    }
                 }
             }
         },
@@ -3287,22 +3070,6 @@ const docTemplate = `{
                 }
             }
         },
-        "question.QuestionInputId": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "question.QuestionOutputId": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
         "question.TestCaseId": {
             "type": "object",
             "properties": {
@@ -3310,9 +3077,6 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        },
-        "question.Void": {
-            "type": "object"
         },
         "subject.CreateSubjectRequest": {
             "type": "object",

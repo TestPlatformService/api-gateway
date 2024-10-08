@@ -53,7 +53,7 @@ func (h *Handler) ProxyChecker(c *gin.Context) {
 	}
 
 	// Checker service bilan bog'lanish
-	resp, err := http.Post("http://192.168.1.100:50054/check", "application/json", bytes.NewBuffer(requestBody))
+	resp, err := http.Post("http://3.121.214.21:50054/check", "application/json", bytes.NewBuffer(requestBody))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, model.Error{Message: "Failed to connect to checker service"})
 		return

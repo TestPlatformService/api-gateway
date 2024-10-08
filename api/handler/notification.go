@@ -1,4 +1,3 @@
-// file: api/handler/notification.go
 package handler
 
 import (
@@ -38,7 +37,6 @@ type WebSocketMessage struct {
 
 func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	log.Printf("WebSocket ulanish so'rovi: %s", r.URL)
-	log.Printf("WebSocket ulanish headerlari: %v", r.Header)
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -46,6 +44,7 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("WebSocket upgrade failed: %v", err), http.StatusBadRequest)
 		return
 	}
+	defer conn.Close()
 
 	conn.SetReadLimit(maxMessageSize)
 	conn.SetReadDeadline(time.Now().Add(pongWait))
@@ -53,21 +52,24 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Autentifikatsiya
 	var userID string
+	stopChan := make(chan struct{}) // Go-routine ni to'xtatish uchun channel
 	go func() {
 		for {
-			time.Sleep(5 * time.Second)
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("Foydalanuvchi chiqib ketdi: %v", err)
-				break
+			select {
+			case <-stopChan:
+				return // Channel yopilganda go-routine to'xtaydi
+			default:
+				time.Sleep(5 * time.Second)
+				h.sendNotifications(conn, userID)
 			}
-			h.sendNotifications(conn, userID)
 		}
 	}()
+
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			log.Println("read:", err)
-			return
+			break // Ulanishni to'xtatish
 		}
 
 		var msg WebSocketMessage
@@ -99,7 +101,7 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		h.ConnMutex.Lock()
 		delete(h.Connections, userID)
 		h.ConnMutex.Unlock()
-		conn.Close()
+		close(stopChan) // Channelni yopish
 	}()
 
 	// Dastlabki bildirishnomalarni yuborish
@@ -172,13 +174,11 @@ func (h *Handler) sendNotifications(conn *websocket.Conn, userID string) {
 }
 
 func (h *Handler) CreateNotification(ctx context.Context, req *pb.CreateNotificationsReq) (*pb.CreateNotificationsRes, error) {
-	// Xabarnomani yaratish logikasi...
 	res, err := h.Notification.CreateNotification(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	// Yangi xabarnomani yaratgandan so'ng, uni WebSocket orqali yuborish
 	go h.broadcastNewNotification(req.UserId)
 
 	return res, nil

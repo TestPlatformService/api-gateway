@@ -759,6 +759,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Check code with the checker service
   /api/groups/add-student:
     post:

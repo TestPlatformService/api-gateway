@@ -30,6 +30,7 @@ type RunRequest struct {
 // @Summary Check code with the checker service
 // @Description This API checks the submitted code using the checker service and returns the result via SSE.
 // @Accept json
+// @Security ApiKeyAuth
 // @Produce text/event-stream
 // @Param request body RunRequest true "Request body containing code, language, limits, and I/O"
 // @Success 200 {string} string "Event stream with results"

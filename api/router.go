@@ -132,7 +132,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 	check.Use(middleware.Check)
 	check.Use(middleware.CheckPermissionMiddleware(hand.Enforcer))
 	{
-		task.POST("/submit", hand.ProxyChecker)
+		check.POST("/submit", hand.ProxyChecker)
 	}
 
 	return router

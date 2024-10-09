@@ -763,6 +763,51 @@
                 }
             }
         },
+        "/api/question-inputs/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "CreateQuestionInput",
+                "tags": [
+                    "questionInputAndOutput"
+                ],
+                "summary": "CreateQuestionInput",
+                "parameters": [
+                    {
+                        "description": "Input and Output data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CreateQuestionInputWithOutputRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Created question input and output IDs",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/question-inputs/delete/{id}": {
             "delete": {
                 "security": [
@@ -2785,6 +2830,25 @@
                 }
             }
         },
+        "model.CreateQuestionInputWithOutputRequest": {
+            "type": "object",
+            "required": [
+                "inputs",
+                "question_id"
+            ],
+            "properties": {
+                "inputs": {
+                    "description": "Input va outputlar uchun slice",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.InputOutputCreate"
+                    }
+                },
+                "question_id": {
+                    "type": "string"
+                }
+            }
+        },
         "model.CreateQuestionRequest": {
             "type": "object",
             "properties": {
@@ -2882,6 +2946,22 @@
                     "type": "string"
                 },
                 "output": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.InputOutputCreate": {
+            "type": "object",
+            "required": [
+                "input",
+                "output"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string"
+                },
+                "output": {
+                    "description": "Output maydoni",
                     "type": "string"
                 }
             }

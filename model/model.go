@@ -64,3 +64,13 @@ type GetQuestionInputWithOutput struct {
 type GetAllQuestionInputsWithOutputsByQuestionIdResponse struct {
 	InputsWithOutputs []GetQuestionInputWithOutput `json:"inputs_with_outputs"`
 }
+
+type CreateQuestionInputWithOutputRequest struct {
+	QuestionId string              `json:"question_id" binding:"required"`
+	Inputs     []InputOutputCreate `json:"inputs" binding:"required"` // Input va outputlar uchun slice
+}
+
+type InputOutputCreate struct {
+	Input  string `json:"input" binding:"required"`
+	Output string `json:"output" binding:"required"` // Output maydoni
+}

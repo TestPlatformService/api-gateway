@@ -13,8 +13,8 @@ import (
 
 // InputOutput - I/O ma'lumotlari uchun tuzilma
 type InputOutput struct {
-	In  string `json:"in"`
-	Out interface{} `json:"out"`
+    In  string      `json:"in"`
+    Out interface{} `json:"out" swaggertype:"object" example:"string or int"` // Bu yerda interfeys uchun sharh beramiz
 }
 
 // RunRequest - Kodni tekshirish uchun so'rov tuzilmasi

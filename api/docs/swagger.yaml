@@ -171,31 +171,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  handler.InputOutput:
-    properties:
-      in:
-        type: string
-      out: {}
-    type: object
   handler.RunRequest:
-    properties:
-      code:
-        description: Kod
-        type: string
-      io:
-        description: I/O ma'lumotlari
-        items:
-          $ref: '#/definitions/handler.InputOutput'
-        type: array
-      lang:
-        description: Dasturlash tili
-        type: string
-      memoryLimit:
-        description: Xotira cheklovi
-        type: integer
-      timeLimit:
-        description: Vaqt cheklovi
-        type: integer
     type: object
   model.CreateQuestionInputWithOutputRequest:
     properties:
@@ -268,12 +244,17 @@ definitions:
         $ref: '#/definitions/question.GetQuestionOutputResponse'
     type: object
   model.InputOutput:
-    properties:
-      input:
-        type: string
-      output:
-        type: string
     type: object
+    properties:
+      in:
+        type: string
+      out:
+        oneOf:
+          - type: string
+          - type: integer
+          - type: number
+          - type: object
+
   model.InputOutputCreate:
     properties:
       input:

@@ -2802,42 +2802,8 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.InputOutput": {
-            "type": "object",
-            "properties": {
-                "in": {
-                    "type": "string"
-                },
-                "out": {}
-            }
-        },
         "handler.RunRequest": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "Kod",
-                    "type": "string"
-                },
-                "io": {
-                    "description": "I/O ma'lumotlari",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/handler.InputOutput"
-                    }
-                },
-                "lang": {
-                    "description": "Dasturlash tili",
-                    "type": "string"
-                },
-                "memoryLimit": {
-                    "description": "Xotira cheklovi",
-                    "type": "integer"
-                },
-                "timeLimit": {
-                    "description": "Vaqt cheklovi",
-                    "type": "integer"
-                }
-            }
+            "type": "object"
         },
         "model.CreateQuestionInputWithOutputRequest": {
             "type": "object",

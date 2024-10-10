@@ -2803,7 +2803,18 @@ const docTemplate = `{
             }
         },
         "handler.RunRequest": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "lang": {
+                    "type": "string"
+                },
+                "question_id": {
+                    "type": "string"
+                }
+            }
         },
         "model.CreateQuestionInputWithOutputRequest": {
             "type": "object",

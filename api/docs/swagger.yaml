@@ -172,6 +172,13 @@ definitions:
         type: string
     type: object
   handler.RunRequest:
+    properties:
+      code:
+        type: string
+      lang:
+        type: string
+      question_id:
+        type: string
     type: object
   model.CreateQuestionInputWithOutputRequest:
     properties:
@@ -243,21 +250,13 @@ definitions:
       output:
         $ref: '#/definitions/question.GetQuestionOutputResponse'
     type: object
-  handler.InputOutput:
-    type: object
+  model.InputOutput:
     properties:
-      in:
+      input:
         type: string
-      out:
-        oneOf:
-          - type: string
-          - type: integer
-          - type: number
-          - type: boolean
-          - type: array
-            items:
-              type: object
-          - type: object
+      output:
+        type: string
+    type: object
   model.InputOutputCreate:
     properties:
       input:

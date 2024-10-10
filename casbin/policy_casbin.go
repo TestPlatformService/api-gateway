@@ -133,6 +133,8 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		{"teacher", "/api/questions/upload-image/:id", "POST"},
 		{"teacher", "/api/questions/delete-image/:id", "DELETE"},
 
+		{"student", "/api/questions/:id", "GET"},
+
 		//question output
 		{"admin", "/api/question-outputs/create", "POST"},
 		{"admin", "/api/question-outputs/:id", "GET"},

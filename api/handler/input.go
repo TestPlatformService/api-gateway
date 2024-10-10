@@ -163,3 +163,58 @@ func (h *Handler) DeleteQuestionInput(c *gin.Context) {
 	h.Log.Info("DeleteQuestionInput ended successfully")
 	c.JSON(http.StatusOK, gin.H{"message": "Question input deleted successfully"})
 }
+
+// CreateQuestionInput godoc
+// @Summary CreateQuestionInput
+// @Description CreateQuestionInput
+// @Tags questionInputAndOutput
+// @Security ApiKeyAuth
+// @Param input body model.CreateQuestionInputWithOutputRequest true "Input and Output data"
+// @Success 200 {object} string "Created question input and output IDs"
+// @Failure 400 {object} string "Invalid request body"
+// @Failure 500 {object} string "Server error"
+// @Router /api/question-inputs/create [post]
+func (h *Handler) CreateQuestionInput(c *gin.Context) {
+	h.Log.Info("CreateQuestionInput is starting")
+
+	var req model.CreateQuestionInputWithOutputRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		h.Log.Error("Invalid request body", "error", err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	var inputIDs []string
+	var outputIDs []string
+
+	// Iterate through each input-output pair
+	for _, io := range req.Inputs {
+		// Create the question input
+		inputRes, err := h.QuestionInput.CreateQuestionInput(c, &question.CreateQuestionInputRequest{
+			QuestionId: req.QuestionId,
+			Input:      io.Input,
+		})
+		if err != nil {
+			h.Log.Error("Failed to create question input", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
+		inputIDs = append(inputIDs, inputRes.Id)
+
+		// Create the question output
+		outputRes, err := h.QuestionOutput.CreateQuestionOutput(c, &question.CreateQuestionOutputRequest{
+			QuestionId: req.QuestionId,
+			InputId:    inputRes.Id, // Use the created input ID
+			Answer:     io.Output,   // Assuming io.Output contains the answer
+		})
+		if err != nil {
+			h.Log.Error("Failed to create question output", "error", err.Error())
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+			return
+		}
+		outputIDs = append(outputIDs, outputRes.Id)
+	}
+
+	h.Log.Info("CreateQuestionInput ended successfully")
+	c.JSON(http.StatusOK, gin.H{"input_ids": inputIDs, "output_ids": outputIDs}) // Return the created input and output IDs
+}

@@ -146,13 +146,16 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 				conn.WriteMessage(websocket.TextMessage, []byte("Failed to mark as read"))
 			} else {
 				log.Println("Xabar o'qilgan deb belgilandi")
-				h.sendNotifications(conn, userID)
 			}
 		}
 	}
 }
 
 func (h *Handler) sendNotifications(conn *websocket.Conn, userID string) {
+	if userID == "" {
+		log.Println("UserID bo'sh, bildirishnomalarni yuborish mumkin emas.")
+		return // Agar UserID bo'sh bo'lsa, funksiyani to'xtatish
+	}
 	log.Printf("sendNotifications funksiyasi chaqirildi. UserID: %s", userID)
 	notifications, err := h.Notification.GetAllNotifications(context.Background(), &pb.GetNotificationsReq{UserId: userID})
 	if err != nil {

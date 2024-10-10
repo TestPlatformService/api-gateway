@@ -197,6 +197,19 @@ definitions:
         description: Vaqt cheklovi
         type: integer
     type: object
+  model.CreateQuestionInputWithOutputRequest:
+    properties:
+      inputs:
+        description: Input va outputlar uchun slice
+        items:
+          $ref: '#/definitions/model.InputOutputCreate'
+        type: array
+      question_id:
+        type: string
+    required:
+    - inputs
+    - question_id
+    type: object
   model.CreateQuestionRequest:
     properties:
       constrains:
@@ -260,6 +273,17 @@ definitions:
         type: string
       output:
         type: string
+    type: object
+  model.InputOutputCreate:
+    properties:
+      input:
+        type: string
+      output:
+        description: Output maydoni
+        type: string
+    required:
+    - input
+    - output
     type: object
   model.UpdateQuestionRequest:
     properties:
@@ -1179,6 +1203,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: GetQuestionInputById
+      tags:
+      - questionInputAndOutput
+  /api/question-inputs/create:
+    post:
+      description: CreateQuestionInput
+      parameters:
+      - description: Input and Output data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateQuestionInputWithOutputRequest'
+      responses:
+        "200":
+          description: Created question input and output IDs
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: CreateQuestionInput
       tags:
       - questionInputAndOutput
   /api/question-inputs/delete/{id}:

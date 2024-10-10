@@ -2763,9 +2763,7 @@ const docTemplate = `{
                 "in": {
                     "type": "string"
                 },
-                "out": {
-                    "type": "string"
-                }
+                "out": {}
             }
         },
         "handler.RunRequest": {

@@ -14,7 +14,7 @@ import (
 // InputOutput - I/O ma'lumotlari uchun tuzilma
 type InputOutput struct {
 	In  string `json:"in"`
-	Out string `json:"out"`
+	Out interface{} `json:"out"`
 }
 
 // RunRequest - Kodni tekshirish uchun so'rov tuzilmasi

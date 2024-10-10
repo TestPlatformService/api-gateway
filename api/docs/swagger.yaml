@@ -175,8 +175,7 @@ definitions:
     properties:
       in:
         type: string
-      out:
-        type: string
+      out: {}
     type: object
   handler.RunRequest:
     properties:

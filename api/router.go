@@ -107,7 +107,7 @@ func Router(hand *handler.Handler) *gin.Engine {
 		questionInput.GET("/:id", hand.GetQuestionInputById)
 		questionInput.DELETE("/delete/:id", hand.DeleteQuestionInput)
 		questionInput.GET("/question/:question_id", hand.GetQuestionInputsByQuestionId)
-		router.POST("/create", hand.CreateQuestionInput)
+		questionInput.POST("/create", hand.CreateQuestionInput)
 	}
 
 	testCase := router.Group("/api/test-cases")
